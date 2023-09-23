@@ -1,38 +1,176 @@
-.App {
-  text-align: center;
+
+
+/* Reset some default styles */
+body, ul {
+  margin: 0;
+  padding: 0;
+  background-color: rgb(224, 231, 230);
+  list-style-type: none;
+ 
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Style the header and navbar */
+header {
+  background-color: #8cd8ed;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.nav-header{
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: space-between;
+  padding:0rem 1rem;
+}
+.nav-toggle {
+  font-size: 1.5rem;
+  color: black;
+  background: transparent;
+  border-color: transparent;
+  transition: 500ms;
+  cursor: pointer;
+}
+.nav-toggle:hover {
   color: white;
+  transform: rotate(90deg);
 }
 
-.App-link {
-  color: #61dafb;
+.logo img {
+  max-height: 100px;
+  margin-left: -12px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.nav-links li {
+  margin-right: 20px;
 }
+.user-account a {
+  display: none;
+}
+.nav-links {
+  height: 0;
+  overflow: hidden;
+  list-style: none;
+  display: flex;
+ 
+}
+.nav-links a {
+  color: var(--clr-grey-3);
+  font-size: 1rem;
+  text-transform: capitalize;
+  letter-spacing: var(--spacing);
+  display: block;
+  padding: 0.5rem 1rem;
+}
+.show-navbar{
+  height: 9.40rem;
+  overflow: hidden;
+  display: block;
+  justify-content:left ;
+  transition:500ms;
+}
+
+.show-navbar a {
+  background-color: #8cd8ed;
+  color: black;
+  font-size: 1rem;
+  display: block;
+  text-transform: capitalize;
+  padding: 0.5rem 1rem;
+  letter-spacing:0.75px;
+  transition:500ms;
+  text-decoration: none;
+}
+.show-navbar a:hover {
+  background: white;
+  color: #8cd8ed;
+  padding-left: 1.5rem;
+}
+/* Media query for mobile responsiveness */
+@media screen and (min-width: 700px) {
+  .navbar {
+    background-color: #8cd8ed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding:0 10px;
+  }
+  .nav-toggle {
+    display: none;
+  }
+  .nav-links {
+    height: auto;
+    display: flex;
+    background-color: #8cd8ed;
+    color: black;
+  
+  }
+  .nav-links a {
+    padding: 0;
+    margin: 0 0.25rem;
+    text-decoration: none;
+    width: 99%;
+    text-align: center;
+    transition:500ms;
+  }
+  .show-navbar {
+    height: auto;
+    display: flex;
+    background-color: #8cd8ed;
+
+  }
+  .show-navbar a {
+    padding: 0;
+    margin: 0 0.65rem;
+    text-decoration: none;
+    width: 99%;
+    text-align: center;
+    transition:500ms;
+    
+  }
+  .show-navbar a:hover {
+    padding: 0;
+    color: white;
+    background: transparent;
+    
+  }
+  .nav-links a:hover {
+    padding: 0;
+    color: white;
+    background: transparent;
+  }
+  .user-account{
+    display: flex;
+
+  }
+  .user-account a {
+    color: black;
+    font-size: 1rem;
+    text-transform: capitalize;
+    letter-spacing: var(--spacing);
+    display: block;
+    padding: 0.5rem 0.2rem;
+    transition:500ms;
+    text-decoration: none;
+  }
+  .user-account .slash{
+    color: black;
+  }
+  .user-account .slash:hover{
+    color: black;
+  }
+  .user-account a:hover{
+    color: white;
+  }
+  /* Mobile hamburger menu button */
+  /* .menu-button {
+      display: block;
+      cursor: pointer;
+      color: #fff;
+      font-size: 20px;
+      margin-right: 20px;
+  } */
+}
+
+
+
