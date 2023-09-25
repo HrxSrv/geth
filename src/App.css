@@ -4,9 +4,9 @@
 body, ul {
   margin: 0;
   padding: 0;
-  background-color: rgb(224, 231, 230);
+  background-color: rgb(229, 232, 232);
   list-style-type: none;
-  
+
 }
 
 /* Style the header and navbar */
@@ -94,19 +94,20 @@ header {
   padding: 100px 0;
   margin: 2px;
   border-radius: 5px;
- 
 }
 
 .hero h1 {
   font-size: 36px;
   margin-bottom: 20px;
   opacity: 1;
+  color: black;
 }
 
 .hero p {
   font-size: 18px;
   margin-bottom: 30px;
   opacity: 1;
+  color: black;
 }
 
 .cta-buttons {
@@ -131,7 +132,8 @@ header {
   background-color: #0056b3;
 }
 .browse-workers {
-  background-color: #f9f9f9; /* Set the background color for the Browse Workers section */
+  /* Set the background color for the Browse Workers section */
+
   padding: 20px;
 }
 

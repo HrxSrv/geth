@@ -25,7 +25,7 @@ export default function Navbar() {
                         <li><a href="index.html">Home</a></li>
                         <li><a href="jobs.html">Find Jobs</a></li>
                         <li><a href="post-job.html">Post a Job</a></li>
-                        <li><a href="about-us.html">About Us</a></li>
+                        <li><a href="#container ">About Us</a></li>
                     </ul>
                     <div className="user-account">
                         <a href="login.html">Login </a>
