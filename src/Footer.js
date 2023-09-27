@@ -11,7 +11,7 @@ export default function Footer() {
                 <div class="footer-links">
                     <a href=" ">About Us</a>
                     <a href=" ">FAQ</a>
-                    <a href=" r">Privacy Policy</a>
+                    <a href=" ">Privacy Policy</a>
                 </div>
                 <div class="social-media-icons">
                 </div>

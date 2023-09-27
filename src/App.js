@@ -6,14 +6,16 @@ import WorkerSection from "./WorkerSection";
 import Footer from "./Footer";
 import './aboutus.css'
 import AboutUs from "./AboutUs";
-
+import Reviews from "./Reviews";
+import './reviews.css'
 function App() {
   return (
     <div className="App">
-     < Navbar/>
+     <Navbar/>
      <Body/>
      <WorkerSection/>
      <AboutUs/>
+     <Reviews/>
      <Footer/>
     </div>
   );

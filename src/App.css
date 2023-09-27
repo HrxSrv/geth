@@ -6,7 +6,6 @@ body, ul {
   padding: 0;
   background-color: rgb(229, 232, 232);
   list-style-type: none;
-
 }
 
 /* Style the header and navbar */
@@ -178,6 +177,7 @@ header {
   border-radius: 5px;
   margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
 }
 
 .worker-card img {
@@ -212,10 +212,14 @@ footer {
   color: white;
   text-align: center;
   padding: 20px 0;
-}
 
+}
+footer p{
+  color: white;
+}
 .contact-info p {
   margin-bottom: 10px;
+  color: white;
 }
 
 .footer-links a {
