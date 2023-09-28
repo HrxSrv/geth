@@ -8,6 +8,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background: linear-gradient(to bottom, #007BFF, #ffffff);
     color: black;
+  
 }
 
 h1 {
@@ -28,19 +29,27 @@ p {
 }
 
 .about-section h1 {
-    color: #fff;
+    margin-top: -10px;
+    color: black;
+    font-size: 30px;
 }
 
 .mission-section {
     margin-top: 20px;
 }
-
-.mission-section p {
+.mission-section h2{
     text-align: center;
+}
+.mission-section p {
+    text-align: left;
+    margin: 0 auto 0 10px;
 }
 
 .why-choose-section {
     margin-top: 20px;
+}
+.why-choose-section h2{
+    text-align: center;
 }
 .why-m{
     display: flex;
@@ -65,7 +74,9 @@ p {
 .team-section {
     margin-top: 20px;
 }
-
+.team-section h2{
+    text-align: centercd;
+}
 .team-section p {
     text-align: center;
 }
