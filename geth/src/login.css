@@ -42,11 +42,6 @@
     margin-top: 20px;
     margin-left: 3px;
     bottom: 42px;
-	
-	/* &:focus {
-		outline: solid 0 transparent;
-		box-shadow: 0 0 0 2px #8ed0f9
-	} */
     transition: 0.3s;
     transition-timing-function: ease-in-out;
 }
