@@ -1,20 +1,24 @@
 import React from "react";
-
 export default function Reviews() {
     let box = document.querySelector('.product-container');
-    let card = document.querySelector('.mycard');
+  //  let card = document.querySelector('.mycard');
 
-
+    console.log(box)
     function btnpressprev() {
-        let width = card.offsetWidth;
-        box.scrollLeft = box.scrollLeft - width - width / 6.615 - width / 6.615;
-        console.log(width + width / 6.615 + width / 6.615)
+        
+        
+           box.scrollLeft = box.scrollLeft - 278 -278/ 6.615 -278 / 6.615;
+           
+        
+        
     }
 
     function btnpressnext() {
-        let width = card.offsetWidth;
-        box.scrollLeft = box.scrollLeft + width + width / 6.615 + width / 6.615;
-        console.log(width + width / 6.615 + width / 6.615);
+    
+        
+           box.scrollLeft = box.scrollLeft + 278 + 278 / 6.615 + 278 / 6.615;
+      
+       
     }
     return (
         <div>
