@@ -190,6 +190,18 @@ input:focus::placeholder
     top: -16px;
     left: -10px;
 }
+.F-pswd{
+
+    margin: 8px 0px -10px 220px;
+    color: white;
+}
+.F-pswd p{
+    color: white;
+}
+.F-pswd p:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
 #btn3{
    display: inline-block;
     margin-top: 29px;

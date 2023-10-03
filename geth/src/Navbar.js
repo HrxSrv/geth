@@ -3,7 +3,7 @@ import logo from "./getH-logos_black.png";
 import { Link } from 'react-router-dom';
 export default function Navbar() {
 
-    const [isExpanded, setisExpanded] = React.useState(false)
+    const [isExpanded, setisExpanded] = React.useState(true)
     function navTgl() {
         setisExpanded(!isExpanded)
     }

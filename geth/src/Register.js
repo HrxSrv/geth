@@ -24,7 +24,7 @@ export default function Register()
                     <form action=" ">
                         <input type="text" className="other_login_cred" name="other_login_cred" placeholder="Phone or email."/>
                         <input type="text" className="other_login_cred" name="other_login_cred" placeholder="Password."/>
-                        <button type="submit" id="btn3">Submit</button>
+                        <Link to="/account"> <button type="submit" id="btn3">Submit</button></Link> 
                     </form>
                     <div id="line-2"><p></p></div>
                    </div>
