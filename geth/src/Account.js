@@ -7,9 +7,14 @@ import logo4 from "./component/settings.png"
 import logo5 from "./component/question.png"
 import logo6 from "./component/logout.png"
 import logo7 from "./component/arrow-right.png"
+
 export default function Account() {
+
+
+    // const location = useLocation()
+    // console.log(location)
     const [isExpanded, setisExpanded] = React.useState(false)
-    function navTgl() {
+    function navTggl() {
         setisExpanded(!isExpanded)
     }
     return (
@@ -37,7 +42,7 @@ export default function Account() {
                     </div>
                 </ul>
                 <div className="user-accounT">
-                    <p onClick={navTgl}>Account</p>
+                    <p onClick={navTggl}>Account</p>
                     <div className={isExpanded ? "expanded" : "not-expanded"}>
                         <div className="profile">
                             <img src={logo2} alt=" " className="profile-img" />

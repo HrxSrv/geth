@@ -1,9 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import Img1 from './getH-logos_black.png';
 import Img2 from './google.png';
-
-import { Link } from 'react-router-dom';
+import axios from "axios"
+import { useNavigate, Link } from 'react-router-dom';
 export default function Login() {
+
+
+    const history = useNavigate();
+
+    const [email, setEmail] = useState(' ')
+    const [password, setPassword] = useState(' ')
+
+    async function submit(e) {
+        e.preventDefault();
+
+        try {
+            await axios.post("http://localhost:8000/login", {
+                email, password
+            })
+                .then(res => {
+                    if (res.data === "exist") {
+                        history("/account", { state: { id: email } })
+                    }
+                    else if (res.data === "notexist") {
+                        alert("User have not sign up")
+                    }
+                })
+                .catch(e => {
+                    alert("wrong details")
+                    console.log(e);
+                })
+        }
+        catch (e) {
+            console.log(e);
+
+        }
+    }
     return (
         <div>
             <div className="Box">
@@ -22,13 +54,13 @@ export default function Login() {
 
                     <div id="line"><p>or</p></div>
                     <div className="input">
-                        <form action=" ">
-                            <input type="text" className="other_login_cred" name="other_login_cred" placeholder="Phone,email or username" />
-                            <input type="password" className="other_login_cred" name="other_login_cred" placeholder="Password" />
+                        <form action="POST">
+                            <input type="email" className="other_login_cred" onChange={(e) => { setEmail(e.target.value) }} placeholder="Phone,email or username" />
+                            <input type="password" className="other_login_cred" onChange={(e) => { setPassword(e.target.value) }} placeholder="Password" />
                             <div className="F-pswd">
                                 <p>Forgot Password?</p>
                             </div>
-                         <Link to="/account"> <button type="submit" id="btn3">Submit</button></Link> 
+                            <Link to="/account"> <button type="submit" id="btn3" onClick={submit}>Submit</button></Link>
 
                         </form>
 

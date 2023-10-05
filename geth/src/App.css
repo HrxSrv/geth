@@ -18,114 +18,6 @@ header {
   background-color: #007BFF;
 }
 
-.navbar{
-  background-color: #007BFF;
-  overflow: hidden;
-  position: fixed;
-  width: 100%;
-  top: 0.3px;
- margin: 0 2px;
-  opacity: 1;
-  z-index: 1;
-}
-.nav-header{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding:0rem 1rem;
-}
-.nav-toggle {
-  font-size: 1.5rem;
-  color: black;
-  background: transparent;
-  border-color: transparent;
-  transition: 500ms;
-  cursor: pointer;
-}
-.nav-toggle:hover {
-  color: white;
-  transform: rotate(90deg);
-}
-
-.logo img {
-  max-height: 100px;
-  margin-left: -12px;
-  transition: 500ms;
-}
-.logo img:hover{
-  transform: rotate(360deg);
-}
-.nav-links li {
-  margin-right: 20px;
-}
-.user-account a {
-  display: none;
-}
-.nav-links {
-  height: 0;
-  overflow: hidden;
-  list-style: none;
-  display: flex;
- 
-}
-.nav-links a {
-  color: var(--clr-grey-3);
-  font-size: 1rem;
-  text-transform: capitalize;
-  letter-spacing: var(--spacing);
-  display: block;
-  padding: 0.5rem 1rem;
-}
-.show-navbar .user-cred {
-  height: 2.1rem;
-  overflow: hidden;
-  display: block;
-  justify-content:left ;
-  transition:500ms;
-}
-.show-navbar .user-cred{
-  display: flex;
-  background-color:#007BFF ;
-  justify-content: flex-start;
-  margin-top: 0.1px;
-}
-
-.show-navbar .user-cred a{
-  padding: 0.5rem 0rem;
-  margin-left: 15px;
- 
-}
-.show-navbar .user-cred .user-cred-l{
-  margin: 0 -12px 0 16px;
-}
-.show-navbar .user-cred .slas{
-  margin:0px -12px 0px 15px ;
-}
-.show-navbar .user-cred .slas:hover{
- color: black;
-}
-
-.show-navbar .user-cred a:hover{
-  color: white;
-  background-color: #007BFF;
-  padding: 0.5rem;
-}
-.show-navbar a {
-  background-color: #007BFF;
-  color: black;
-  font-size: 1rem;
-  display: block;
-  text-transform: capitalize;
-  padding: 0.5rem 1rem;
-  letter-spacing:0.75px;
-  transition:500ms;
-  text-decoration: none;
-}
-.show-navbar a:hover {
-  background: white;
-  color: #007BFF;
-  padding-left: 1.5rem;
-}
 .hero {
   background-image: url('img1.jpg') ; /* Replace with your image */
   background-size: cover;
@@ -147,7 +39,7 @@ header {
   margin-left: 29%;
   width: 44.6%;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 4px black;
   color: black;
 }
 
@@ -159,7 +51,7 @@ header {
   margin-left: 38.3%;
   width: 24.4%;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 7px black;
   color: black;
 }
 
@@ -179,7 +71,7 @@ header {
   margin: 10px;
   border-radius: 5px;
   opacity: 1;
-  box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 5px  black;
 }
 
 .cta-button:hover {
@@ -305,99 +197,7 @@ footer p {
   margin-top: 10px;
 }
 /* Media query for mobile responsiveness */
-@media screen and (min-width: 750px) {
-  .navbar {
-    background-color: #007BFF;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    margin: 0 1px;
-    padding:0 0px;
-    overflow: hidden;
-    opacity: 1;
-    z-index: 1;
-    
-  }
-  .nav-toggle {
-    display: none;
-  }
-  .nav-links {
-    height: auto;
-    display: flex;
-    background-color: #007BFF;
-    color: black;
-    margin: 0 1.5rem;
-  }
-  .nav-links a {
-    padding: 0;
-    margin: 0 0.25rem;
-    text-decoration: none;
-    width: 99%;
-    text-align: center;
-    transition:500ms;
-  }
-  .show-navbar {
-    height: auto;
-    display: flex;
-    background-color: #007BFF;
 
-  }
-  .show-navbar a {
-    padding: 0;
-    margin: 1rem 0.65rem;
-    text-decoration: none;
-    width: 99%;
-    text-align: center;
-    transition:500ms;
-    
-  }
-  .show-navbar a:hover {
-    padding: 0;
-    color: white;
-    background: transparent;
-    
-  }
-  .nav-links a:hover {
-    padding: 0;
-    color: white;
-    background: transparent;
-  }
-  .user-cred a{
-    display: none;
-    
-  }
-  .user-account{
-    display: flex;
-
-  }
-  .user-account a {
-    color: black;
-    font-size: 1rem;
-    text-transform: capitalize;
-    letter-spacing: var(--spacing);
-    display: block;
-    padding: 0.5rem 0.2rem;
-    transition:500ms;
-    text-decoration: none;
-  }
-  .user-account .slash{
-    color: black;
-  }
-  .user-account .slash:hover{
-    color: black;
-  }
-  .user-account a:hover{
-    color: white;
-  }
-  /* Mobile hamburger menu button */
-  /* .menu-button {
-      display: block;
-      cursor: pointer;
-      color: #fff;
-      font-size: 20px;
-      margin-right: 20px;
-  } */
-}
 
 
 

@@ -1,12 +1,14 @@
 import React from "react";
 
-export default function AboutUs() {
+export default function AboutUs({elementToScroll}) {
+   
+
 
     return (
         <div>
-            <section id="container" class="container">
+            <section id="container" class="container" ref={elementToScroll}>
                 <div class="about-section">
-                    <h1>About Us</h1>
+                    <h1 >About Us</h1>
                     <p>Welcome to geth, your trusted platform for all your job and household service needs!</p>
                 </div>
 

@@ -1,22 +1,24 @@
-import React from "react";
+import React, { useRef } from "react";
+
+
 export default function Reviews() {
-    let box = document.querySelector('.product-container');
+    const box = useRef();
   //  let card = document.querySelector('.mycard');
 
     console.log(box)
-    function btnpressprev() {
+    const btnpressprev=()=> {
         
-        
-           box.scrollLeft = box.scrollLeft - 278 -278/ 6.615 -278 / 6.615;
+          
+           box.current.scrollLeft = box.current.scrollLeft - 278 -278/6.615-278/6.615;
            
         
         
     }
 
-    function btnpressnext() {
+    const btnpressnext=()=> {
     
-        
-           box.scrollLeft = box.scrollLeft + 278 + 278 / 6.615 + 278 / 6.615;
+       
+        box.current.scrollLeft = box.current.scrollLeft +  278 +278/6.615+278/6.615;
       
        
     }
@@ -31,7 +33,7 @@ export default function Reviews() {
                 <button className="next-btn" onClick={btnpressnext}><p>&gt;</p></button>
 
 
-                <div className="product-container">
+                <div className="product-container" ref={box}>
                     <div className="mycard-1">
                         <div className="text">Very time Convenient! </div>
                         <div className="box-1">
