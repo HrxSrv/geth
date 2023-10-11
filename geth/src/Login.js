@@ -1,26 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useContext }  from "react";
 import Img1 from './getH-logos_black.png';
 import Img2 from './google.png';
 import axios from "axios"
 import { useNavigate, Link } from 'react-router-dom';
-export default function Login() {
+import { useData } from './DataContext';
 
+
+export default function Login() {
+    
+    const {setUserData} = useData()
 
     const history = useNavigate();
+    const history1 = useNavigate();
 
     const [email, setEmail] = useState(' ')
     const [password, setPassword] = useState(' ')
 
     async function submit(e) {
-        e.preventDefault();
-
         try {
             await axios.post("http://localhost:8000/login", {
                 email, password
             })
                 .then(res => {
                     if (res.data === "exist") {
-                        history("/account", { state: { id: email } })
+                        history("/", { state: { id: email }})
+                        setUserData({ email: email, password: password });
                     }
                     else if (res.data === "notexist") {
                         alert("User have not sign up")
@@ -33,7 +37,6 @@ export default function Login() {
         }
         catch (e) {
             console.log(e);
-
         }
     }
     return (
@@ -52,7 +55,7 @@ export default function Login() {
                         <p>Sign in with Google</p>
                     </a>
 
-                    <div id="line"><p>or</p></div>
+                    <div id="line"><p className="line-P">or</p></div>
                     <div className="input">
                         <form action="POST">
                             <input type="email" className="other_login_cred" onChange={(e) => { setEmail(e.target.value) }} placeholder="Phone,email or username" />
@@ -60,8 +63,7 @@ export default function Login() {
                             <div className="F-pswd">
                                 <p>Forgot Password?</p>
                             </div>
-                            <Link to="/account"> <button type="submit" id="btn3" onClick={submit}>Submit</button></Link>
-
+                            <Link to="/"> <button type="submit" id="btn3" onClick={submit}>Submit</button></Link>
                         </form>
 
 

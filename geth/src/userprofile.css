@@ -1,0 +1,363 @@
+.bg-secondary-soft {
+    background-color: rgba(208, 212, 217, 0.1) !important;
+}
+.rounded {
+    border-radius: 5px !important;
+}
+.py-5 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+}
+.px-4 {
+    padding-right: 1.5rem !important;
+    padding-left: 1.5rem !important;
+}
+.file-upload .square {
+    height: 250px;
+    width: 250px;
+    margin: auto;
+    vertical-align: middle;
+    border: 1px solid #e5dfe4;
+    background-color: #fff;
+    border-radius: 5px;
+}
+.text-secondary {
+    --bs-text-opacity: 1;
+    color: rgba(208, 212, 217, 0.5) !important;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #29292e;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #e5dfe4;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 5px;
+    -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+}
+.my-5{
+    display: flex;
+    justify-content: space-between;
+}
+.profile--img{
+   width: 60px;
+   border-radius: 50%;
+ 
+   margin: 0 -15px -2px 0;
+}
+.profile--btn{
+    width: 60px;
+    position: relative;
+    background-color: #fff;
+    border-radius: 5px;
+    height: 24px;
+    cursor: pointer; 
+   
+}
+.profile-img-menu-not-expanded{
+    display: none;
+    width: 0;
+}
+.profile-img-menu-expanded{
+   position: absolute;
+   top: 90px;
+}
+.profile-img-menu-expanded ul{
+    /* background-color: rgb(229, 232, 232); */
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 6px 8px;
+    cursor: pointer;
+    border: 1px solid black;
+}
+.profile-img-menu-expanded li:hover{
+    background-color:rgb(229, 232, 232) ;
+    cursor: pointer;
+}
+.profile-img-menu-expanded li{
+    transition: 0.5s;
+    font-size: 13.5px;
+    border-radius: 5px;
+    padding: 3px 3px;
+}
+.profile--btn-img{
+    width: 15px;
+    height: 15px;
+    margin: 0 3px;
+    padding: 2px 0px;
+  
+ }
+.file-upload{
+    margin-top: 40px;
+}
+.m-p{
+ display: flex;
+ margin: 100px 15%;
+ margin-bottom: 20px;
+}
+.m-p .PROFILE{
+    width: 40%;
+    padding: 0.5rem;
+    min-width: 170px;
+    position: relative;
+    max-height: 400px;
+}
+.PROFILE li{
+    margin: 7px 0px 7px 0;
+    height: 15px;
+    padding: 5px;
+    transition: 0.25s ease-in;
+    width: 60%;
+    min-width: 140px;
+    max-height: 400px;
+    color: black;
+}
+.PROFILE li a{
+    color: #171718;
+}
+.PROFILE li:hover{
+    cursor: pointer;
+    border-radius: 2px;
+    background-color:  #a3a3ac;
+    margin-left: 5px;
+}
+.my-profile{
+    background-color:transparent;
+    width: 80%;
+    height: 530px;
+    padding: 1.5rem;
+    border-radius: 5px;
+    margin: 28px 0 0 0;
+    min-width: 400px;
+    box-shadow: 0 0 2px black;
+    position: relative;
+}
+.PROFILe{
+    position: fixed;
+    top: 106px;
+    left: 1px;
+    width:25%;
+    z-index: 1;
+    opacity: 1;
+    height: 470px;
+    padding: 0 10px;
+    border-radius: 5px;
+    background-color:transparent;
+    transition: 0.5s ease-in;
+    transition: left  0.75s ;
+}
+.PROFILe-n{
+    left: -210px;
+    height: 470px;
+    width: 25%;
+    opacity: 0;
+    top: 106px;
+    padding: 0 10px;
+    transition:  0.75s ;
+    position: absolute;
+  
+}
+.PROFILe-n li{
+    margin: 7px 0px 7px 0;
+    height: 15px;
+    padding: 5px;
+    transition: 0.25s ease-in;
+    width: 60%;
+    min-width: 140px;
+    max-height: 400px;
+    
+    
+}
+.name-btn{
+    display: flex;
+    justify-content: space-between;
+}
+.clear{
+    border: none;
+    background-color:transparent;
+    cursor: pointer;
+    height: 30px;
+    margin-top: 20px;
+   
+}
+.clear-img{
+    width: 14px;
+    height: 15px;
+    transition: 500ms;
+}
+.clear-img:hover{
+    transform: rotate(180deg);
+}
+.PROFILe li{
+    margin: 7px 0px 7px 0;
+    height: 15px;
+    padding: 5px;
+    transition: 0.25s ease-in;
+    width: 60%;
+    min-width: 140px;
+    max-height: 400px;
+    color: #171718;
+}
+.PROFILe li a{
+    color: #171718;
+}
+.PROFILe li:hover{
+    cursor: pointer;
+    border-radius: 2px;
+    background-color:  #a3a3ac;
+    margin-left: 5px;
+}
+.menu-bar-btn{
+  margin-top: 27px;
+  background-color: transparent;
+  border: none;
+  margin-right : 35px;
+  cursor: pointer;
+  position: absolute;
+  top: 100px;
+  left: 15px;
+}
+.menu-bar-btn-n{
+    display: none;
+    width: 0;
+}
+.menu-bar-img{
+    width: 35px;
+    transition: 500ms;
+}
+.menu-bar-img:hover{
+    transform: rotate(90deg);
+}
+.F-L{
+    display: flex;
+   
+}
+.F-name{
+    width: 31%;
+}
+.L-name{
+    width: 31%;
+    margin: 0 0 5% 20%;
+
+}
+.m-number{
+    width: 50%;
+    margin: 0 0 5% 0;
+
+}
+.e-mail{
+    width: 50%;
+    margin: 0 0 5% 0;
+}
+.occu{
+    width: 50%;
+    margin: 0 0 5% 0;
+}
+.gender-option {
+    display: inline-block;
+    margin-bottom: 30px;
+}
+
+.gender-option input[type="radio"] {
+    display: none; /* Hide the actual radio buttons */
+}
+.gender p{
+    margin-bottom: 5px;
+}
+.gender-option label {
+    cursor: pointer;
+    position: relative;
+    font-size: 16px;
+    margin: 0 50px 30px 0;
+    padding-left: 20px; /* Add space for the bullet icon */
+}
+
+.gender-option label:before {
+    content: "\2022"; /* Unicode character for a bullet (•) */
+    position: absolute;
+    left: 0;
+    top:-12px;
+    font-size: 35px;
+}
+
+.gender-option input[type="radio"]:checked + label:before {
+    color: #007bff; /* Change the color of the selected bullet */
+}
+.bttn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: black;
+    font-size: 17px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin: 0 43% ;
+    justify-items: center;
+    border: 0;
+}
+
+.bttn:hover {
+    background-color: #0056b3;
+}
+@media screen and (min-width: 801px)
+{
+    .m-p{
+       
+        margin-left:11%;
+        margin-bottom: 20px;
+    }
+    .menu-bar-btn{
+        display: none;
+        transition:width 10s ease-in-out ;
+    }
+    .PROFILe{
+        display: none;
+    }
+    .my-profile{
+        background-color: transparent;
+        width: 70%;
+        height: 565px;
+        padding: 1.5rem;
+        border-radius: 5px;
+        margin: 28px 0 0 8%;
+        min-width: 400px;
+        box-shadow: 0 0 2px black;
+        position: relative;
+    }
+    
+}
+@media screen and (max-width:800px)
+{
+    
+    .m-p .PROFILE{
+        display: none;
+        max-height: 400px;
+
+        transition:width 10s ease-in-out ;
+    }
+    .my-profile{
+        background-color: transparent;
+        width: 80%;
+        height: 525px;
+        padding: 1.5rem;
+        border-radius: 5px;
+        margin: 28px 0 0 8%;
+        min-width: 400px;
+        box-shadow: 0 0 2px black;
+        position: relative;
+    }
+
+}
+
+

@@ -7,13 +7,13 @@ import logo5 from "./component/question.png"
 import logo6 from "./component/logout.png"
 import logo7 from "./component/arrow-right.png"
 import './navbar.css'
-import { useLocation,  Link } from 'react-router-dom';
+import { useLocation, useNavigate,  Link } from 'react-router-dom';
 
-function Navbar({scrollToElement}) {
+function Navbar({scrollToElement} ) {
 
+     
     const location = useLocation()
-    console.log(location)
-
+  //  console.log(location)
     const [isExpanded, setisExpanded] = React.useState(true)
     function navTgl() {
         setisExpanded(!isExpanded)
@@ -73,28 +73,28 @@ function Navbar({scrollToElement}) {
                             <div className="profile-img-div">
                                 <img src={logo3} alt=" " className="profile-img-1" />
                             </div>
-                            <p>Edit Profile</p>
+                            <Link to="/userprofile" ><p>Edit Profile</p></Link> 
                             <img src={logo7} alt=" " className="profile-img-arrow-1" />
                         </div>
                         <div className="profile-1">
                             <div className="profile-img-div">
                                 <img src={logo4} alt=" " className="profile-img-1" />
                             </div>
-                            <p>settings</p>
+                            <Link to="/userprofile" ><p>Settings</p></Link> 
                             <img src={logo7} alt=" " className="profile-img-arrow-2" />
                         </div>
                         <div className="profile-1">
                             <div className="profile-img-div">
                                 <img src={logo5} alt=" " className="profile-img-1" />
                             </div>
-                            <p>Help & Support</p>
+                            <Link to="/userprofile" ><p>Help & Support</p></Link> 
                             <img src={logo7} alt=" " className="profile-img-arrow-3" />
                         </div>
                         <div className="profile-1">
                             <div className="profile-img-div">
                                 <img src={logo6} alt=" " className="profile-img-1" />
                             </div>
-                            <p>Log out</p>
+                            <Link to="/userprofile" ><p>Log Out</p></Link> 
                             <img src={logo7} alt=" " className="profile-img-arrow-4" />
                         </div>
 

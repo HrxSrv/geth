@@ -72,7 +72,15 @@
     justify-content: flex-start;
     margin-top: 0.1px;
   }
-  
+  .show-navbar .user-cred a{
+    padding: 0.5rem 0rem;
+    margin-left: 15px;
+  }
+  .show-navbar .user-cred a:hover{
+    color: white;
+    background-color: #007BFF;
+    padding: 0.5rem;
+  }
   .show-navbar .user-cred p{
     padding: 0.5rem 0rem;
     margin-left: 15px;
@@ -82,7 +90,7 @@
     margin: 0 -12px 0 16px;
   }
   .show-navbar .user-cred .slas{
-    margin:0px -12px 0px 15px ;
+    margin:0px -10px 0px 5px ;
   }
   .show-navbar .user-cred .slas:hover{
    color: black;
@@ -95,6 +103,18 @@
     padding: 0.5rem;
   }
   .show-navbar a {
+    background-color: #007BFF;
+    color: black;
+    font-size: 1rem;
+    display: block;
+    text-transform: capitalize;
+    padding: 0.5rem 1rem;
+    letter-spacing:0.75px;
+    transition:500ms;
+    text-decoration: none;
+    
+  }
+  .show-navbar p{
     background-color: #007BFF;
     color: black;
     font-size: 1rem;
@@ -140,7 +160,7 @@
 }
 .profile-1{
   display: flex;
-  margin-bottom: 11px;
+  margin-bottom: 5px;
   transition: 0.2s ease-in;
 }
 .profile-1 .profile-img-1{
@@ -150,9 +170,9 @@
   opacity: 0.8;
 }
 .profile-1 p{
-  top: 5.5px;
+  top: 0.5px;
   left: 12px;
-  font-size: 13px;
+  font-size: 12.5px;
   transition: 10ms all ease;
   margin-left: 5px;
   white-space: nowrap;
@@ -168,8 +188,8 @@
  font-weight:bold ;
 }
 .profile-img-div{
-  background-color: #7f8081;
-  padding:5px 5px 1.5px 5px;
+  border: 1px solid black;
+  padding:8px 7px 0px 7px;
   border-radius: 55%;
 }
  .profile-1 .profile-img-arrow-1{
@@ -271,6 +291,18 @@
       text-align: center;
       transition:500ms;
       
+    }
+    .show-navbar p{
+      background-color: #007BFF;
+      color: black;
+      font-size: 1rem;
+      display: block;
+      text-transform: capitalize;
+      padding: 0.5rem 1rem;
+      letter-spacing:0.75px;
+      transition:500ms;
+      text-decoration: none;
+      margin-top: 9px;
     }
     .show-navbar a:hover {
       padding: 0;

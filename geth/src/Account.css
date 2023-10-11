@@ -157,7 +157,7 @@ body, ul {
 }
 .profile-1{
   display: flex;
-  margin-bottom: 11px;
+  margin-bottom: 5px;
   transition: 0.2s ease-in;
 }
 .profile-1 .profile-img-1{
@@ -167,9 +167,9 @@ body, ul {
   opacity: 0.8;
 }
 .profile-1 p{
-  top: 5.5px;
+  top: 0.5px;
   left: 12px;
-  font-size: 13px;
+  font-size: 12.5px;
   transition: 10ms all ease;
   margin-left: 5px;
   white-space: nowrap;
@@ -185,35 +185,35 @@ body, ul {
  font-weight:bold ;
 }
 .profile-img-div{
-  background-color: #7f8081;
-  padding:5px 5px 1.5px 5px;
+  
+  padding:8px 7px 0px 8px;
   border-radius: 55%;
 }
  .profile-1 .profile-img-arrow-1{
   width: 15px;
   height: 15px;
-  margin: 5.2px 0 0 50px;
+  margin: 8.7px 0 0 45px;
   opacity: 0.8;
 
 }
 .profile-1 .profile-img-arrow-2{
   width: 15px;
   height: 15px;
-  margin: 5.2px 0 0 75px;
+  margin: 8.7px 0 0 69px;
   opacity: 0.8;
 
 }
 .profile-1 .profile-img-arrow-3{
   width: 15px;
   height: 15px;
-  margin: 5.2px 0 0 28px;
+  margin: 8.7px 0 0 23px;
   opacity: 0.8;
 
 }
 .profile-1 .profile-img-arrow-4{
   width: 15px;
   height: 15px;
-  margin: 5.2px 0 0 82px;
+  margin: 8.7px 0 0 77px;
   opacity: 0.8;
 
 }

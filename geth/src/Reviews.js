@@ -5,7 +5,7 @@ export default function Reviews() {
     const box = useRef();
   //  let card = document.querySelector('.mycard');
 
-    console.log(box)
+    //console.log(box)
     const btnpressprev=()=> {
         
           

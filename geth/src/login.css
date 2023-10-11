@@ -125,8 +125,7 @@ a{
 }
 p{  
     position: relative;
-    margin: 0;
-    
+    margin: 0px; 
 }
 
 #glogo{

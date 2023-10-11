@@ -3,18 +3,19 @@ import Img1 from './getH-logos_black.png';
 import Img2 from './google.png';
 import axios from "axios"
 import {useNavigate, Link } from 'react-router-dom';
+
+
 export default function Register()
 {
 
     const history = useNavigate();
     const [email,setEmail] = useState(' ')
     const [password,setPassword] = useState(' ')
-
     async function submit(e){
         e.preventDefault();
          
         try{
-            await axios.post("http://localhost:8000/login",{
+            await axios.post("http://localhost:8000/register",{
                 email,password
             })
             .then(res=>{
@@ -32,7 +33,6 @@ export default function Register()
         }
          catch(e){
             console.log(e);
-    
          }
        }
 
@@ -56,7 +56,7 @@ export default function Register()
                     <form action=" ">
                         <input type="email" className="other_login_cred" onChange={(e)=>{setEmail(e.target.value)}} placeholder="Phone or email."/>
                         <input type="password" className="other_login_cred" onChange={(e)=>{setPassword(e.target.value)}} placeholder="Password."/>
-                        <Link to="/account"> <button type="submit" id="btn3"  onClick={submit}>Submit</button></Link> 
+                        <Link to="/"> <button type="submit" id="btn3"  onClick={submit}>Submit</button></Link> 
                     </form>
                     <div id="line-2"><p></p></div>
                    </div>

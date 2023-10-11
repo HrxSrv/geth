@@ -5,21 +5,11 @@ import './login.css';
 import './register.css'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Login from "./Login";
-import Regsiter from "./Register"
-import Account from "./Account"
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Router>
-      <Routes>
-        <Route path="/login" element={<Login/>}/>
-        <Route path='/register' element ={<Regsiter/>}/>
-        <Route path='/account' element ={<Account/>}/>
-        <Route path = "/" element={<App/>}/>
-      </Routes>
-    </Router>
+        <App/>
   </React.StrictMode>
 );
 
