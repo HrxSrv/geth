@@ -1,22 +1,38 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import Img1 from './getH-logos_black.png';
 import Img2 from './google.png';
 import axios from "axios"
+import { useData } from './DataContext';
 import {useNavigate, Link } from 'react-router-dom';
-
+import { UserAuth } from './AuthContext';
 
 export default function Register()
 {
-
+    const {setUserData} = useData()
     const history = useNavigate();
     const [email,setEmail] = useState(' ')
     const [password,setPassword] = useState(' ')
+    const [username,setusername] = useState(' ')
+    const { googleSignIn,user } = UserAuth();
+    const navigate = useNavigate();
+    const handleGoogleSignIn = async () => {
+        try {
+          await googleSignIn();
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      useEffect(() => {
+          if (user !== null) {
+            navigate('/');
+          }
+        }, [user]);
     async function submit(e){
         e.preventDefault();
          
         try{
             await axios.post("http://localhost:8000/register",{
-                email,password
+                email,password,username
             })
             .then(res=>{
                 if(res.data==="exist"){
@@ -24,6 +40,7 @@ export default function Register()
                 }
                 else if(res.data==="notexist"){
                     history("/",{state:{id:email}})
+                    setUserData({ email: email, password: password , username:username });
                 }
             })
             .catch(e=>{
@@ -38,7 +55,7 @@ export default function Register()
 
     return(
         <div>
-           <div className="Box">
+           <div className="box">
             <div className="head">
                <Link to= "/"> <button id='close'>close</button></Link>
                 <img src={Img1} alt="twiter_logo" id="logo"/>
@@ -47,14 +64,15 @@ export default function Register()
                    <div id="Sign">
                        <h1>Register to getH</h1>
                    </div>
-                   <a href=" " className="Btn-R">
+                   <div className="Btn-R">
                        <img src={Img2} alt="google_logo" id="glogo"/>
-                       <p>Register with Google</p>
-                   </a>
+                       <p onClick={handleGoogleSignIn}>Register with Google</p>
+                   </div>
                    <div id="line"><p>or</p></div>
                    <div className="input">
                     <form action=" ">
-                        <input type="email" className="other_login_cred" onChange={(e)=>{setEmail(e.target.value)}} placeholder="Phone or email."/>
+                        <input type="text" className="other_login_cred" onChange={(e)=>{setusername(e.target.value)}} placeholder="Username."/>
+                        <input type="email" className="other_login_cred" onChange={(e)=>{setEmail(e.target.value)}} placeholder="e-mail."/>
                         <input type="password" className="other_login_cred" onChange={(e)=>{setPassword(e.target.value)}} placeholder="Password."/>
                         <Link to="/"> <button type="submit" id="btn3"  onClick={submit}>Submit</button></Link> 
                     </form>

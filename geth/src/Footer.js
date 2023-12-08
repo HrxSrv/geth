@@ -5,7 +5,7 @@ export default function Footer() {
     return (
         <div>
             <footer>
-                <div class="contact-info">
+                <div class="Contact-info">
                     <p>Contact Us: geth@hireworkers.com</p>
                 </div>
                 <div class="footer-links">
@@ -13,8 +13,8 @@ export default function Footer() {
                     <a href=" ">FAQ</a>
                     <a href=" ">Privacy Policy</a>
                 </div>
-                <div class="social-media-icons">
-                </div>
+                {/* <div class="social-media-icons">
+                </div> */}
                 <p>&copy; 2023 Hire Workers</p>
             </footer>
         </div>

@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from 'react-router-dom';
 export default function AboutUs({elementToScroll}) {
    
 
@@ -38,7 +38,7 @@ export default function AboutUs({elementToScroll}) {
                 <div class="get-started-section">
                     <h2>Get Started Today!</h2>
                     <p>Join geth today to unlock a world of opportunities and convenience. Whether you're looking for your next big or seeking expert help for your household needs, we're here to make it happen.</p>
-                    <a class="btn" href="/register">Sign Up</a>
+                    <Link class="btn" to="/register">Sign Up</Link>
                 </div>
             </section>
         </div>

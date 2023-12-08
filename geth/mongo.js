@@ -25,10 +25,21 @@ const addressSchema = new mongoose.Schema({
     addtionalnumber: Number
 });
 const newUserdata = new mongoose.Schema({
+    email:{
+        type:String,
+        required:true
+    },
+    password:{
+        type:String,
+        required:true
+    },
+    username:{
+        type:String,
+        required:true
+    },
     firstname:String,  //title:{type: String} aise bhi likh skte h
     lastname: String,
     mobilenumber: Number,
-    e_mail:String,
     occupation:String,
     gender:String,
     address: addressSchema

@@ -1,10 +1,12 @@
-import React, { useState, useContext }  from "react";
+import React, { useState, useContext,useEffect }  from "react";
 import Img1 from './getH-logos_black.png';
 import Img2 from './google.png';
 import axios from "axios"
 import { useNavigate, Link } from 'react-router-dom';
 import { useData } from './DataContext';
-
+import { UserAuth } from './AuthContext';
+// import {auth,provider} from "./config";
+// import {signInWithPopup} from "firebase/auth";
 
 export default function Login() {
     
@@ -15,19 +17,46 @@ export default function Login() {
 
     const [email, setEmail] = useState(' ')
     const [password, setPassword] = useState(' ')
+    const { googleSignIn,user } = UserAuth();
+    const navigate = useNavigate();
+  
+    const handleGoogleSignIn = async () => {
+      try {
+        await googleSignIn();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    useEffect(() => {
+        if (user !== null) {
+          navigate('/');
+        }
+      }, [user]);
+    // const [valueemail,setValueemail] = useState('')
+    // const handleClick =()=>{
+       
+    //     signInWithPopup(auth,provider).then((data)=>{
+    //         setValueemail(data.user.email)
+    //         localStorage.setItem("e__mail",data.user.email)
+    //     })
+    //     console.log(1);
+    // }
 
+    // useEffect(()=>{
+    //     setValueemail(localStorage.getItem('e__mail'))
+    // })
     async function submit(e) {
         try {
             await axios.post("http://localhost:8000/login", {
                 email, password
             })
                 .then(res => {
-                    if (res.data === "exist") {
+                    if (res.data) {
                         history("/", { state: { id: email }})
-                        setUserData({ email: email, password: password });
+                        setUserData({ email: res.data.email, password: res.data.password,username:res.data.username });
                     }
                     else if (res.data === "notexist") {
-                        alert("User have not sign up")
+                        alert("Wrong password or username!")
                     }
                 })
                 .catch(e => {
@@ -50,20 +79,20 @@ export default function Login() {
                     <div id="Sign">
                         <h1>Sign in to getH</h1>
                     </div>
-                    <a href=" " className="Btn">
+                    <div className="Btn">
                         <img src={Img2} alt="google_logo" id="glogo" />
-                        <p>Sign in with Google</p>
-                    </a>
+                    <p onClick={handleGoogleSignIn} >Sign in with Google</p>   
+                    </div>
 
                     <div id="line"><p className="line-P">or</p></div>
                     <div className="input">
                         <form action="POST">
-                            <input type="email" className="other_login_cred" onChange={(e) => { setEmail(e.target.value) }} placeholder="Phone,email or username" />
+                            <input type="email" className="other_login_cred" onChange={(e) => { setEmail(e.target.value) }} placeholder="email or username" />
                             <input type="password" className="other_login_cred" onChange={(e) => { setPassword(e.target.value) }} placeholder="Password" />
                             <div className="F-pswd">
                                 <p>Forgot Password?</p>
                             </div>
-                            <Link to="/"> <button type="submit" id="btn3" onClick={submit}>Submit</button></Link>
+                            <Link to='/'> <button type="submit" id="btn3" onClick={submit}>Submit</button></Link>
                         </form>
 
 
@@ -78,3 +107,4 @@ export default function Login() {
     )
 
 }
+

@@ -1,0 +1,287 @@
+.rightbars {
+    display: flex;
+    flex-direction: column;
+    gap: 20px 30px;
+    margin: 50px 100px 70px 10px;
+}
+
+.rightbars .rightBar {
+    flex: 3;
+    position: sticky;
+    top: 70px;
+    height: calc(100vh - 70px);
+    overflow: scroll;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 0 10%;
+    position: relative;
+    /* background-color: rgb(154, 251, 154); */
+}
+
+.rightbars .rightBar .ContaineR {
+    position: fixed;
+    right: 5px;
+    top: 120px;
+    padding: 20px;
+    width: 20%;
+    background-color: #007BFF;
+}
+
+.rightbars .rightBar .ContaineR .item {
+    /* background-color: #9bdeac; */
+    position: relative;
+    /* -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09); */
+    /* -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09); */
+    /* box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09); */
+    padding: 20px;
+    /* width: 150%; */
+    margin-bottom: 20px;
+}
+
+.rightbars .rightBar .ContaineR .item span {
+    color: gray;
+}
+
+.rightbars .rightBar .ContaineR .item p {
+    color: black;
+    font-size: 27px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.rightbars .rightBar .ContaineR .item hr {
+    margin: 15px -20px;
+}
+
+.rightbars .rightBar .ContaineR .item .filter-1 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.rightbars .rightBar .ContaineR .item .filter-1 img {
+    width: 20px;
+}
+
+.rightbars .rightBar .ContaineR .item .filter-1 span {
+    color: black;
+    font-size: 20px;
+}
+
+.rightbars .rightBar .ContaineR .item .boxes,
+.rightbars .rightBar .ContaineR .item .boxes-2 {
+    margin-left: 20px;
+    transition: height 0.15s;
+}
+
+.rightbars .rightBar .ContaineR .item .boxes.height {
+    height: 120px;
+}
+
+.rightbars .rightBar .ContaineR .item .boxes-2.height {
+    height: 245px;
+}
+
+.rightbars .rightBar .ContaineR .item .boxes-hide {
+    height: 0px;
+    margin-left: 20px;
+    overflow: hidden;
+    transition: height 0.15s;
+}
+
+.rightbars .rightBar .ContaineR .item .State {
+    margin-left: 23px;
+    margin-top: 15px;
+    height: 40px;
+    transform: height 1s;
+}
+
+.rightbars .rightBar .ContaineR .item .State #states {
+    width: 160px;
+    height: 35px;
+    color: rgb(255, 255, 255);
+    border-color: rgb(255, 255, 255);
+    border: 2px solid rgb(255, 255, 255);
+    transform: height 1s;
+}
+
+.rightbars .rightBar .ContaineR .item .State-hide {
+    margin-left: 23px;
+    margin-top: 15px;
+    height: 0px;
+    transform: height 1s;
+}
+
+.rightbars .rightBar .ContaineR .item .State-hide #states {
+    display: none;
+    transform: height 1s;
+}
+
+.rightbars .rightBar .ContaineR .item .user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0px;
+}
+
+.rightbars .rightBar .ContaineR .item .user .userInfo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+}
+
+.rightbars .rightBar .ContaineR .item .user .userInfo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.rightbars .rightBar .ContaineR .item .user .userInfo .online {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: limegreen;
+    position: absolute;
+    top: 0;
+    left: 30px;
+}
+
+.rightbars .rightBar .ContaineR .item .user .userInfo p {
+    color: themed("textColorSoft");
+}
+
+.rightbars .rightBar .ContaineR .item .user .userInfo span {
+    font-weight: 500;
+    margin-right: 10px;
+    color: themed("textColor");
+}
+
+.rightbars .rightBar .ContaineR .item .user .buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.rightbars .rightBar .ContaineR .item .user .buttons button {
+    border: none;
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.rightbars .rightBar .ContaineR .item .user .buttons button:first-child {
+    background-color: #5271ff;
+}
+
+.rightbars .rightBar .ContaineR .item .user .buttons button:last-child {
+    background-color: #f0544f;
+}
+.Worker-profiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px 3%;
+    width: 100%;
+
+
+  }
+  
+  .Worker-card {
+    width: calc(20%  ); /* Adjust the card width as needed */
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+  }
+  
+  .Worker-card img {
+    width: 100%;
+    border-radius: 5px;
+    max-height: 187.5px;
+  }
+  
+  .Worker-card h3 {
+    margin-top: 10px;
+    font-size: 18px;
+  }
+  
+  .Worker-card p {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+  
+  .Worker-card .hire-button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border:none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .Worker-card .hire-button:hover {
+    background-color: #0056b3;
+  }
+  .imagepath{
+    display: none;
+  }
+  @media screen and (max-width: 1075px){
+
+    .rightbars .rightBar .ContaineR {
+        position: fixed;
+        right: 5px;
+        top: 120px;
+        padding: 20px;
+        width: 28%;
+        background-color: #007BFF;
+    }
+    .Worker-profiles {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px 4%;
+        width: 100%;
+    
+    
+      }
+    .Worker-card {
+        width: calc(28%  ); /* Adjust the card width as needed */
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        
+      }
+  }
+  @media screen and (max-width: 775px){
+    .rightbars .rightBar .ContaineR {
+        position: fixed;
+        right: 5px;
+        top: 120px;
+        padding: 20px;
+        width: 39%;
+        background-color: #007BFF;
+    }
+    .Worker-profiles {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px 15%;
+        width: 100%;
+    
+    
+      }
+    .Worker-card {
+        width: calc(40%  ); /* Adjust the card width as needed */
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        
+      }
+  }

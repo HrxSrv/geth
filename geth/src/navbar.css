@@ -1,6 +1,4 @@
-.user-accounT{
-    display: none;
-  }
+
 .navbar{
     background-color: #007BFF;
     overflow: hidden;
@@ -72,6 +70,18 @@
     justify-content: flex-start;
     margin-top: 0.1px;
   }
+  .user-account-1{
+    display: flex;
+    background-color:#007BFF ;
+    justify-content: flex-start;
+    margin-top: 0.1px;
+  }
+  .user-account-1 .user-account-1-L{
+    margin: 0 -1px 0 16px;
+  }
+  .user-account-1 .slas{
+    margin:0px -12px 0px 15px ;
+  }
   .show-navbar .user-cred a{
     padding: 0.5rem 0rem;
     margin-left: 15px;
@@ -119,7 +129,6 @@
     color: black;
     font-size: 1rem;
     display: block;
-    text-transform: capitalize;
     padding: 0.5rem 1rem;
     letter-spacing:0.75px;
     transition:500ms;
@@ -171,6 +180,16 @@
 }
 .profile-1 p{
   top: 0.5px;
+  left: 12px;
+  font-size: 12.5px;
+  transition: 10ms all ease;
+  margin-left: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+.profile-1 .log-out{
+  top: 8.5px;
   left: 12px;
   font-size: 12.5px;
   transition: 10ms all ease;
@@ -242,6 +261,11 @@
 }
 #linE p::after{
   margin-left: 0px;
+}
+.Mail-photo{
+  width: 50%;
+  border-radius: 50%;
+  cursor: pointer;
 }
   @media screen and (min-width: 750px) {
     .navbar {
@@ -315,21 +339,31 @@
       color: white;
       background: transparent;
     }
-    .user-cred a{
+    .user-cred{
       display: none;
-      
     }
-    .user-cred p{
-        display: none;
+    .show-navbar .user-cred{
+      display: none;
     }
+   .user-cred p{
+    display: none;
+   }
     .user-account{
       display: flex;
-  
+    }
+    .user-account-1{
+      display: none;
     }
     .user-account:hover{
         cursor: pointer;
     
       }
+      .user-account p:hover{
+  cursor: pointer;
+      }
+      .user-accounT p:hover{
+        cursor: pointer;
+            }
     .user-account a {
       color: black;
       font-size: 1rem;
@@ -357,4 +391,12 @@
         font-size: 20px;
         margin-right: 20px;
     } */
+  }
+  @media screen and (max-width: 750px){
+    .user-accounT p{
+      display: none;
+    }
+    .Mail-photo{
+      display: none;
+    }
   }

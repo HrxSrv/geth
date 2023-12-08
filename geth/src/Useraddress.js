@@ -1,4 +1,4 @@
-import React, { useEffect, useState, component } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import './useraddress.css'
 import logo from "./getH-logos_black.png";
 import logo2 from "./component/profile_img.jpg"
@@ -14,12 +14,80 @@ import logo9 from "./component/menu-bar.png"
 import { useLocation, Link } from 'react-router-dom';
 import axios from "axios";
 import { useData } from './DataContext';
-
+import { UserAuth } from './AuthContext';
 export default function Useraddress() {
     //const location = useLocation()
     //  console.log(location)
-    const { userData } = useData();
-    const { email, password } = userData;
+    const { logOut, user } = UserAuth();
+    const { userData, deleteUserData } = useData();
+    const { email, username } = userData;
+    const [selectedImage, setSelectedImage] = useState(user?.photoURL);
+    const fileInputRef = useRef(null);
+    const [inputValue, setInputValue] = useState('');
+    const [inputValuename, setInputValuename] = useState('');
+    const [inputValuemnumber, setInputValuemnumber] = useState('');
+    const [inputValuepincode, setInputValuepincode] = useState('');
+    const [inputValuelocality, setInputValuelocality] = useState('');
+    const [inputValuecity, setInputValuecity] = useState('');
+    const [inputValuelandmark, setInputValuelandmark] = useState('');
+    const [inputValueanumber, setInputValueanumber] = useState('');
+    const [address, setAddress] = useState({
+        name: '',
+        mnumber: '',
+        pincode: ' ',
+        locality: '',
+        address_1: '',
+        city: '',
+        state: '',
+        landmark: '',
+        addtionalnumber: ' '
+    });
+
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          setSelectedImage(URL.createObjectURL(file));
+        }
+        setisExpandedimgmenu(!isExpandedimgmenu)
+        console.log(1)
+        console.log(file);
+      };
+    
+      const handleRemoveImage = () => {
+        setSelectedImage(user?.photoURL);
+        setisExpandedimgmenu(!isExpandedimgmenu)
+        fileInputRef.current.value = '';
+        console.log(1)
+      };
+    async function submit(e) {
+        e.preventDefault();
+        try {
+            await axios.patch("http://localhost:8000/useraddress", {
+                address , username
+            })
+            .then(res=>{
+                if(res.data==='not exist')
+                {
+                    alert("Mobile number does not exist. Change mobile number and try again");
+                }
+            })
+            .catch(e=>{
+               // alert("wrong details")
+                console.log(e);
+            })
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+    const handleSignOut = async () => {
+        try {
+            await logOut();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     const [isExpanded, setisExpanded] = React.useState(true)
     function navTgl() {
         setisExpanded(!isExpanded)
@@ -41,41 +109,13 @@ export default function Useraddress() {
         setisExpandedsidebar(!isExpandedsidebar)
         setisExpandedbtn(!isExpandedbtn)
     }
-    const [inputValue, setInputValue] = useState('');
-    const [inputValuename, setInputValuename] = useState('');
-    const [inputValuemnumber, setInputValuemnumber] = useState('');
-    const [inputValuepincode, setInputValuepincode] = useState('');
-    const [inputValuelocality, setInputValuelocality] = useState('');
-    const [inputValuecity, setInputValuecity] = useState('');
-    const [inputValuelandmark, setInputValuelandmark] = useState('');
-    const [inputValueanumber, setInputValueanumber] = useState('');
-    const [address, setAddress] = useState({
-        name: '',
-        mnumber: '',
-        pincode: ' ',
-        locality: '',
-        address_1: '',
-        city: '',
-        state: '',
-        landmark: '',
-        addtionalnumber: ' '
-    });
-    async function submit(e) {
-        //e.preventDefault();
-        try {
-            await axios.patch("http://localhost:8000/useraddress", {
-                address
-            })
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
-    
+
 
     useEffect(() => {
         // Your code for any side effects when `inputValue` or `isFocused` changes can go here.
     }, [address]);
+
+
     // console.log(inputValue)
     const textareaClass = inputValue ? 'focus-L' : 'L';
     const inputnameClass = inputValuename ? 'f-name-L' : 'name-L';
@@ -85,6 +125,9 @@ export default function Useraddress() {
     const inputcityClass = inputValuecity ? 'f-name-L' : 'name-L';
     const inputlandmarkClass = inputValuelandmark ? 'f-name-L' : 'name-L';
     const inputanumberClass = inputValueanumber ? 'f-name-L' : 'name-L';
+
+
+
     return (
 
         <div className="DIV">
@@ -104,32 +147,38 @@ export default function Useraddress() {
 
                     <ul className={isExpanded ? "nav-links" : "show-navbar"}>
                         <li><a href="/">Home</a></li>
-                        <li><a href=" ">Find Jobs</a></li>
-                        <li><a href=" ">Post a Job</a></li>
+                        <li><Link to="/hireworkers" >Hire Workers</Link></li>
+                        <li><Link to="/contact" >Contact Us</Link></li>
                         <div className="user-cred">
-                            {!{ email } ?
-                                <div className="user-cred">
-                                    <a href=" ">Login</a>
-                                    <a href=" " className="slas">/ </a>
-                                    <a href=" ">Register</a>
-                                </div>
+                            {user !== null ?
+                                <p >{user?.displayName} </p>
                                 :
-                                <p  >{email} </p>}
+                                email === '' ?
+                                    <div className="user-cred">
+                                        <Link to="/login" >Login</Link>
+                                        <a href=" " className="slas">/ </a>
+                                        <a href="/register">Register</a>
+                                    </div> :
+                                    <p > {email}  </p>}
                         </div>
                     </ul>
                     <div className="user-accounT" >
-                        {!{ email } ?
-                            <div className="user-account">
-                                <a href=" ">Login</a>
-                                <a href=" " className="slas">/ </a>
-                                <a href=" ">Register</a>
+                        {user !== null ?
+                            <div onClick={navTggl}>
+                                <img src={user !== null ? user?.photoURL : logo2} alt=" " className="Mail-photo" />
                             </div>
                             :
-                            <p onClick={navTggl}>{email} </p>}
-                        <div className={isExpandedmenu ? "expanded" : "not-expanded"}>
+                            email === '' ?
+                                <div className="user-account">
+                                    <Link to="/login">Login</Link>
+                                    <a href=" " className="slas">/ </a>
+                                    <a href="/register">Register</a>
+                                </div> :
+                                <p onClick={navTggl}>{email} </p>}
+                        <div className={isExpandedmenu && (email !== '' || user !== null) ? "expanded" : "not-expanded"}>
                             <div className="profile">
-                                <img src={logo2} alt=" " className="profile-img" />
-                                {!{ email } ? <p>Gaurav Upadhyay</p> : <p>{email}</p>}
+                                <img src={user !== null ? user?.photoURL : logo2} alt=" " className="profile-img" />
+                                {user !== null ? <p >{user?.displayName} </p> : email === '' ? <p> </p> : <p>{email}</p>}
                             </div>
                             <div id="linE"><p></p></div>
                             <div className="profile-1">
@@ -143,7 +192,7 @@ export default function Useraddress() {
                                 <div className="profile-img-div">
                                     <img src={logo4} alt=" " className="profile-img-1" />
                                 </div>
-                                <Link to="/userprofile" ><p>Settings</p></Link>
+                                <Link to="/userprofile/settings" ><p>Settings</p></Link>
                                 <img src={logo7} alt=" " className="profile-img-arrow-2" />
                             </div>
                             <div className="profile-1">
@@ -157,7 +206,7 @@ export default function Useraddress() {
                                 <div className="profile-img-div">
                                     <img src={logo6} alt=" " className="profile-img-1" />
                                 </div>
-                                <Link to="/userprofile" ><p>Log Out</p></Link>
+                                <p onClick={user === null ? deleteUserData : handleSignOut}>Log Out</p>
                                 <img src={logo7} alt=" " className="profile-img-arrow-4" />
                             </div>
 
@@ -173,9 +222,9 @@ export default function Useraddress() {
 
                 <div className="PROFILE">
                     <h4>Gaurav Upadhyay</h4>
-                    <Link to="/userprofile"><li>Profile Information</li></Link>    
-                    <Link to="/userprofile/useraddress"><li>Manage Address</li></Link>  
-                    <Link to="/userprofile/settings"> <li>Settings</li></Link> 
+                    <Link to="/userprofile"><li>Profile Information</li></Link>
+                    <Link to="/userprofile/useraddress"><li>Manage Address</li></Link>
+                    <Link to="/userprofile/settings"> <li>Settings</li></Link>
                     <ul>
                     </ul>
                 </div>
@@ -188,9 +237,9 @@ export default function Useraddress() {
 
                     </div>
 
-                    <Link to="/userprofile"><li>Profile Information</li></Link>    
-                    <Link to="/userprofile/useraddress"><li>Manage Address</li></Link>  
-                    <Link to="/userprofile/settings"> <li>Settings</li></Link> 
+                    <Link to="/userprofile"><li>Profile Information</li></Link>
+                    <Link to="/userprofile/useraddress"><li>Manage Address</li></Link>
+                    <Link to="/userprofile/settings"> <li>Settings</li></Link>
                     <ul>
                     </ul>
                 </div>
@@ -203,15 +252,26 @@ export default function Useraddress() {
                     <div class="my-5">
                         <h3>My Address</h3>
                         <div>
-                            <img src={logo2} alt=" " className="profile--img" />
+                            <img src={user !== null ? selectedImage : logo2} alt=" " className="profile--img" />
                             <button className="profile--btn" onClick={menuTggl}>
                                 <img src={logo13} alt=" " className="profile--btn-img" />
                                 <img src={logo14} alt=" " className="profile--btn-img" />
                             </button>
                             <div className={isExpandedimgmenu ? "profile-img-menu-expanded" : "profile-img-menu-not-expanded"}>
                                 <ul>
-                                    <li>Upload/Change</li>
-                                    <li>Remove</li>
+                                    <li><form>
+                                        <label htmlFor="fileInput" >Upload/Change</label>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            ref={fileInputRef}
+                                            id="fileInput"
+                                            placeholder="upload"
+                                            style={{ display: 'none' }}
+                                            onChange={handleImageChange}
+                                        />
+                                        </form></li>
+                                        <li onClick={handleRemoveImage}>Remove</li>
                                 </ul>
                             </div>
                         </div>
@@ -235,7 +295,7 @@ export default function Useraddress() {
 
                             <div class="F-name-container">
                                 <input type="text" id="form-name" name="m-number"
-                                     onChange={(e) => {
+                                    onChange={(e) => {
                                         setInputValuemnumber(e.target.value);
                                         setAddress((prevAddress) => ({
                                             ...prevAddress,
@@ -260,26 +320,26 @@ export default function Useraddress() {
 
                             <div class="F-name-container">
                                 <input type="text" id="form-name" name="locality"
-                                   onChange={(e) => {
-                                    setInputValuelocality(e.target.value);
-                                    setAddress((prevAddress) => ({
-                                        ...prevAddress,
-                                        locality: e.target.value
-                                    }))
-                                }}  />
+                                    onChange={(e) => {
+                                        setInputValuelocality(e.target.value);
+                                        setAddress((prevAddress) => ({
+                                            ...prevAddress,
+                                            locality: e.target.value
+                                        }))
+                                    }} />
                                 <label for="locality" className={inputlocalityClass}>Locality*</label>
                             </div>
                         </div>
                         <div className="input-container">
 
                             <textarea id="myTextarea" name="myTextarea" rows="4" cols="50"
-                               onChange={(e) => {
-                                setInputValue(e.target.value);
-                                setAddress((prevAddress) => ({
-                                    ...prevAddress,
-                                    address_1: e.target.value
-                                }))
-                            }} 
+                                onChange={(e) => {
+                                    setInputValue(e.target.value);
+                                    setAddress((prevAddress) => ({
+                                        ...prevAddress,
+                                        address_1: e.target.value
+                                    }))
+                                }}
                             >
                             </textarea>
                             <label className={textareaClass} for="myTextarea">Address(Area & Street)*</label>
@@ -294,7 +354,7 @@ export default function Useraddress() {
                                             ...prevAddress,
                                             city: e.target.value
                                         }))
-                                    }}  />
+                                    }} />
                                 <label for="city" className={inputcityClass}>City/District*</label>
                             </div>
 
@@ -349,25 +409,25 @@ export default function Useraddress() {
                         <div className="F-L">
                             <div class="F-name-container">
                                 <input type="text" id="form-name" name="landmark"
-                                     onChange={(e) => {
+                                    onChange={(e) => {
                                         setInputValuelandmark(e.target.value);
                                         setAddress((prevAddress) => ({
                                             ...prevAddress,
                                             landmark: e.target.value
                                         }))
-                                    }}  />
+                                    }} />
                                 <label for="landmark" className={inputlandmarkClass}>Landmark</label>
                             </div>
 
                             <div class="F-name-container">
                                 <input type="text" id="form-name" name="a-number"
-                                     onChange={(e) => {
+                                    onChange={(e) => {
                                         setInputValueanumber(e.target.value);
                                         setAddress((prevAddress) => ({
                                             ...prevAddress,
                                             addtionalnumber: e.target.value
                                         }))
-                                    }}  />
+                                    }} />
                                 <label for="a-number" className={inputanumberClass}>Alternate Phone</label>
                             </div>
                         </div>

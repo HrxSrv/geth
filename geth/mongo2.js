@@ -10,14 +10,17 @@ mongoose.connect("mongodb://localhost:27017/first-website",{
     console.log('failed');
 })
 const newSchema=new mongoose.Schema({
-    email:{
-        type:String,
-        required:true
-    },
-    password:{
-        type:String,
-        required:true
-    }
+    email:String,
+    experience:String,
+    name:String,
+    message:String,
+    occupation:String,
+    states:String,
+    wage:String,
+    phone:Number,
+    dob:Date,
+    img:String,
+    gender:String
 })
 
 const userinformation = mongoose.model("userinformation",newSchema)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import './userprofile.css'
 import logo from "./getH-logos_black.png";
 import logo2 from "./component/profile_img.jpg"
@@ -14,7 +14,7 @@ import logo9 from "./component/menu-bar.png"
 import { useLocation, Link } from 'react-router-dom';
 import axios from "axios";
 import { useData } from './DataContext';
-
+import { UserAuth } from './AuthContext';
 
 export default function UserProfile() {
     const [lastname, setLastname] = useState(' ')
@@ -23,13 +23,41 @@ export default function UserProfile() {
     const [e_mail, setE_mail] = useState(' ')
     const [occupation, setOccupation] = useState(' ')
     const [gender,setGender] = useState(' ')
-   
+    const { logOut, user } = UserAuth();
+    const [selectedImage, setSelectedImage] = useState(user?.photoURL);
+    const { userData ,deleteUserData} = useData();
+    const { email, username } = userData;
+    const fileInputRef = useRef(null);
 
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setSelectedImage(URL.createObjectURL(file));
+        }
+        setisExpandedimgmenu(!isExpandedimgmenu)
+        console.log(1)
+        console.log(file);
+    };
+    
+
+      const handleRemoveImage = () => {
+        setSelectedImage(user?.photoURL);
+        setisExpandedimgmenu(!isExpandedimgmenu)
+        fileInputRef.current.value = '';
+        console.log(1)
+      };
+    const handleSignOut = async () => {
+        try {
+            await logOut();
+        } catch (error) {
+            console.log(error);
+        }
+    };
     async function submit(e) {
         e.preventDefault();
         try {
             await axios.post("http://localhost:8000/userprofile", {
-                firstname, lastname, mobilenumber, e_mail, occupation,gender
+                firstname, lastname, mobilenumber, e_mail, occupation,gender,username
             })
             // .then(res => {
             //     if (res.data === "exist") {
@@ -58,8 +86,6 @@ export default function UserProfile() {
     //     getProducts()
     // },[])
     // const [userNData, setUserNData] = useState({ mail:' ', pass: ' ' });
-    const { userData } = useData();
-    const { email, password } = userData;
     // const [cnt,setCnt] = useState(0)
     //console.log(email)
     //    if(cnt===0)
@@ -122,32 +148,38 @@ export default function UserProfile() {
 
                     <ul className={isExpanded ? "nav-links" : "show-navbar"}>
                         <li><a href="/">Home</a></li>
-                        <li><a href=" ">Find Jobs</a></li>
-                        <li><a href=" ">Post a Job</a></li>
+                        <li><Link to="/hireworkers" >Hire Workers</Link></li>
+                        <li><Link to="/contact" >Contact Us</Link></li>
                         <div className="user-cred">
-                            {!{ email } ?
-                                <div className="user-cred">
-                                    <a href=" ">Login</a>
-                                    <a href=" " className="slas">/ </a>
-                                    <a href=" ">Register</a>
-                                </div>
-                                :
-                                <p  >{email} </p>}
+                        {user !== null ?
+                           <p >{user?.displayName} </p>
+                           :
+                          email===''?
+                            <div className="user-cred">
+                                <Link to="/login" >Login</Link>
+                                <a href=" " className="slas">/ </a>
+                                <a href="/register">Register</a>
+                            </div> :
+                            <p > {email}  </p>}
                         </div>
                     </ul>
                     <div className="user-accounT" >
-                        {!{ email } ?
+                    {user !== null ?
+                        <div  onClick={navTggl}> 
+                        <img  src={user!==null ? user?.photoURL : logo2} alt=" " className="Mail-photo"/>
+                      </div> 
+                        :
+                         email===''  ?
                             <div className="user-account">
-                                <a href=" ">Login</a>
+                                <Link to="/login">Login</Link>
                                 <a href=" " className="slas">/ </a>
-                                <a href=" ">Register</a>
-                            </div>
-                            :
-                            <p onClick={navTggl}>{email} </p>}
-                        <div className={isExpandedmenu ? "expanded" : "not-expanded"}>
+                                <a href="/register">Register</a>
+                            </div> :
+                            <p onClick={navTggl}>{ email } </p>}
+                        <div className={isExpandedmenu && (email!=='' || user !== null)  ? "expanded" : "not-expanded"}>
                             <div className="profile">
-                                <img src={logo2} alt=" " className="profile-img" />
-                                {!{ email } ? <p>Gaurav Upadhyay</p> : <p>{email}</p>}
+                                <img src={user!==null ? user?.photoURL : logo2} alt=" " className="profile-img" />
+                                 {user !== null ? <p >{user?.displayName} </p>:email==='' ? <p> </p> : <p>{email}</p>}
                             </div>
                             <div id="linE"><p></p></div>
                             <div className="profile-1">
@@ -161,7 +193,7 @@ export default function UserProfile() {
                                 <div className="profile-img-div">
                                     <img src={logo4} alt=" " className="profile-img-1" />
                                 </div>
-                                <Link to="/userprofile" ><p>Settings</p></Link>
+                                <Link to="/userprofile/settings" ><p>Settings</p></Link>
                                 <img src={logo7} alt=" " className="profile-img-arrow-2" />
                             </div>
                             <div className="profile-1">
@@ -175,7 +207,7 @@ export default function UserProfile() {
                                 <div className="profile-img-div">
                                     <img src={logo6} alt=" " className="profile-img-1" />
                                 </div>
-                                <Link to="/userprofile" ><p>Log Out</p></Link>
+                               <p onClick={user===null ? deleteUserData:handleSignOut}>Log Out</p>
                                 <img src={logo7} alt=" " className="profile-img-arrow-4" />
                             </div>
 
@@ -221,15 +253,26 @@ export default function UserProfile() {
                     <div class="my-5">
                         <h3>My Profile</h3>
                         <div>
-                            <img src={logo2} alt=" " className="profile--img" />
+                            <img src={user!==null ?  selectedImage : logo2} alt=" " className="profile--img" />
                             <button className="profile--btn" onClick={menuTggl}>
                                 <img src={logo13} alt=" " className="profile--btn-img" />
                                 <img src={logo14} alt=" " className="profile--btn-img" />
                             </button>
                             <div className={isExpandedimgmenu ? "profile-img-menu-expanded" : "profile-img-menu-not-expanded"}>
                                 <ul>
-                                    <li>Upload/Change</li>
-                                    <li>Remove</li>
+                                <li><form>
+                                        <label htmlFor="fileInput" >Upload/Change</label>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            ref={fileInputRef}
+                                            id="fileInput"
+                                            placeholder="upload"
+                                            style={{ display: 'none' }}
+                                            onChange={handleImageChange}
+                                        />
+                                        </form></li>
+                                        <li onClick={handleRemoveImage}>Remove</li>
                                 </ul>
                             </div>
                         </div>

@@ -1,0 +1,121 @@
+.contact-section {
+    
+    /* margin: 100px 10px; */
+    background-color: transparent;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 110px auto 20px auto;
+    max-width: 800px;
+    background-size: cover;
+    background-position: center;
+    background-image: url("https://cdn.pixabay.com/photo/2016/11/18/12/05/white-male-1834101_640.jpg");
+}
+
+.Container {
+ 
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: transparent;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.511);
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+.File{
+    margin-top: -20px;
+}
+select {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.511);
+    background-color: transparent;
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    margin: 10px 0px;
+
+}
+
+.contact-title {
+    font-size: 2rem;
+    color: #0a0a0a;
+    margin-bottom: 20px;
+}
+
+.contact-description {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #0e0c0c;
+    margin-bottom: 20px;
+}
+
+.contact-info {
+
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+}
+
+.contact-details,
+.contact-form {
+    flex: 1;
+    padding: 10px;
+    margin-right: 35px;
+}
+
+.contact-details h3,
+.contact-form h3 {
+    font-size: 1.5rem;
+    color: #0c0c0c;
+    margin-bottom: 10px;
+}
+
+.contact-details p,
+.contact-form p {
+    font-size: 1.1rem;
+    color: #0e0d0d;
+    margin-bottom: 10px;
+}
+
+.contact-details label,
+.contact-form label {
+    font-size: 1.1rem;
+    color: #0a0a0a;
+}
+
+.contact-details input,
+.contact-form input,
+.contact-details textarea,
+.contact-form textarea {
+    width: 94%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    resize: none;
+    margin: 10px 0px;
+    background-color: transparent;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.511);
+}
+
+.contact-details button,
+.contact-form button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.contact-details button:hover,
+.contact-form button:hover {
+    background-color: #0056b3;
+}
