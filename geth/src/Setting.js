@@ -1,45 +1,260 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from "react";
+import './settings.css'
+import logo from "./getH-logos_black.png";
+import logo2 from "./component/profile_img.jpg"
+import logo3 from "./component/profile-user.png"
+import logo4 from "./component/settings.png"
+import logo5 from "./component/question.png"
+import logo6 from "./component/logout.png"
+import logo7 from "./component/arrow-right.png"
+import logo13 from "./component/edit.png"
+import logo14 from "./component/arrow-down.png"
+import logo8 from "./component/clear.png"
+import logo9 from "./component/menu-bar.png"
+import { useLocation, Link } from 'react-router-dom';
+import axios from "axios";
+import { useData } from './DataContext';
 import { UserAuth } from './AuthContext';
-import { useNavigate } from 'react-router-dom';
-import "./settings.css"
 
-function Setting(){
-    const { googleSignIn } = UserAuth();
-  const navigate = useNavigate();
+export default function UserProfile() {
 
-  const handleGoogleSignIn = async () => {
+  const { logOut, user } = UserAuth();
+  const { userData, deleteUserData } = useData();
+  const { email, username } = userData;
+  // console.log(username)
+
+
+  // const today = new Date();
+  // console.log(today)
+  const handleSignOut = async () => {
     try {
-      await googleSignIn();
+      await logOut();
     } catch (error) {
       console.log(error);
     }
   };
 
+  const [userHiring, setUsersHiring] = useState([]);
+  console.log(userHiring)
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/history',
+          { params: { username }, });
+        setUsersHiring(response.data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  const [isExpanded, setisExpanded] = React.useState(true)
+  function navTgl() {
+    setisExpanded(!isExpanded)
+  }
+
+  const [isExpandedmenu, setisExpandedmenu] = React.useState(false)
+  function navTggl() {
+    setisExpandedmenu(!isExpandedmenu)
+  }
+
+  const [isExpandedimgmenu, setisExpandedimgmenu] = React.useState(false)
+  function menuTggl() {
+    setisExpandedimgmenu(!isExpandedimgmenu)
+  }
+
+  const [isExpandedsidebar, setisExpandedsidebar] = React.useState(false)
+  const [isExpandedbtn, setisExpandedbtn] = React.useState(true)
+  function sideTggl() {
+    setisExpandedsidebar(!isExpandedsidebar)
+    setisExpandedbtn(!isExpandedbtn)
+  }
+
+  const UserHistoryContainer = ({ user }) => {
+    // {console.log(user)}
+    const [workerDetails, setWorkerDetails] = useState(null);
+
+    useEffect(() => {
+      const fetchWorkerDetails = async () => {
+        try {
+          const response = await axios.get(`http://localhost:8000/worker/${user.workerid}`);
+          setWorkerDetails(response.data);
+        } catch (error) {
+          console.error('Error fetching worker details:', error);
+        }
+      };
+  
+      fetchWorkerDetails();
+    }, [user.workerid]);
+    return(
+
+      <div className="My-5 grid-container">
+      <div className="grid-item">
+        <img src={logo13} alt=" " className="history-img" />
+      </div>
+      <div className="grid-item">
+        <p>{!workerDetails ? "Gaurav" : workerDetails.name}</p>
+        <span>{!workerDetails ? "Gaurav" : workerDetails.occupation}</span>
+      </div>
+      <div className="grid-item">
+        <span>{!workerDetails ? "Gaurav" : workerDetails.wage}</span>
+      </div>
+      <div className="grid-item">
+        <span>Booked on 7th Oct</span>
+        <p>Rate</p>
+      </div>
+    </div>
+    )
+  }
+
+  const renderUserhistory = () => {
+    return userHiring.map((user, index) => (
+      <UserHistoryContainer key={index} user={user} />
+    ));
+  }
 
   return (
-    <div>
-        <form>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required/>
-            
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required/>
-            
-            <label for="phone">Phone:</label>
-            <input type="tel" id="phone" name="phone" required/>
-            
-            <label for="skills">Skills (e.g., Carpenter, Plumber, Electrician, etc.):</label>
-            <input type="text" id="skills" name="skills" required/>
-            
-            <label for="experience">Experience (years):</label>
-            <input type="number" id="experience" name="experience" required/>
-            
-            <label for="resume">Resume/CV:</label>
-            <textarea id="resume" name="resume" rows="4" required></textarea>
-            
-            <button type="submit">Submit Application</button>
-        </form>
+    
+    <div className="DIv">
+      <header>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+        />
+        <nav className="navbar">
+
+          <div className="nav-header">
+            <div className="logo">
+              <img src={logo} alt="Your Logo" />
+            </div>
+            <button className="nav-toggle" onClick={navTgl}>  <i class="fas fa-bars"></i></button>
+          </div>
+
+          <ul className={isExpanded ? "nav-links" : "show-navbar"}>
+            <li><a href="/">Home</a></li>
+            <li><Link to="/hireworkers" >Hire Workers</Link></li>
+            <li><Link to="/contact" >Contact Us</Link></li>
+            <div className="user-cred">
+              {user !== null ?
+                <p >{user?.displayName} </p>
+                :
+                email === '' ?
+                  <div className="user-cred">
+                    <Link to="/login" >Login</Link>
+                    <a href=" " className="slas">/ </a>
+                    <a href="/register">Register</a>
+                  </div> :
+                  <p > {email}  </p>}
+            </div>
+          </ul>
+          <div className="user-accounT" >
+            {user !== null ?
+              <div onClick={navTggl}>
+                <img src={user !== null ? user?.photoURL : logo2} alt=" " className="Mail-photo" />
+              </div>
+              :
+              email === '' ?
+                <div className="user-account">
+                  <Link to="/login">Login</Link>
+                  <a href=" " className="slas">/ </a>
+                  <a href="/register">Register</a>
+                </div> :
+                <p onClick={navTggl}>{email} </p>}
+            <div className={isExpandedmenu && (email !== '' || user !== null) ? "expanded" : "not-expanded"}>
+              <div className="profile">
+                <img src={user !== null ? user?.photoURL : logo2} alt=" " className="profile-img" />
+                {user !== null ? <p >{user?.displayName} </p> : email === '' ? <p> </p> : <p>{email}</p>}
+              </div>
+              <div id="linE"><p></p></div>
+              <div className="profile-1">
+                <div className="profile-img-div">
+                  <img src={logo3} alt=" " className="profile-img-1" />
+                </div>
+                <Link to="/userprofile" ><p>Edit Profile</p></Link>
+                <img src={logo7} alt=" " className="profile-img-arrow-1" />
+              </div>
+              <div className="profile-1">
+                <div className="profile-img-div">
+                  <img src={logo4} alt=" " className="profile-img-1" />
+                </div>
+                <Link to="/userprofile/settings" ><p>Settings</p></Link>
+                <img src={logo7} alt=" " className="profile-img-arrow-2" />
+              </div>
+              <div className="profile-1">
+                <div className="profile-img-div">
+                  <img src={logo5} alt=" " className="profile-img-1" />
+                </div>
+                <Link to="/userprofile" ><p>Help & Support</p></Link>
+                <img src={logo7} alt=" " className="profile-img-arrow-3" />
+              </div>
+              <div className="profile-1">
+                <div className="profile-img-div">
+                  <img src={logo6} alt=" " className="profile-img-1" />
+                </div>
+                <p onClick={user === null ? deleteUserData : handleSignOut}>Log Out</p>
+                <img src={logo7} alt=" " className="profile-img-arrow-4" />
+              </div>
+
+            </div>
+
+
+          </div>
+
+
+        </nav>
+      </header>
+      <div className="History">
+
+
+        <div className="m-p" >
+
+          <div className="PROFILE">
+            <h4>Gaurav Upadhyay</h4>
+            <li><Link to="/userprofile">Profile Information</Link></li>
+            <li><Link to="/userprofile/useraddress">Manage Address</Link></li>
+            <li>Settings</li>
+            <ul>
+            </ul>
+          </div>
+          <div className={isExpandedsidebar ? "PROFILe" : "PROFILe-n"}>
+            <div className="name-btn">
+              <h4>Gaurav Upadhyay</h4>
+              <button className="clear" onClick={sideTggl}>
+                <img className="clear-img" src={logo8} alt=" " />
+              </button>
+
+            </div>
+
+            <li><Link to="/userprofile">Profile Information</Link></li>
+            <li><Link to="/userprofile/useraddress">Manage Address</Link></li>
+            <li>Settings</li>
+            <ul>
+            </ul>
+          </div>
+          <div>
+            <button className={isExpandedbtn ? "menu-bar-btn" : "menu-bar-btn-n"} onClick={sideTggl} >
+              <img className="menu-bar-img" src={logo9} alt=" " />
+            </button>
+          </div>
+          <div class="MY-profile">
+            <h3>History</h3>
+            <hr />
+            {!userHiring.length ? <p> You hired no Household helper from getH </p>:renderUserhistory()}
+          </div>
+
+        </div>
+        <div className="p-f">
+          <h1>
+            .
+          </h1>
+        </div>
+      </div>
+
     </div>
-  );
+
+  )
+
+
 }
-export default Setting;

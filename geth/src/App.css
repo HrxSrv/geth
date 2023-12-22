@@ -154,12 +154,21 @@ header {
 .worker-card .hire-button:hover {
   background-color: #0056b3;
 }
+.footer-container{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.DIv{
+  background-color: white;
+  flex: 1;
+}
 footer {
   background-color: #333;
   color: white;
   text-align: center;
   padding: 20px 0;
-
+  margin-top: auto;
 }
 footer p{
   color: white;

@@ -44,7 +44,11 @@ function App() {
               <Route exact path="/login" element={<Login />} />
               <Route exact path='/register' element={<Regsiter />} />
               <Route exact path='/account' element={<Account />} />
-              <Route exact path='/userprofile/settings' element={<Setting />} />
+              <Route exact path='/userprofile/settings' element={
+              <div className="footer-container">
+                <Setting />
+                <Footer />
+              </div>} />
               <Route exact path='/userprofile' element={
                 <div>
                   <UserProfile />

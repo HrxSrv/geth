@@ -50,7 +50,6 @@ const Contact = () => {
             for (const key in inputs) {
                 formData.append(key, inputs[key]);
             }
-
             await axios.post("http://localhost:8000/contact", formData);
         } catch (err) {
 

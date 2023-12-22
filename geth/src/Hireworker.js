@@ -1,4 +1,3 @@
-// import Rightbar from "./RightBar";
 import React, { useState, useEffect } from 'react';
 import "./hireworker.css";
 import logo5 from "./w1_2.jpg";
@@ -12,6 +11,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import logo1 from "./component/arrow-up.png"
 import logo2 from "./component/down-arrow.png"
+import star from "./component/star.png"
+import star1 from "./component/star1.png"
+import star2 from "./component/star2.png"
+import star3 from "./component/star3.png"
+import { useData } from './DataContext';
 import axios from 'axios';
 const Hireworker = () => {
 
@@ -87,7 +91,7 @@ const Hireworker = () => {
     };
 
     const [users, setUsers] = useState([]);
-
+    // console.log(users)
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -100,48 +104,97 @@ const Hireworker = () => {
 
         fetchUsers();
     }, []);
-    // console.log(users)
-    // const { isLoading, error, data } = useQuery({
-    //     queryKey: ["userss"],
-    //     queryFn: async () => {
-    //       try {
-    //         const response = await makeRequest.get("/hireworkers");
-    //         return response.data;
-    //       } catch (error) {
-    //         throw new Error(`Unable to fetch data: ${error.message}`);
-    //       }
-    //     },
-    //   });
 
-    // console.log(data);
-    // if (isLoading) {
-    //     return <div>Loading...</div>;
-    //   }
+    const [isPopupOpen, setPopupOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [selectedUserIndex, setSelectedUserIndex] = useState(null);
 
-    //   if (error) {
-    //     return <div>Error: {error.message}</div>;
-    //   }
+    const openPopup = (user, index) => {
+        setSelectedUser(user);
+        setSelectedUserIndex(index);
+        console.log(index)
+        setPopupOpen(true);
+    };
+    // console.log(selectedUser._id);
+    // console.log(isPopupOpen)
+
+    const closePopup = () => {
+        setPopupOpen(false);
+        setSelectedUser(null);
+    };
+    const handleNext = () => {
+        if (users.length === 0) {
+            // Handle the case when there are no users
+            return;
+        }
+        const nextIndex = (selectedUserIndex + 1) % users.length;
+        setSelectedUser(users[nextIndex]);
+        setSelectedUserIndex(nextIndex);
+    };
+    const { userData } = useData();
+    console.log(userData)
+    const handleConfirmHiring = async () => {
+
+        try {
+            const hiringData = {
+                uname: userData.username,
+                workerid: selectedUser._id,
+            };
+            await axios.post("http://localhost:8000/confirmhire", hiringData);
+        }
+        catch (error) {
+            console.error('Error confirming hiring:', error);
+        }
+        closePopup();
+    };
+    function calculateAge(dob) {
+        // Parse the DOB string into a Date object
+        const dobDate = new Date(dob);
+
+        // Get the current date
+        const currentDate = new Date();
+
+        // Calculate the difference in milliseconds
+        const timeDifference = currentDate - dobDate;
+
+        // Calculate the age in years
+        const age = Math.floor(timeDifference / (365.25 * 24 * 60 * 60 * 1000));
+
+        return age;
+    }
+
+    const dobString = !selectedUser ? "2022-12-07T00:00:00.000Z" : selectedUser.dob;
+    const age = calculateAge(dobString);
+    // console.log(dobString)
+    // console.log(age)
 
     let imgpath = " ";
     let imagepath = " ";
-    const UserProfileContainer = ({ user }) => (
+    const UserProfileContainer = ({ user, onHireClick }) => (
         <div class="Worker-card">
             <div className="imagepath">
 
                 {imgpath = user ? user.img : " "}
                 {imagepath = process.env.PUBLIC_URL + '/upload/' + imgpath}
             </div>
-           { console.log(imagepath)}
+            {/* {console.log(imagepath)} */}
             <img src={imagepath} alt="Worker 1" />
-            <h3>{user.name}</h3>
+            <div className='star-name'>
+                <h3>{user.name}</h3>
+                <div>
+                    <span>5</span>
+                    <img src={star} alt="star" className='star-img' />
+                </div>
+            </div>
+            <p>Wage: {user.wage}/hour</p>
             <p>{user.occupation}</p>
             <p>Location: {user.states}</p>
-            <button class="hire-button">Hire</button>
+            <button class="hire-button" onClick={onHireClick}>Hire</button>
         </div>
     );
     const renderUserProfiles = () => {
         return users.map((user, index) => (
-            <UserProfileContainer key={index} user={user} />
+            <UserProfileContainer key={index} user={user} onHireClick={() => openPopup(user, index)} />
         ));
 
     };
@@ -151,7 +204,7 @@ const Hireworker = () => {
 
     return (
         <div className="rightbars">
-            <div className="rightBar">
+            <div className={`rightBar ${isPopupOpen ? 'blur' : ''}`}>
                 <div className="ContaineR">
 
 
@@ -343,6 +396,83 @@ const Hireworker = () => {
                         {renderUserProfiles()}
                     </div>
                 </div>
+            </div>
+            <div >
+
+                {isPopupOpen && (
+                    <div className="overlay" onClick={closePopup}></div>
+                )}
+                {isPopupOpen && (
+                    <div className="hire">
+                        <div className="popup">
+                            <div className="popup-content">
+                                <span className="close" onClick={closePopup}>
+                                    &times;
+                                </span>
+                                <div className="row">
+                                    <div className="profile-nav ">
+
+                                        <div className="user-heading round">
+
+                                            <img src={logo5} alt=" " />
+
+
+                                            <div className="bio-data">
+                                                <div className="Buttons">
+                                                    <button onClick={handleConfirmHiring}>Confirm Hiring</button>
+                                                    <button onClick={handleNext}>Next</button>    
+                                                </div>
+                                                <label for="dob">Hire date :</label>
+                                                <input type="date" id="dob" name="dob" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div className="bio-graph-info">
+                                    <h1>Bio Graph</h1>
+
+                                    <div className="bio-row">
+                                        <p><span>Name </span>: {selectedUser && selectedUser.name}  </p>
+                                    </div>
+                                    <hr></hr>
+                                    <div className="bio-row">
+                                        <p><span>Wage </span>: {selectedUser && selectedUser.wage}/hour </p>
+                                    </div>
+                                    <hr></hr>
+                                    <div className="bio-row">
+                                        <p><span>Region </span>: {selectedUser && selectedUser.states}  </p>
+                                    </div>
+                                    <hr></hr>
+                                    <div className="bio-row">
+                                        <p><span>Age</span>: {selectedUser && age}  </p>
+                                    </div>
+                                    <hr></hr>
+
+                                    <div className="bio-row">
+                                        <p><span>WE </span>: {selectedUser && selectedUser.experience} years </p>
+                                    </div>
+                                    <hr></hr>
+                                    <div className="bio-row">
+                                        <p><span>Email </span>: {selectedUser && selectedUser.email}</p>
+                                    </div>
+                                    <hr></hr>
+                                    <div className="bio-row">
+                                        <p><span>Mobile </span>: {selectedUser && selectedUser.phone}</p>
+                                    </div>
+                                    <hr></hr>
+                                    <div className="bio-row">
+                                        <p><span>Message </span>: {selectedUser && selectedUser.message}</p>
+                                    </div>
+                                    <hr></hr>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

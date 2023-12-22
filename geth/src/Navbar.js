@@ -32,7 +32,7 @@ function Navbar({ scrollToElement }) {
         setisExpandedmenu(!isExpandedmenu)
     }
     const { userData,deleteUserData } = useData();
-    console.log(userData)
+    // console.log(userData)
     const { email, password } = userData;
     //   console.log(userData)
     //   console.log(!(email))
@@ -56,6 +56,7 @@ function Navbar({ scrollToElement }) {
                     <li><Link to="/hireworkers" >Hire Workers</Link></li>
                     <li><p onClick={scrollToElement}>About Us</p></li>
                     <li><Link to="/contact" >Contact Us</Link></li>
+                    {/* <p className="log-out" onClick={user===null ? deleteUserData:handleSignOut}>Log Out</p> */}
                     <div className="user-cred">
                         {user !== null ?
                         <p >{user?.displayName} </p>

@@ -1,0 +1,118 @@
+
+.history-img{
+    width: 40px;
+}
+.History{
+    margin: 0px 0 0 -4%  ;
+}
+.MY-profile{
+    background-color:transparent;
+    width: 180%;
+    height: auto;
+    padding: 1rem;
+    border-radius: 5px;
+    margin: 28px -5% 0 0;
+    min-width: 400px;
+    box-shadow: 0 0 2px black;
+    position: relative;
+}
+.MY-profile hr{
+    margin-bottom: 20px;
+}
+.My-5{
+    display: grid;
+    grid-template-columns: 0.5fr 1.5fr 0.5fr 1.5fr; 
+    gap: 14%;
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.255);
+    padding: 20px 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+.grid-item {
+    text-align: left;
+  }
+@media screen and (max-width:1100px) {
+    .MY-profile{
+        background-color: transparent;
+        width: 120%;
+        height: auto;
+        padding: 1rem;
+        border-radius: 5px;
+        margin: 28px -10% 0 -5%;
+        min-width: 400px;
+        box-shadow: 0 0 2px black;
+        position: relative;
+    }
+    .My-5{
+        display: grid;
+        grid-template-columns: 0.5fr 1.5fr 0.5fr 1.5fr; 
+        gap: 8%;
+        /* background-color: #d6d6d6; */
+        box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.255);
+        padding: 20px 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+}
+/* @media screen and (min-width: 801px)
+{
+    
+    .MY-profile{
+        background-color: transparent;
+        width: 200%;
+        height: 565px;
+        padding: 1.5rem;
+        border-radius: 5px;
+        margin: 28px 0 0 8%;
+        min-width: 400px;
+        box-shadow: 0 0 2px black;
+        position: relative;
+    }
+ 
+} */
+@media screen and (max-width:900px)
+{
+    .History{
+        margin: 0px 0 0 -5%  ;
+    }
+    .MY-profile{
+        background-color: transparent;
+        width: 120%;
+        height: auto;
+        padding: 1rem;
+        border-radius: 5px;
+        margin: 28px -8% 0 -3%;
+        min-width: 400px;
+        box-shadow: 0 0 2px black;
+        position: relative;
+    }
+    .My-5{
+        display: grid;
+        grid-template-columns: 0.5fr 1.5fr 0.5fr 1.5fr; 
+        gap: 3%;
+        /* background-color: #d6d6d6; */
+        box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.255);
+        padding: 20px 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+}
+@media screen and (max-width:800px)
+{
+    .History{
+        margin: 0 0 0 0;
+    }
+    .MY-profile{
+        background-color: transparent;
+        width: 90%;
+        height: auto;
+        padding: 1rem;
+        border-radius: 5px;
+        margin: 28px -10% 0 10%;
+        min-width: 400px;
+        box-shadow: 0 0 2px black;
+        position: relative;
+    }
+
+}

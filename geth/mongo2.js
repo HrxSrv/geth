@@ -22,10 +22,15 @@ const newSchema=new mongoose.Schema({
     img:String,
     gender:String
 })
+const historySchema=new mongoose.Schema({
+    uname:String,
+    workerid:String
+})
 
 const userinformation = mongoose.model("userinformation",newSchema)
-module.exports=userinformation;
-
+const userhistoryinfo = mongoose.model("userhistoryinfo",historySchema)
+module.exports = { userinformation, userhistoryinfo };
+// module.exports=userhistoryinfo;
 // {   "firstname":"gaurav",
 //     "address":{
 //     "name":"gaurav",

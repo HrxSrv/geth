@@ -45,18 +45,21 @@ export default function Login() {
     // useEffect(()=>{
     //     setValueemail(localStorage.getItem('e__mail'))
     // })
+    // console.log(email)
     async function submit(e) {
+        e.preventDefault();
         try {
             await axios.post("http://localhost:8000/login", {
                 email, password
             })
                 .then(res => {
-                    if (res.data) {
+                    
+                    if (res.data === "notexist" || res.data==="fail") {
+                        alert("Wrong password or username!")
+                    }
+                    else{
                         history("/", { state: { id: email }})
                         setUserData({ email: res.data.email, password: res.data.password,username:res.data.username });
-                    }
-                    else if (res.data === "notexist") {
-                        alert("Wrong password or username!")
                     }
                 })
                 .catch(e => {

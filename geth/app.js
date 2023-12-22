@@ -1,6 +1,6 @@
 const express = require("express")
 const multer = require("multer")
-const userinformation = require("./mongo2")
+const { userinformation, userhistoryinfo } = require("./mongo2")
 const userdata = require('./mongo')
 const cors = require("cors")
 const { json } = require("react-router-dom")
@@ -13,28 +13,29 @@ app.use(cors())
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, "../geth/public/upload");
+        cb(null, "../geth/public/upload");
     },
     filename: function (req, file, cb) {
-      cb(null, Date.now() + file.originalname);
+        cb(null, Date.now() + file.originalname);
     },
 });
 
 const upload = multer({ storage: storage });
 
-app.get("/login", cors(), async (req, res) => {
-    const d = await userinformation.find()
-    res.json(d);
-})
+// app.get("/login", cors(), async (req, res) => {
+//     const d = await userinformation.find()
+//     res.json(d);
+// })
 
 app.post("/login", async (req, res) => {
     const { email, password } = req.body
-
+    // console.log(email);
     try {
         const check = await userdata.findOne({ email: email })
-        console.log(check.password)  
-        if (check.email===email && check.password===password) {
+        // console.log(check)  
+        if (check.email === email && check.password === password && check) {
             res.json(check)
+            console.log("1");
         }
         else {
             res.json("notexist")
@@ -45,12 +46,42 @@ app.post("/login", async (req, res) => {
         res.json("fail")
     }
 })
+app.get("/history", async (req, res) => {
+    const { username } = req.query
+    // console.log(req.query);
+    try {
+        const check = await userhistoryinfo.find({ uname: username })
+        res.status(200).json(check)
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+})
+app.get('/worker/:workerid', async (req, res) => {
+    const { workerid } = req.params;
+    // console.log(workerid)
+    try {
+      // Fetch worker details from the database
+      const workerDetails = await userinformation.findById(workerid);
+  
+      if (!workerDetails) {
+        return res.status(404).json({ error: 'Worker not found' });
+      }
+  
+      res.json(workerDetails);
+    //   console.log(workerDetails)
+    } catch (error) {
+      console.error('Error fetching worker details:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
 app.post("/register", async (req, res) => {
-    const { email, password,username } = req.body
+    const { email, password, username } = req.body
     const data = {
         email: email,
         password: password,
-        username:username
+        username: username
     }
     try {
         const check = await userdata.findOne({ email: email })
@@ -69,15 +100,14 @@ app.post("/register", async (req, res) => {
 })
 app.post('/userprofile', async (req, res) => {
 
-    try{
+    try {
 
         const udata = new userdata(req.body)
         // console.log(udata)
         const id = udata.username
-    
-        const uinformation = await userdata.findOne({username: id})
-        if(uinformation)
-        {
+
+        const uinformation = await userdata.findOne({ username: id })
+        if (uinformation) {
             uinformation.firstname = udata.firstname
             uinformation.lastname = udata.lastname
             uinformation.mobilenumber = udata.mobilenumber
@@ -86,8 +116,7 @@ app.post('/userprofile', async (req, res) => {
             await uinformation.save()
             res.status(200).json("data saved")
         }
-        else
-        {
+        else {
             res.json("not exist");
         }
     }
@@ -109,13 +138,12 @@ app.patch('/useraddress', async (req, res) => {
         const id = updatedAddress.username
         console.log(updatedAddress);
         const daaata = await userdata.findOne({ username: id })
- 
         if (daaata) {
             daaata.address = updatedAddress.address
             await daaata.save()
             res.status(200).json(req.body)
         }
-        else{
+        else {
             res.json("not exist");
         }
     }
@@ -127,16 +155,16 @@ app.patch('/useraddress', async (req, res) => {
 
 })
 
-app.post('/contact', upload.single("file"),async(req,res)=>{
+app.post('/contact', upload.single("file"), async (req, res) => {
 
-    try{
+    try {
         console.log(req.body)
         const file = req.file || {};
         console.log(file);
-        const filepath =  file.filename || "default.png";
-        const {dob , email, experience,message,name,occupation,phone,states,wage,gender} = req.body;
+        const filepath = file.filename || "default.png";
+        const { dob, email, experience, message, name, occupation, phone, states, wage, gender } = req.body;
 
-         const workerdata = {
+        const workerdata = {
             email: email,
             dob: dob,
             experience: experience,
@@ -146,28 +174,43 @@ app.post('/contact', upload.single("file"),async(req,res)=>{
             phone: phone,
             states: states,
             wage: wage,
-            img:filepath,
-            gender:gender
+            img: filepath,
+            gender: gender
         }
-        
+
         await userinformation.insertMany([workerdata])
 
     }
-    catch(err)
-    {
+    catch (err) {
         console.log(err);
         res.status(500).json({ message: 'Internal server error' });
     }
 
 })
-app.get('/hireworkers',async(req,res)=>{
-    try{
+app.post('/confirmhire', async (req, res) => {
+    try {
+        const { uname, workerid } = req.body;
+        // console.log(hiredWorker)
+        const userHistoryData = {
+            uname: uname,
+            workerid: workerid,
+        };
+        // console.log(userHistoryData);
+        const userHistory = new userhistoryinfo(userHistoryData);
+        await userHistory.save()
+        res.status(200).json({ message: 'Hiring confirmed successfully' });
+    } catch (error) {
+        console.error('Error confirming hiring:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
+app.get('/hireworkers', async (req, res) => {
+    try {
         const workers = await userinformation.find()
         res.json(workers)
         // console.log(workers[0])
     }
-    catch(err)
-    {
+    catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
     }

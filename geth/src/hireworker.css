@@ -1,5 +1,6 @@
 .rightbars {
     display: flex;
+    position: relative;
     flex-direction: column;
     gap: 20px 30px;
     margin: 50px 100px 70px 10px;
@@ -15,7 +16,11 @@
     justify-content: space-evenly;
     gap: 0 10%;
     position: relative;
+
     /* background-color: rgb(154, 251, 154); */
+    &.blur {
+        filter: blur(7px);
+    }
 }
 
 .rightbars .rightBar .ContaineR {
@@ -24,7 +29,10 @@
     top: 120px;
     padding: 20px;
     width: 20%;
-    background-color: #007BFF;
+    /* font-size: 15px; */
+    background-color:transparent;
+    border-radius: 0px 5px ;
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.7);
 }
 
 .rightbars .rightBar .ContaineR .item {
@@ -177,6 +185,7 @@
 .rightbars .rightBar .ContaineR .item .user .buttons button:last-child {
     background-color: #f0544f;
 }
+
 .Worker-profiles {
     display: flex;
     flex-wrap: wrap;
@@ -184,51 +193,218 @@
     width: 100%;
 
 
-  }
-  
-  .Worker-card {
-    width: calc(20%  ); /* Adjust the card width as needed */
+}
+
+.Worker-card {
+    width: calc(20%);
+    /* Adjust the card width as needed */
     background-color: white;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    
-  }
-  
-  .Worker-card img {
+
+}
+
+.Worker-card img {
     width: 100%;
     border-radius: 5px;
     max-height: 187.5px;
-  }
-  
-  .Worker-card h3 {
+}
+
+.Worker-card h3 {
     margin-top: 10px;
     font-size: 18px;
-  }
-  
-  .Worker-card p {
+}
+.star-name{
+    display: flex;
+    justify-content: space-between;
+}
+.star-name .star-img{
+    width: 15px;
+    height: 15px;
+    margin-top: 10px;
+}
+.star-name span{
+    margin-right: 3px;
+}
+.Worker-card p {
     font-size: 14px;
     margin: 5px 0;
-  }
-  
-  .Worker-card .hire-button {
+}
+
+.Worker-card .hire-button {
     padding: 10px 20px;
     background-color: #007BFF;
     color: white;
-    border:none;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.Worker-card .hire-button:hover {
+    background-color: #0056b3;
+}
+
+.imagepath {
+    display: none;
+}
+
+.overlay {
+    position: fixed;
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.687);
+    /* Adjust the opacity as needed */
+    z-index: 9998;
+    /* Ensure the overlay is behind the popup but above the main content */
+}
+
+.hire {
+    /* background-color: rgb(0, 0, 0); */
+    width: 50%;
+    /* height: 200px; */
+    position: fixed;
+    top: 410px;
+    right: 0;
+    transform: translate(-41.7%, -50%);
+    z-index: 9999;
+    background-color: transparent;
+    padding: 0.5% 2% 1% 1%;
+    color: black;
+    box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    /* text-align: center; */
+}
+
+/* .hire .popup .popup-content {
+    text-align: center;
+} */
+
+.hire .popup .popup-content .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    color: white;
+    padding: 8px 12px 6px 12.5px;
+    border-radius: 50%;
+    background-color: black;
+}
+
+
+.row {
+    display: flex;
+    margin: 0 5% 0 7.5%;
+}
+
+.profile-nav {
+    margin-top: 20px;
+    position: relative;
+    width: 100%;
+    display: flex;
+}
+
+.user-heading {
+    display: flex;
+    width: 100%;
+    height: 95%;
+    background-color: #605e5e;
+    color: #fff;
+    border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    padding: 2% 10% 1% 10%;
+    text-align: center;
+}
+
+.user-heading img {
+    margin-top: 1.5%;
+    width: 25%;
+    height: 75%;
+    max-width: 125px;
+    max-height: 125px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border: 10px solid rgba(255, 255, 255, 0.23);
+}
+
+.user-heading .bio-data {
+    width: 71%;
+    padding: 0% 2% 2% 2%;
+}
+
+/* .user-heading h1 {
+    font-size: 150%;
+    font-weight: 300;
+    margin-bottom: -5px;
   }
   
-  .Worker-card .hire-button:hover {
-    background-color: #0056b3;
-  }
-  .imagepath{
-    display: none;
-  }
-  @media screen and (max-width: 1075px){
+  .user-heading p {
+    font-size: 110%;
+  } */
+
+.user-heading .Buttons button {
+    padding: 5px 10px;
+    margin: 8% 4% 4% 4%;
+    border-radius: 5px;
+    border: none;
+    background-color: transparent;
+    box-shadow: 0px 0px 5px 1px white;
+    color: #fff;
+    transition: 0.25s;
+    font-size: 130%;
+}
+.user-heading label{
+    font-size: 130%;
+    margin-right: 3%;
+}
+.user-heading input{
+    background-color: transparent;
+    border: none;
+    box-shadow: 0px 0px 5px 1px white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.user-heading .Buttons button:hover {
+    background-color: #fff;
+    color: black;
+    cursor: pointer;
+}
+
+.bio-graph-info {
+    margin: 3% 5% 0 7.5%;
+    background-color: #fff;
+    padding: 15px 30px;
+    border-radius: 0px 5px 0px 5px;
+}
+
+.bio-graph-info h1 {
+    font-size: 28px;
+    font-weight: 300;
+    margin: 0 0 15px;
+}
+
+.bio-graph-info .bio-row {
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+    padding: 0 15px;
+}
+
+.bio-graph-info .bio-row p span {
+    width: 100px;
+    display: inline-block;
+    margin-bottom: -30px;
+
+}
+
+
+@media screen and (max-width: 1075px) {
 
     .rightbars .rightBar .ContaineR {
         position: fixed;
@@ -238,26 +414,61 @@
         width: 28%;
         background-color: #007BFF;
     }
+
     .Worker-profiles {
         display: flex;
         flex-wrap: wrap;
         gap: 30px 4%;
         width: 100%;
-    
-    
-      }
+
+
+    }
+
     .Worker-card {
-        width: calc(28%  ); /* Adjust the card width as needed */
+        width: calc(28%);
+        /* Adjust the card width as needed */
         background-color: white;
         padding: 20px;
         border: 1px solid #ccc;
         border-radius: 5px;
         margin-bottom: 20px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        
-      }
-  }
-  @media screen and (max-width: 775px){
+
+    }
+
+    .hire {
+        /* background-color: rgb(0, 0, 0); */
+        width: 70%;
+        /* height: 200px; */
+        position: fixed;
+        top: 410px;
+        right: 0;
+        left: 43%;
+        transform: translate(-41.7%, -50%);
+        z-index: 9999;
+        background-color: transparent;
+        padding: 0.5% 2% 1% 1%;
+        color: black;
+        box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+
+        /* text-align: center; */
+    }
+
+    .hire .popup .popup-content .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 15px;
+        cursor: pointer;
+        color: white;
+        padding: 4.5px 9px 4.5px 9.5px;
+        border-radius: 50%;
+        background-color: black;
+    }
+}
+
+@media screen and (max-width: 775px) {
     .rightbars .rightBar .ContaineR {
         position: fixed;
         right: 5px;
@@ -266,22 +477,55 @@
         width: 39%;
         background-color: #007BFF;
     }
+
     .Worker-profiles {
         display: flex;
         flex-wrap: wrap;
         gap: 30px 15%;
         width: 100%;
-    
-    
-      }
+
+
+    }
+
     .Worker-card {
-        width: calc(40%  ); /* Adjust the card width as needed */
+        width: calc(40%);
+        /* Adjust the card width as needed */
         background-color: white;
         padding: 20px;
         border: 1px solid #ccc;
         border-radius: 5px;
         margin-bottom: 20px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        
-      }
-  }
+
+    }
+
+    .hire {
+        /* background-color: rgb(0, 0, 0); */
+        width: 85%;
+        /* height: 200px; */
+        position: fixed;
+        top: 410px;
+        right: 0;
+        left: 43%;
+        transform: translate(-41.7%, -50%);
+        z-index: 9999;
+        background-color: transparent;
+        padding: 0.5% 2% 1% 1%;
+        color: black;
+        box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        /* text-align: center; */
+    }
+
+    .hire .popup .popup-content .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 13px;
+        cursor: pointer;
+        color: white;
+        padding: 2px 6px 2px 6.5px;
+        border-radius: 50%;
+        background-color: black;
+    }
+}
