@@ -24,12 +24,18 @@ const newSchema=new mongoose.Schema({
 })
 const historySchema=new mongoose.Schema({
     uname:String,
-    workerid:String
+    workerid:String,
+    HireDate:Date
 })
-
+const ratingSchema=new mongoose.Schema({
+    workerId:String,
+    rating:Number,
+    username:String
+})
 const userinformation = mongoose.model("userinformation",newSchema)
 const userhistoryinfo = mongoose.model("userhistoryinfo",historySchema)
-module.exports = { userinformation, userhistoryinfo };
+const workerrating = mongoose.model("workerrating",ratingSchema)
+module.exports = { userinformation, userhistoryinfo, workerrating };
 // module.exports=userhistoryinfo;
 // {   "firstname":"gaurav",
 //     "address":{

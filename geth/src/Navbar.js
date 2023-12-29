@@ -100,7 +100,7 @@ function Navbar({ scrollToElement }) {
                             <div className="profile-img-div">
                                 <img src={logo4} alt=" " className="profile-img-1" />
                             </div>
-                            <Link to="/userprofile/settings" ><p>Settings</p></Link>
+                            <Link to="/userprofile/settings" ><p>History</p></Link>
                             <img src={logo7} alt=" " className="profile-img-arrow-2" />
                         </div>
                         <div className="profile-1">

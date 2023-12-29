@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import "./hireworker.css";
 import logo5 from "./w1_2.jpg";
 import logo4 from "./w2.jpg"
@@ -64,7 +64,8 @@ const Hireworker = () => {
         Five_10: false,
         Above_10: false,
     });
-    // console.log(checkedGender)
+    const [selectedState, setSelectedState] = useState("");
+    // console.log(selectedState)
     const handleCheckboxChange = (season) => {
         setCheckedGender((prevGender) => ({
             ...prevGender,
@@ -91,6 +92,90 @@ const Hireworker = () => {
     };
 
     const [users, setUsers] = useState([]);
+    const [ratings, setRatings] = useState([]);
+
+    const [filteredUsers, setFilteredUsers] = useState([]);
+
+    useEffect(() => {
+        applyFilters();
+    }, [checkedGender, checkedWages, checkedAge, checkedWe, selectedState]);
+
+    useEffect(() => {
+        applyFilters();
+    }, [users, checkedGender, checkedWages, checkedAge, checkedWe, selectedState]);
+    const applyFilters = () => {
+        // Create a copy of the original users array
+        let filteredList = [...users];
+        // console.log(filteredList)
+        filteredList = filteredList.filter((user) => {
+            if (checkedGender.Female || checkedGender.Male) {
+                return (
+                    (checkedGender.Female && user.gender === 'female') ||
+                    (checkedGender.Male && user.gender === 'male')
+                );
+            }
+            return true; // No gender filter selected, include all users
+        });
+        filteredList = filteredList.filter((user) => {
+            if (checkedWages.Under_1000 ||
+                checkedWages.Under_1200 ||
+                checkedWages.Under_1400 ||
+                checkedWages.Under_1600 ||
+                checkedWages.Under_1800 ||
+                checkedWages.Under_2000) {
+                const wagesFilter =
+                    (checkedWages.Under_1000 && user.wage <= 600) ||
+                    (checkedWages.Under_1200 && user.wage <= 800) ||
+                    (checkedWages.Under_1400 && user.wage <= 1000) ||
+                    (checkedWages.Under_1600 && user.wage <= 1200) ||
+                    (checkedWages.Under_1800 && user.wage <= 1400) ||
+                    (checkedWages.Under_2000 && user.wage <= 1600);
+                return wagesFilter
+            }
+            return true; // No gender filter selected, include all users
+        });
+        filteredList = filteredList.filter((user) => {
+            if (checkedAge.Twenty_25 ||
+                checkedAge.Twentyfive_30 ||
+                checkedAge.Thirty_35 ||
+                checkedAge.Thirtyfive_40 ||
+                checkedAge.Forty_45 ||
+                checkedAge.Fortyfive_50) {
+                const dobString = user.dob;
+                const Age = calculateAge(dobString);
+                // console.log(Age)
+                const ageFilter =
+                    (checkedAge.Twenty_25 && Age >= 20 && Age <= 25) ||
+                    (checkedAge.Twentyfive_30 && Age >= 25 && Age <= 30) ||
+                    (checkedAge.Thirty_35 && Age >= 30 && Age <= 35) ||
+                    (checkedAge.Thirtyfive_40 && Age >= 35 && Age <= 40) ||
+                    (checkedAge.Forty_45 && Age >= 40 && Age <= 45);
+                return ageFilter
+            }
+            return true; // No gender filter selected, include all users
+        });
+        filteredList = filteredList.filter((user) => {
+            if (checkedWe.One_5 ||
+                checkedWe.Five_10 ||
+                checkedWe.Above_10) {
+                const weFilter =
+                    (checkedWe.One_5 && user.experience >= 1 && user.experience <= 5) ||
+                    (checkedWe.Five_10 && user.experience >= 5 && user.experience <= 10) ||
+                    (checkedWe.Above_10 && user.experience > 10);
+                return weFilter
+            }
+            return true; // No gender filter selected, include all users
+        });
+        filteredList = filteredList.filter((user) => {
+            // Check if the selected state is present in the user's state
+            
+            return selectedState ? user.states === selectedState : true;
+        });
+
+        // console.log(selectedState)
+        // console.log(filteredList)
+        setFilteredUsers(filteredList);
+    };
     // console.log(users)
     useEffect(() => {
         const fetchUsers = async () => {
@@ -108,11 +193,12 @@ const Hireworker = () => {
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const [selectedUserIndex, setSelectedUserIndex] = useState(null);
-
+    const [hiredate, setHiredate] = useState("");
+    // console.log(hiredate)
     const openPopup = (user, index) => {
         setSelectedUser(user);
         setSelectedUserIndex(index);
-        console.log(index)
+        // console.log(index)
         setPopupOpen(true);
     };
     // console.log(selectedUser._id);
@@ -132,15 +218,31 @@ const Hireworker = () => {
         setSelectedUserIndex(nextIndex);
     };
     const { userData } = useData();
-    console.log(userData)
+    // console.log(userData)
     const handleConfirmHiring = async () => {
 
         try {
+            if (!hiredate) {
+                // If hiring date is not selected, show an error message
+                alert("Please select hiring date.");
+                return;
+            }
             const hiringData = {
                 uname: userData.username,
                 workerid: selectedUser._id,
+                Hiredate: hiredate
             };
-            await axios.post("http://localhost:8000/confirmhire", hiringData);
+            const response = await axios.post("http://localhost:8000/confirmhire", hiringData);
+            if (response.status === 200) {
+                // Handle success
+                console.log('Hiring confirmed successfully');
+
+                // Display an alert with a success message
+                alert(`User hired on ${hiredate} successfully!`);
+            } else {
+                // Handle unexpected status codes
+                console.warn('Unexpected status code:', response.status);
+            }
         }
         catch (error) {
             console.error('Error confirming hiring:', error);
@@ -148,20 +250,25 @@ const Hireworker = () => {
         closePopup();
     };
     function calculateAge(dob) {
-        // Parse the DOB string into a Date object
+
         const dobDate = new Date(dob);
 
-        // Get the current date
         const currentDate = new Date();
 
-        // Calculate the difference in milliseconds
         const timeDifference = currentDate - dobDate;
 
-        // Calculate the age in years
         const age = Math.floor(timeDifference / (365.25 * 24 * 60 * 60 * 1000));
 
         return age;
     }
+    const getCurrentDate = () => {
+        const currentDate = new Date();
+        currentDate.setHours(currentDate.getHours() + 12);
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+        const day = String(currentDate.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+    };
 
     const dobString = !selectedUser ? "2022-12-07T00:00:00.000Z" : selectedUser.dob;
     const age = calculateAge(dobString);
@@ -170,30 +277,50 @@ const Hireworker = () => {
 
     let imgpath = " ";
     let imagepath = " ";
-    const UserProfileContainer = ({ user, onHireClick }) => (
-        <div class="Worker-card">
-            <div className="imagepath">
+    const UserProfileContainer = ({ user, onHireClick }) => {
+        const userIdRef = useRef(user._id);
+        // console.log(userIdRef)
+        // useEffect(() => {
+        //     console.log('Effect is running');
+        //     console.log('Current userId:', userIdRef.current);
+        //     const fetchRating = async () => {
+        //         try {
+        //             const workerId = "65707bd90e532bbf6f17ab0d"
+        //             const response = await axios.get(`http://localhost:8000/getAverageRating/${userIdRef.current}`);
+        //             setRatings(response.data);
+        //             // console.log(ratings)
+        //         } catch (error) {
+        //             console.error('Error fetching users:', error);
+        //         }
+        //     };
 
-                {imgpath = user ? user.img : " "}
-                {imagepath = process.env.PUBLIC_URL + '/upload/' + imgpath}
-            </div>
-            {/* {console.log(imagepath)} */}
-            <img src={imagepath} alt="Worker 1" />
-            <div className='star-name'>
-                <h3>{user.name}</h3>
-                <div>
-                    <span>5</span>
-                    <img src={star} alt="star" className='star-img' />
+        //     fetchRating();
+        // }, [userIdRef.current]);
+        return (
+            <div class="Worker-card">
+                <div className="imagepath">
+
+                    {imgpath = user ? user.img : " "}
+                    {imagepath = process.env.PUBLIC_URL + '/upload/' + imgpath}
                 </div>
+                {/* {console.log(imagepath)} */}
+                <img src={imagepath} alt="Worker 1" />
+                <div className='star-name'>
+                    <h3>{user.name}</h3>
+                    <div>
+                        <span>5</span>
+                        <img src={star} alt="star" className='star-img' />
+                    </div>
+                </div>
+                <p>Wage: {user.wage}/hour</p>
+                <p>{user.occupation}</p>
+                <p>Location: {user.states} </p>
+                <button class="hire-button" onClick={onHireClick}>Hire</button>
             </div>
-            <p>Wage: {user.wage}/hour</p>
-            <p>{user.occupation}</p>
-            <p>Location: {user.states}</p>
-            <button class="hire-button" onClick={onHireClick}>Hire</button>
-        </div>
-    );
+        )
+    };
     const renderUserProfiles = () => {
-        return users.map((user, index) => (
+        return filteredUsers.map((user, index) => (
             <UserProfileContainer key={index} user={user} onHireClick={() => openPopup(user, index)} />
         ));
 
@@ -221,12 +348,12 @@ const Hireworker = () => {
                             <div className={isExpanded ? "boxes" : "boxes-hide"}>
                                 <FormGroup>
                                     <FormControlLabel
-                                        control={<Checkbox checked={checkedGender.Female} onChange={() => handleCheckboxChange('Female')} style={{ color: 'white' }} />}
-                                        label={<span style={{ color: 'white' }}>Female</span>}
+                                        control={<Checkbox checked={checkedGender.Female} onChange={() => handleCheckboxChange('Female')} style={{ color: '#007BFF' }} />}
+                                        label={<span style={{ color: 'black' }}>Female</span>}
                                     />
                                     <FormControlLabel
-                                        control={<Checkbox checked={checkedGender.Male} onChange={() => handleCheckboxChange('Male')} style={{ color: 'white' }} />}
-                                        label={<span style={{ color: 'white' }}>Male</span>}
+                                        control={<Checkbox checked={checkedGender.Male} onChange={() => handleCheckboxChange('Male')} style={{ color: '#007BFF' }} />}
+                                        label={<span style={{ color: 'black' }}>Male</span>}
                                     />
                                 </FormGroup>
                             </div>
@@ -243,28 +370,28 @@ const Hireworker = () => {
                             <div className={isExpanded1 ? "boxes-2" : "boxes-hide"}>
                                 <FormGroup>
                                     <FormControlLabel
-                                        control={<Checkbox checked={checkedWages.Under_1000} onChange={() => handleCheckboxChangeWages('Under_1000')} style={{ color: 'white' }} />}
-                                        label={<span style={{ color: 'white' }}>Under 1000</span>}
+                                        control={<Checkbox checked={checkedWages.Under_1000} onChange={() => handleCheckboxChangeWages('Under_1000')} style={{ color: '#007BFF' }} />}
+                                        label={<span style={{ color: 'black' }}>Under 600</span>}
                                     />
                                     <FormControlLabel
-                                        control={<Checkbox checked={checkedWages.Under_1200} onChange={() => handleCheckboxChangeWages('Under_1200')} style={{ color: 'white' }} />}
-                                        label={<span style={{ color: 'white' }}>Under 1200</span>}
+                                        control={<Checkbox checked={checkedWages.Under_1200} onChange={() => handleCheckboxChangeWages('Under_1200')} style={{ color: '#007BFF' }} />}
+                                        label={<span style={{ color: 'black' }}>Under 800</span>}
                                     />
                                     <FormControlLabel
-                                        control={<Checkbox checked={checkedWages.Under_1400} onChange={() => handleCheckboxChangeWages('Under_1400')} style={{ color: 'white' }} />}
-                                        label={<span style={{ color: 'white' }}>Under 1400</span>}
+                                        control={<Checkbox checked={checkedWages.Under_1400} onChange={() => handleCheckboxChangeWages('Under_1400')} style={{ color: '#007BFF' }} />}
+                                        label={<span style={{ color: 'black' }}>Under 1000</span>}
                                     />
                                     <FormControlLabel
-                                        control={<Checkbox checked={checkedWages.Under_1600} onChange={() => handleCheckboxChangeWages('Under_1600')} style={{ color: 'white' }} />}
-                                        label={<span style={{ color: 'white' }}>Under 1600</span>}
+                                        control={<Checkbox checked={checkedWages.Under_1600} onChange={() => handleCheckboxChangeWages('Under_1600')} style={{ color: '#007BFF' }} />}
+                                        label={<span style={{ color: 'black' }}>Under 1200</span>}
                                     />
                                     <FormControlLabel
-                                        control={<Checkbox checked={checkedWages.Under_1800} onChange={() => handleCheckboxChangeWages('Under_1800')} style={{ color: 'white' }} />}
-                                        label={<span style={{ color: 'white' }}>Under 1800</span>}
+                                        control={<Checkbox checked={checkedWages.Under_1800} onChange={() => handleCheckboxChangeWages('Under_1800')} style={{ color: '#007BFF' }} />}
+                                        label={<span style={{ color: 'black' }}>Under 1400</span>}
                                     />
                                     <FormControlLabel
-                                        control={<Checkbox checked={checkedWages.Under_2000} onChange={() => handleCheckboxChangeWages('Under_2000')} style={{ color: 'white' }} />}
-                                        label={<span style={{ color: 'white' }}>Under 2000</span>}
+                                        control={<Checkbox checked={checkedWages.Under_2000} onChange={() => handleCheckboxChangeWages('Under_2000')} style={{ color: '#007BFF' }} />}
+                                        label={<span style={{ color: 'black' }}>Under 1600</span>}
                                     />
                                 </FormGroup>
                             </div>
@@ -280,27 +407,27 @@ const Hireworker = () => {
                             <div className={isExpanded2 ? "boxes-2" : "boxes-hide"}>
                                 <FormGroup>
                                     <FormControlLabel
-                                        control={<Checkbox checked={checkedAge.Twenty_25} onChange={() => handleCheckboxChangeAge('Twenty_25')} style={{ color: 'white' }} />}
-                                        label={<span style={{ color: 'white' }}>20-25</span>}
+                                        control={<Checkbox checked={checkedAge.Twenty_25} onChange={() => handleCheckboxChangeAge('Twenty_25')} style={{ color: '#007BFF' }} />}
+                                        label={<span style={{ color: 'black' }}>20-25</span>}
                                     />
                                     <FormControlLabel
-                                        control={<Checkbox checked={checkedAge.Twentyfive_30} onChange={() => handleCheckboxChangeAge('Twentyfive_30')} style={{ color: 'white' }} />}
-                                        label={<span style={{ color: 'white' }}>25-30</span>}
+                                        control={<Checkbox checked={checkedAge.Twentyfive_30} onChange={() => handleCheckboxChangeAge('Twentyfive_30')} style={{ color: '#007BFF' }} />}
+                                        label={<span style={{ color: 'black' }}>25-30</span>}
                                     />
                                     <FormControlLabel
-                                        control={<Checkbox checked={checkedAge.Thirty_35} onChange={() => handleCheckboxChangeAge('Thirty_35')} style={{ color: 'white' }} />}
-                                        label={<span style={{ color: 'white' }}>30-35</span>}
+                                        control={<Checkbox checked={checkedAge.Thirty_35} onChange={() => handleCheckboxChangeAge('Thirty_35')} style={{ color: '#007BFF' }} />}
+                                        label={<span style={{ color: 'black' }}>30-35</span>}
                                     />
                                     <FormControlLabel
-                                        control={<Checkbox checked={checkedAge.Thirtyfive_40} onChange={() => handleCheckboxChangeAge('Thirtyfive_40')} style={{ color: 'white' }} />}
-                                        label={<span style={{ color: 'white' }}>35-40</span>}
+                                        control={<Checkbox checked={checkedAge.Thirtyfive_40} onChange={() => handleCheckboxChangeAge('Thirtyfive_40')} style={{ color: '#007BFF' }} />}
+                                        label={<span style={{ color: 'black' }}>35-40</span>}
                                     />
                                     <FormControlLabel
-                                        control={<Checkbox checked={checkedAge.Forty_45} onChange={() => handleCheckboxChangeAge('Forty_45')} style={{ color: 'white' }} />}
-                                        label={<span style={{ color: 'white' }}>40-45</span>}
+                                        control={<Checkbox checked={checkedAge.Forty_45} onChange={() => handleCheckboxChangeAge('Forty_45')} style={{ color: '#007BFF' }} />}
+                                        label={<span style={{ color: 'black' }}>40-45</span>}
                                     />
                                     {/* <FormControlLabel
-                                        control={<Checkbox checked={checkedAge.Fortyfive_50} onChange={() => handleCheckboxChangeAge('Fortyfive_50')} style={{ color: 'white' }} />}
+                                        control={<Checkbox checked={checkedAge.Fortyfive_50} onChange={() => handleCheckboxChangeAge('Fortyfive_50')} style={{ color: 'black' }} />}
                                         label="45-50"
                                     /> */}
                                 </FormGroup>
@@ -316,12 +443,11 @@ const Hireworker = () => {
                             </div>
                             <div className={isExpanded3 ? "State" : "State-hide"}>
                                 <select id="states" name="states"
-                                // onChange={(e) => {
-                                //     setAddress((prevAddress) => ({
-                                //         ...prevAddress,
-                                //         state: e.target.value
-                                //     }));
-                                // }}
+                                    onChange={(e) => {
+                                        setSelectedState(e.target.value);
+                                        applyFilters()
+                                        // Apply filters when the state selection changes
+                                    }}
 
                                 >
                                     <option disabled selected> --Select State--</option>
@@ -373,16 +499,16 @@ const Hireworker = () => {
                             <div className={isExpanded4 ? "boxes" : "boxes-hide"}>
                                 <FormGroup>
                                     <FormControlLabel
-                                        control={<Checkbox checked={checkedWe.One_5} onChange={() => handleCheckboxChangeWe('One_5')} style={{ color: 'white' }} />}
-                                        label={<span style={{ color: 'white' }}>1-5 years</span>}
+                                        control={<Checkbox checked={checkedWe.One_5} onChange={() => handleCheckboxChangeWe('One_5')} style={{ color: '#007BFF' }} />}
+                                        label={<span style={{ color: 'black' }}>1-5 years</span>}
                                     />
                                     <FormControlLabel
-                                        control={<Checkbox checked={checkedWe.Five_10} onChange={() => handleCheckboxChangeWe('Five_10')} style={{ color: 'white' }} />}
-                                        label={<span style={{ color: 'white' }}>5-10 years</span>}
+                                        control={<Checkbox checked={checkedWe.Five_10} onChange={() => handleCheckboxChangeWe('Five_10')} style={{ color: '#007BFF' }} />}
+                                        label={<span style={{ color: 'black' }}>5-10 years</span>}
                                     />
                                     <FormControlLabel
-                                        control={<Checkbox checked={checkedWe.Above_10} onChange={() => handleCheckboxChangeWe('Above_10')} style={{ color: 'white' }} />}
-                                        label={<span style={{ color: 'white' }}>Above 10 years</span>}
+                                        control={<Checkbox checked={checkedWe.Above_10} onChange={() => handleCheckboxChangeWe('Above_10')} style={{ color: '#007BFF' }} />}
+                                        label={<span style={{ color: 'black' }}>Above 10 years</span>}
                                     />
                                 </FormGroup>
                             </div>
@@ -420,10 +546,16 @@ const Hireworker = () => {
                                             <div className="bio-data">
                                                 <div className="Buttons">
                                                     <button onClick={handleConfirmHiring}>Confirm Hiring</button>
-                                                    <button onClick={handleNext}>Next</button>    
+                                                    <button onClick={handleNext}>Next</button>
                                                 </div>
                                                 <label for="dob">Hire date :</label>
-                                                <input type="date" id="dob" name="dob" />
+                                                <input
+                                                    type="date"
+                                                    id="dob"
+                                                    name="dob"
+                                                    onChange={(e) => setHiredate(e.target.value)}
+                                                    min={getCurrentDate()}
+                                                />
                                             </div>
                                         </div>
 

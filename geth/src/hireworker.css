@@ -2,36 +2,53 @@
     display: flex;
     position: relative;
     flex-direction: column;
+    flex: 1;
     gap: 20px 30px;
-    margin: 50px 100px 70px 10px;
+    margin: 50px 10px 50px 10px;
+  
 }
 
 .rightbars .rightBar {
     flex: 3;
     position: sticky;
     top: 70px;
-    height: calc(100vh - 70px);
+    /* height: calc(100vh - 70px); */
+    height: auto;
     overflow: scroll;
-    display: flex;
-    justify-content: space-evenly;
-    gap: 0 10%;
+    display: grid;
+    grid-template-columns: 75% 25%;  
+    justify-content: space-between;
+    gap: 0% 0%;
     position: relative;
-
+    
     /* background-color: rgb(154, 251, 154); */
     &.blur {
         filter: blur(7px);
     }
 }
+.rightbars .rightBar::-webkit-scrollbar {
+    width: 0;
+  }
+.Worker-profiles {
+    /* display: flex;
+    flex-wrap: wrap;
+    gap: 30px 3%;
+    width: 100%; */
+     display: grid;
+     grid-template-columns: repeat(3,25%);
+     gap: 0% 8%;
 
+}
 .rightbars .rightBar .ContaineR {
-    position: fixed;
+    position: absolute;
     right: 5px;
-    top: 120px;
+    top: 5px;
     padding: 20px;
     width: 20%;
     /* font-size: 15px; */
-    background-color:transparent;
-    border-radius: 0px 5px ;
+   
+    background-color: transparent;
+    border-radius: 0px 5px;
     box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.7);
 }
 
@@ -106,9 +123,9 @@
 .rightbars .rightBar .ContaineR .item .State #states {
     width: 160px;
     height: 35px;
-    color: rgb(255, 255, 255);
-    border-color: rgb(255, 255, 255);
-    border: 2px solid rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border-color: rgb(0, 0, 0);
+    border: 2px solid rgb(0, 0, 0);
     transform: height 1s;
 }
 
@@ -186,17 +203,10 @@
     background-color: #f0544f;
 }
 
-.Worker-profiles {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px 3%;
-    width: 100%;
 
-
-}
 
 .Worker-card {
-    width: calc(20%);
+    width: calc(100%);
     /* Adjust the card width as needed */
     background-color: white;
     padding: 20px;
@@ -217,18 +227,22 @@
     margin-top: 10px;
     font-size: 18px;
 }
-.star-name{
+
+.star-name {
     display: flex;
     justify-content: space-between;
 }
-.star-name .star-img{
+
+.star-name .star-img {
     width: 15px;
     height: 15px;
     margin-top: 10px;
 }
-.star-name span{
+
+.star-name span {
     margin-right: 3px;
 }
+
 .Worker-card p {
     font-size: 14px;
     margin: 5px 0;
@@ -359,17 +373,20 @@
     transition: 0.25s;
     font-size: 130%;
 }
-.user-heading label{
+
+.user-heading label {
     font-size: 130%;
     margin-right: 3%;
 }
-.user-heading input{
+
+.user-heading input {
     background-color: transparent;
     border: none;
     box-shadow: 0px 0px 5px 1px white;
     padding: 5px 10px;
     border-radius: 5px;
 }
+
 .user-heading .Buttons button:hover {
     background-color: #fff;
     color: black;
@@ -407,25 +424,37 @@
 @media screen and (max-width: 1075px) {
 
     .rightbars .rightBar .ContaineR {
-        position: fixed;
+        position: absolute;
         right: 5px;
-        top: 120px;
+        top: 5px;
         padding: 20px;
         width: 28%;
-        background-color: #007BFF;
+        background-color: transparent;
+        border-radius: 0px 5px;
+        box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.7);
     }
 
-    .Worker-profiles {
+    /* .Worker-profiles {
         display: flex;
         flex-wrap: wrap;
         gap: 30px 4%;
         width: 100%;
 
 
+    } */
+    .Worker-profiles {
+        /* display: flex;
+        flex-wrap: wrap;
+        gap: 30px 3%;
+        width: 100%; */
+         display: grid;
+         grid-template-columns: repeat(2,35%);
+         gap: 0% 8%;
+    
     }
 
     .Worker-card {
-        width: calc(28%);
+        width: calc(100%);
         /* Adjust the card width as needed */
         background-color: white;
         padding: 20px;
@@ -470,25 +499,33 @@
 
 @media screen and (max-width: 775px) {
     .rightbars .rightBar .ContaineR {
-        position: fixed;
+        position: absolute;
         right: 5px;
-        top: 120px;
+        top: 5px;
         padding: 20px;
         width: 39%;
-        background-color: #007BFF;
+        background-color: transparent;
+        border-radius: 0px 5px;
+        box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.7);
     }
 
-    .Worker-profiles {
+    /* .Worker-profiles {
         display: flex;
         flex-wrap: wrap;
         gap: 30px 15%;
         width: 100%;
 
 
+    } */
+    .Worker-profiles {
+         display: grid;
+         grid-template-columns: repeat(1,50%);
+         gap: 0% 8%;
+    
     }
 
     .Worker-card {
-        width: calc(40%);
+        width: calc(100%);
         /* Adjust the card width as needed */
         background-color: white;
         padding: 20px;

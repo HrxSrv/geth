@@ -31,6 +31,7 @@ export default function Useraddress() {
     const [inputValuecity, setInputValuecity] = useState('');
     const [inputValuelandmark, setInputValuelandmark] = useState('');
     const [inputValueanumber, setInputValueanumber] = useState('');
+    // console.log(inputValuemnumber)
     const [address, setAddress] = useState({
         name: '',
         mnumber: '',
@@ -42,7 +43,17 @@ export default function Useraddress() {
         landmark: '',
         addtionalnumber: ' '
     });
-
+    const [phoneError, setPhoneError] = useState("");
+    const [phoneErrorAdd, setPhoneErrorAdd] = useState("");
+    const handleChangeNumberAdd = (e)=>{
+        // setMobile(e.target.value)
+        const phoneNumber = e.target.value.replace(/\D/g, ''); // Remove non-digit characters
+        if (phoneNumber.length !== 10) {
+            setPhoneErrorAdd("Phone number must be 10 digits.");
+        } else {
+            setPhoneErrorAdd("");
+        }
+    }
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -301,8 +312,17 @@ export default function Useraddress() {
                                             ...prevAddress,
                                             mnumber: e.target.value
                                         }))
+                                        const phoneNumber = e.target.value.replace(/\D/g, ''); // Remove non-digit characters
+                                        // console.log(inputValuemnumber)
+                                        // console.log(phoneError)
+                                        if (phoneNumber.length !== 10 ) {
+                                            setPhoneError("Phone number must be 10 digits.");
+                                        } else {
+                                            setPhoneError("");
+                                        }
                                     }} />
                                 <label for="m-number" className={inputmnumberClass}>Mobile Number*</label>
+                                { !inputValuemnumber ? " ":phoneError && <p style={{ color: 'red' ,margin:'14px 0 0 0'}}>{phoneError}</p> }
                             </div>
                         </div>
                         <div className="F-L">
@@ -358,7 +378,7 @@ export default function Useraddress() {
                                 <label for="city" className={inputcityClass}>City/District*</label>
                             </div>
 
-                            <div class="F-name-container">
+                            <div class="F-name-container-states">
 
                                 <label for="states" className="State-name">State*</label>
                                 <select id="states" name="states"
@@ -426,9 +446,17 @@ export default function Useraddress() {
                                         setAddress((prevAddress) => ({
                                             ...prevAddress,
                                             addtionalnumber: e.target.value
+                                            
                                         }))
+                                        const phoneNumber = e.target.value.replace(/\D/g, ''); // Remove non-digit characters
+                                        if (phoneNumber.length !== 10) {
+                                            setPhoneErrorAdd("Phone number must be 10 digits.");
+                                        } else {
+                                            setPhoneErrorAdd("");
+                                        }
                                     }} />
                                 <label for="a-number" className={inputanumberClass}>Alternate Phone</label>
+                                { !inputValueanumber ? " ":phoneErrorAdd && <p style={{ color: 'red' ,margin:'14px 0 0 0'}}>{phoneErrorAdd}</p> }
                             </div>
                         </div>
                         <div className="bttns">

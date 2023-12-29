@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import Select from 'react-select';
 import './settings.css'
 import logo from "./getH-logos_black.png";
 import logo2 from "./component/profile_img.jpg"
@@ -11,21 +12,47 @@ import logo13 from "./component/edit.png"
 import logo14 from "./component/arrow-down.png"
 import logo8 from "./component/clear.png"
 import logo9 from "./component/menu-bar.png"
+import star from "./component/star.png"
+import star2 from "./component/star2.png"
+import star5 from "./component/star5.png"
+import star6 from "./component/star6.png"
+import star7 from "./component/star7.png"
+import logoup from "./component/arrow-up.png"
+import logodown from "./component/down-arrow.png"
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
 import { useLocation, Link } from 'react-router-dom';
 import axios from "axios";
 import { useData } from './DataContext';
 import { UserAuth } from './AuthContext';
-
+import StarRating from './StarRating';
 export default function UserProfile() {
 
   const { logOut, user } = UserAuth();
   const { userData, deleteUserData } = useData();
   const { email, username } = userData;
-  // console.log(username)
+  const [selectedRating, setSelectedRating] = useState(null);
 
-
-  // const today = new Date();
-  // console.log(today)
+  const handleStarClick = (rating) => {
+    setSelectedRating(rating);
+  };
+  const renderStars = () => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      const filled = i <= selectedRating;
+      stars.push(
+        <img
+          key={i}
+          src={filled ? star2 : star7}
+          alt={filled ? 'filled star' : 'empty star'}
+          onClick={() => handleStarClick(i)}
+          className="rating-star"
+        />
+      );
+    }
+    return stars;
+  };
   const handleSignOut = async () => {
     try {
       await logOut();
@@ -35,7 +62,6 @@ export default function UserProfile() {
   };
 
   const [userHiring, setUsersHiring] = useState([]);
-  console.log(userHiring)
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -72,9 +98,37 @@ export default function UserProfile() {
     setisExpandedbtn(!isExpandedbtn)
   }
 
-  const UserHistoryContainer = ({ user }) => {
+  const UserHistoryContainer = ({ user, index }) => {
     // {console.log(user)}
     const [workerDetails, setWorkerDetails] = useState(null);
+    const dateObject = new Date(user.HireDate);
+    const [isExpandedrating, setisExpandedrating] = useState(false);
+
+    const divTgl = () => {
+      setisExpandedrating(!isExpandedrating);
+    };
+    const [currentRating, setCurrentRating] = useState(null);
+
+    const handleRatingSave = async(workerId,rating) => {
+      try {
+        await axios.post('http://localhost:8000/saveRating', {
+          rating,
+          workerId,
+          username,
+        });
+        // console.log(`Saved rating ${rating} for user ${workerId}`);
+        setCurrentRating(rating);
+        divTgl(); 
+      } catch (error) {
+        console.error('Error saving rating:', error);
+      }
+    };
+
+    const formattedDate = dateObject.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
 
     useEffect(() => {
       const fetchWorkerDetails = async () => {
@@ -85,38 +139,48 @@ export default function UserProfile() {
           console.error('Error fetching worker details:', error);
         }
       };
-  
+      // console.log(user.workerid)
       fetchWorkerDetails();
     }, [user.workerid]);
-    return(
+    return (
 
       <div className="My-5 grid-container">
-      <div className="grid-item">
-        <img src={logo13} alt=" " className="history-img" />
+        <div className="grid-item">
+          <img src={logo13} alt=" " className="history-img" />
+        </div>
+        <div className="grid-item">
+          <p>{!workerDetails ? "Gaurav" : workerDetails.name}</p>
+          <span>{!workerDetails ? "Gaurav" : workerDetails.occupation}</span>
+        </div>
+        <div className="grid-item">
+          <span>{!workerDetails ? "Gaurav" : workerDetails.wage}</span>
+        </div>
+        <div className="grid-item">
+          <span>Booked on {formattedDate}</span>
+
+          <div className="Rating">
+            <div className="filters">
+
+              {!isExpandedrating ? (
+                <p><button onClick={divTgl}>Rate</button></p>
+              ) : (
+                <StarRating onSave={handleRatingSave} initialRating={currentRating} workerId={user.workerid} onClose={divTgl} />
+              )}
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="grid-item">
-        <p>{!workerDetails ? "Gaurav" : workerDetails.name}</p>
-        <span>{!workerDetails ? "Gaurav" : workerDetails.occupation}</span>
-      </div>
-      <div className="grid-item">
-        <span>{!workerDetails ? "Gaurav" : workerDetails.wage}</span>
-      </div>
-      <div className="grid-item">
-        <span>Booked on 7th Oct</span>
-        <p>Rate</p>
-      </div>
-    </div>
     )
   }
 
   const renderUserhistory = () => {
     return userHiring.map((user, index) => (
-      <UserHistoryContainer key={index} user={user} />
+      <UserHistoryContainer key={index} user={user} index={index} />
     ));
   }
 
   return (
-    
+
     <div className="DIv">
       <header>
         <link
@@ -214,7 +278,7 @@ export default function UserProfile() {
             <h4>Gaurav Upadhyay</h4>
             <li><Link to="/userprofile">Profile Information</Link></li>
             <li><Link to="/userprofile/useraddress">Manage Address</Link></li>
-            <li>Settings</li>
+            <li>History</li>
             <ul>
             </ul>
           </div>
@@ -229,7 +293,7 @@ export default function UserProfile() {
 
             <li><Link to="/userprofile">Profile Information</Link></li>
             <li><Link to="/userprofile/useraddress">Manage Address</Link></li>
-            <li>Settings</li>
+            <li>History</li>
             <ul>
             </ul>
           </div>
@@ -241,7 +305,7 @@ export default function UserProfile() {
           <div class="MY-profile">
             <h3>History</h3>
             <hr />
-            {!userHiring.length ? <p> You hired no Household helper from getH </p>:renderUserhistory()}
+            {!userHiring.length ? <p> You hired no Household helper from getH </p> : renderUserhistory()}
           </div>
 
         </div>

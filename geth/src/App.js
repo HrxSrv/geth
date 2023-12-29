@@ -60,7 +60,7 @@ function App() {
                   <Footer />
                 </div>} />
                 <Route exact path='/hireworkers' element={
-                <div>
+                <div className="hire-container">
                   <Navbar/>
                   <Hireworker />
                   <Footer />

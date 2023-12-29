@@ -35,11 +35,20 @@ export default function UserProfile() {
             setSelectedImage(URL.createObjectURL(file));
         }
         setisExpandedimgmenu(!isExpandedimgmenu)
-        console.log(1)
-        console.log(file);
+        // console.log(1)
+        // console.log(file);
     };
-    
-
+    const [phoneError, setPhoneError] = useState("");
+    const handleChangeNumber = (e)=>{
+        setMobile(e.target.value)
+        const phoneNumber = e.target.value.replace(/\D/g, ''); // Remove non-digit characters
+        if (phoneNumber.length !== 10) {
+            setPhoneError("Phone number must be 10 digits.");
+        } else {
+            setPhoneError("");
+        }
+    }
+    // console.log(mobilenumber)
       const handleRemoveImage = () => {
         setSelectedImage(user?.photoURL);
         setisExpandedimgmenu(!isExpandedimgmenu)
@@ -59,48 +68,11 @@ export default function UserProfile() {
             await axios.post("http://localhost:8000/userprofile", {
                 firstname, lastname, mobilenumber, e_mail, occupation,gender,username
             })
-            // .then(res => {
-            //     if (res.data === "exist") {
-            //         history("/", { state: { id: email }})
-            //         setUserData({ email: email, password: password });
-            //     }
-            //     else if (res.data === "notexist") {
-            //         alert("User have not sign up")
-            //     }
-            // })
-            // .catch(e => {
-            //     alert("wrong details")
-            //     console.log(e);
-            // })
         }
         catch (e) {
             console.log(e);
         }
     }
-
-    // const getProducts=async()=>{
-    //   const res =  await axios.get('http://localhost:8000/userprofile');
-    //   //console.log(res.data);   
-    // }
-    // useEffect(()=>{
-    //     getProducts()
-    // },[])
-    // const [userNData, setUserNData] = useState({ mail:' ', pass: ' ' });
-    // const [cnt,setCnt] = useState(0)
-    //console.log(email)
-    //    if(cnt===0)
-    //    {
-    //         setUserNData({
-    //             mail: email,
-    //             pass: password,
-    //           });
-    //           setCnt(x=>x+1)
-    //           console.log(cnt)
-    //    }
-
-    // console.log(useData())
-    // console.log(userNData)
-    // console.log(userNData)
 
 
 
@@ -301,13 +273,14 @@ export default function UserProfile() {
                         </div>
                         <div class="m-number">
                             <label class="form-label">Mobile number </label>
-                            <input type="text" class="form-control" placeholder="" onChange={(e) => { setMobile(e.target.value) }} aria-label="Phone number" />
+                            <input type="text" class="form-control" placeholder="" onChange={handleChangeNumber} aria-label="Phone number" />
+                            {phoneError && <p style={{ color: 'red' }}>{phoneError}</p>}
                         </div>
-
+{/* 
                         <div class="e-mail">
                             <label for="inputEmail4" class="form-label">Email </label>
                             <input type="email" class="form-control" onChange={(e) => { setE_mail(e.target.value) }} id="inputEmail4" />
-                        </div>
+                        </div> */}
 
                         <div class="occu">
                             <label class="form-label">Occupation</label>

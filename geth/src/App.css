@@ -159,6 +159,11 @@ header {
   flex-direction: column;
   min-height: 100vh;
 }
+.hire-container{
+  display: flex;
+  flex-direction: column;
+  min-height: 120vh;
+}
 .DIv{
   background-color: white;
   flex: 1;

@@ -1,6 +1,6 @@
 const express = require("express")
 const multer = require("multer")
-const { userinformation, userhistoryinfo } = require("./mongo2")
+const { userinformation, userhistoryinfo,workerrating } = require("./mongo2")
 const userdata = require('./mongo')
 const cors = require("cors")
 const { json } = require("react-router-dom")
@@ -37,13 +37,13 @@ app.post("/login", async (req, res) => {
             res.json(check)
             console.log("1");
         }
-        else {
+        else 
+        {
             res.json("notexist")
         }
-
     }
-    catch (e) {
-        res.json("fail")
+    catch (e) { 
+       res.json("fail")
     }
 })
 app.get("/history", async (req, res) => {
@@ -60,7 +60,7 @@ app.get("/history", async (req, res) => {
 })
 app.get('/worker/:workerid', async (req, res) => {
     const { workerid } = req.params;
-    // console.log(workerid)
+    console.log(workerid)
     try {
       // Fetch worker details from the database
       const workerDetails = await userinformation.findById(workerid);
@@ -189,18 +189,46 @@ app.post('/contact', upload.single("file"), async (req, res) => {
 })
 app.post('/confirmhire', async (req, res) => {
     try {
-        const { uname, workerid } = req.body;
+        const { uname, workerid, Hiredate } = req.body;
         // console.log(hiredWorker)
         const userHistoryData = {
             uname: uname,
             workerid: workerid,
+            HireDate: Hiredate,
         };
-        // console.log(userHistoryData);
         const userHistory = new userhistoryinfo(userHistoryData);
         await userHistory.save()
         res.status(200).json({ message: 'Hiring confirmed successfully' });
     } catch (error) {
         console.error('Error confirming hiring:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
+app.post('/saveRating',async(req,res)=>{
+    try{
+       const {workerId,rating,username} = req.body;
+    //    console.log(rating)
+       const ratingNumber = parseInt(rating, 10);
+       const RatingData={
+           workerId:workerId,
+           rating:ratingNumber,
+           username:username,
+       }
+       const existingrating = await workerrating.findOne({workerId,username});
+       if(existingrating)
+       {
+        await workerrating.findOneAndUpdate({ workerId, username }, { rating });
+        res.status(200).json({ message: 'Rating updated successfully' });
+       }
+       else
+       {
+           const workerRatingData = new workerrating(RatingData)
+           await workerRatingData.save()
+           res.status(200).json({ message: 'Rating saved successfully' });
+       }
+    }catch(err)
+    {
+        console.error('Error confirming hiring:', err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 })
@@ -218,3 +246,34 @@ app.get('/hireworkers', async (req, res) => {
 app.listen(8000, () => {
     console.log("port connected");
 })
+app.get('/getAverageRating/:workerId', async (req, res) => {
+    try {
+        const { workerId } = req.params;
+         console.log(workerId)
+        // Aggregate to get average rating for the worker
+        const result = await workerrating.aggregate([
+            { $match: { workerId } },
+            {
+                $group: {
+                    _id: null,
+                    averageRating: { $avg: '$rating' },
+                    totalRatings: { $sum: 1 }
+                }
+            }
+        ]);
+
+        if (result.length === 0) {
+            // No ratings found for the worker
+            res.status(404).json({ error: 'No ratings found for the worker' });
+            return;
+        }
+
+        const averageRating = result[0].averageRating;
+        const totalRatings = result[0].totalRatings;
+
+        res.status(200).json({ averageRating, totalRatings });
+    } catch (err) {
+        console.error('Error getting average rating:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
