@@ -11,6 +11,7 @@ import logo13 from "./component/edit.png"
 import logo14 from "./component/arrow-down.png"
 import logo8 from "./component/clear.png"
 import logo9 from "./component/menu-bar.png"
+import logof from './component/feedback.png'
 import { useLocation, Link } from 'react-router-dom';
 import axios from "axios";
 import { useData } from './DataContext';
@@ -208,9 +209,9 @@ export default function Useraddress() {
                             </div>
                             <div className="profile-1">
                                 <div className="profile-img-div">
-                                    <img src={logo5} alt=" " className="profile-img-1" />
+                                    <img src={logof} alt=" " className="profile-img-1" />
                                 </div>
-                                <Link to="/userprofile" ><p>Help & Support</p></Link>
+                                <Link to="/userprofile/review" ><p>Review</p></Link>
                                 <img src={logo7} alt=" " className="profile-img-arrow-3" />
                             </div>
                             <div className="profile-1">
@@ -235,7 +236,8 @@ export default function Useraddress() {
                     <h4>Gaurav Upadhyay</h4>
                     <Link to="/userprofile"><li>Profile Information</li></Link>
                     <Link to="/userprofile/useraddress"><li>Manage Address</li></Link>
-                    <Link to="/userprofile/settings"> <li>Settings</li></Link>
+                    <Link to="/userprofile/settings"> <li>History</li></Link>
+                    <li><Link to="/userprofile/review">Review</Link></li>
                     <ul>
                     </ul>
                 </div>
@@ -250,7 +252,8 @@ export default function Useraddress() {
 
                     <Link to="/userprofile"><li>Profile Information</li></Link>
                     <Link to="/userprofile/useraddress"><li>Manage Address</li></Link>
-                    <Link to="/userprofile/settings"> <li>Settings</li></Link>
+                    <Link to="/userprofile/settings"> <li>History</li></Link>
+                    <li><Link to="/userprofile/review">Review</Link></li>
                     <ul>
                     </ul>
                 </div>
@@ -380,7 +383,7 @@ export default function Useraddress() {
 
                             <div class="F-name-container-states">
 
-                                <label for="states" className="State-name">State*</label>
+                                {/* <label for="states" className="State-name">State*</label> */}
                                 <select id="states" name="states"
                                     onChange={(e) => {
                                         setAddress((prevAddress) => ({

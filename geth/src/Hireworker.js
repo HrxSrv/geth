@@ -11,10 +11,12 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import logo1 from "./component/arrow-up.png"
 import logo2 from "./component/down-arrow.png"
+import logof from './component/feedback.png'
 import star from "./component/star.png"
 import star1 from "./component/star1.png"
 import star2 from "./component/star2.png"
 import star3 from "./component/star3.png"
+// import Razorpay from 'razorpay';
 import { useData } from './DataContext';
 import axios from 'axios';
 const Hireworker = () => {
@@ -92,7 +94,6 @@ const Hireworker = () => {
     };
 
     const [users, setUsers] = useState([]);
-    const [ratings, setRatings] = useState([]);
 
     const [filteredUsers, setFilteredUsers] = useState([]);
 
@@ -188,8 +189,9 @@ const Hireworker = () => {
         };
 
         fetchUsers();
+        // console.log("*")
     }, []);
-
+    // console.log(users)
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const [selectedUserIndex, setSelectedUserIndex] = useState(null);
@@ -219,35 +221,81 @@ const Hireworker = () => {
     };
     const { userData } = useData();
     // console.log(userData)
-    const handleConfirmHiring = async () => {
+    const loadScript = (src) => {
+        return new Promise((resolve) => {
+          const script = document.createElement("script");
+          script.src = src;
+          script.onload = () => {
+            resolve(true);
+          };
+          script.onerror = () => {
+            resolve(false);
+          };
+          document.body.appendChild(script);
+        });
+      };
+    const handleConfirmHiring = async (amount) => {
 
-        try {
-            if (!hiredate) {
-                // If hiring date is not selected, show an error message
-                alert("Please select hiring date.");
-                return;
-            }
-            const hiringData = {
-                uname: userData.username,
-                workerid: selectedUser._id,
-                Hiredate: hiredate
-            };
-            const response = await axios.post("http://localhost:8000/confirmhire", hiringData);
-            if (response.status === 200) {
-                // Handle success
-                console.log('Hiring confirmed successfully');
+        // try {
+        //     if (!hiredate) {
+        //         // If hiring date is not selected, show an error message
+        //         alert("Please select hiring date.");
+        //         return;
+        //     }
+        //     const hiringData = {
+        //         uname: userData.username,
+        //         workerid: selectedUser._id,
+        //         Hiredate: hiredate
+        //     };
+        //     // const response = await axios.post("http://localhost:8000/confirmhire", hiringData);
+        //     // if (response.status === 200) {
+        //     //     // Handle success
+        //     //     console.log('Hiring confirmed successfully');
 
-                // Display an alert with a success message
-                alert(`User hired on ${hiredate} successfully!`);
-            } else {
-                // Handle unexpected status codes
-                console.warn('Unexpected status code:', response.status);
-            }
-        }
-        catch (error) {
-            console.error('Error confirming hiring:', error);
-        }
+        //     //     // Display an alert with a success message
+        //     //     // alert(`User hired on ${hiredate} successfully!`);
+        //     // } else {
+        //     //     // Handle unexpected status codes
+        //     //     console.warn('Unexpected status code:', response.status);
+        //     // }
+        // }
+        // catch (error) {
+        //     console.error('Error confirming hiring:', error);
+        // }
         closePopup();
+
+        const { data: { key } } = await axios.get("http://localhost:8000/getkey")
+
+        const { data: { order } } = await axios.post("http://localhost:8000/checkout", {
+            amount
+        })
+
+        const options = {
+            key,
+            amount: order.amount,
+            currency: "INR",
+            name: "getH",
+            description: "Payment for Geth",
+            order_id: order.id,
+            callback_url: "http://localhost:8000/paymentverification",
+            prefill: {
+                name: "Gaurav Kumar",
+                email: "gaurav.kumar@yadav.com",
+                contact: "7379914045"
+            },
+            notes: {
+                "address": "Razorpay Corporate Office"
+            },
+            theme: {
+                "color": "#121212"
+            }
+        };
+        const res = await loadScript(
+            "https://checkout.razorpay.com/v1/checkout.js"
+         );
+        const razor = new window.Razorpay(options);
+        razor.open();
+
     };
     function calculateAge(dob) {
 
@@ -278,24 +326,28 @@ const Hireworker = () => {
     let imgpath = " ";
     let imagepath = " ";
     const UserProfileContainer = ({ user, onHireClick }) => {
-        const userIdRef = useRef(user._id);
-        // console.log(userIdRef)
-        // useEffect(() => {
-        //     console.log('Effect is running');
-        //     console.log('Current userId:', userIdRef.current);
-        //     const fetchRating = async () => {
-        //         try {
-        //             const workerId = "65707bd90e532bbf6f17ab0d"
-        //             const response = await axios.get(`http://localhost:8000/getAverageRating/${userIdRef.current}`);
-        //             setRatings(response.data);
-        //             // console.log(ratings)
-        //         } catch (error) {
-        //             console.error('Error fetching users:', error);
-        //         }
-        //     };
 
-        //     fetchRating();
-        // }, [userIdRef.current]);
+        const [ratings, setRatings] = useState([]);
+        const [userId, setUserId] = useState(user._id);
+        // const [ratings, setRatings] = useState([]);
+        const userIdRef = useRef(user._id);
+        // console.log(userId)
+        // console.log('Current userId:', userIdRef.current);
+        useEffect(() => {
+            // console.log('Effect is running');
+            const fetchRating = async () => {
+                try {
+                    const response = await axios.get(`http://localhost:8000/getAverageRating/${userId}`);
+                    setRatings(response.data);
+                    // console.log(response.data)
+                } catch (error) {
+                    console.error('Error fetching users:', error);
+                }
+            };
+
+            fetchRating();
+        }, [userId]);
+        // console.log(ratings);
         return (
             <div class="Worker-card">
                 <div className="imagepath">
@@ -308,7 +360,7 @@ const Hireworker = () => {
                 <div className='star-name'>
                     <h3>{user.name}</h3>
                     <div>
-                        <span>5</span>
+                        <span>{ ratings ? ratings.averageRating: 1}</span>
                         <img src={star} alt="star" className='star-img' />
                     </div>
                 </div>
@@ -545,7 +597,7 @@ const Hireworker = () => {
 
                                             <div className="bio-data">
                                                 <div className="Buttons">
-                                                    <button onClick={handleConfirmHiring}>Confirm Hiring</button>
+                                                    <button onClick={()=>handleConfirmHiring(10)}>Confirm Hiring</button>
                                                     <button onClick={handleNext}>Next</button>
                                                 </div>
                                                 <label for="dob">Hire date :</label>

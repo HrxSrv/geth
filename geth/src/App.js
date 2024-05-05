@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React, { useContext, useRef } from "react"
 import './App.css'
 import Navbar from "./Navbar"
 import Body from "./Body"
@@ -16,17 +16,19 @@ import Account from "./Account"
 import Setting from "./Setting";
 import Contact from "./Contact";
 import Hireworker from "./Hireworker";
+import UserReview from "./UserReview";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useLocation, Link } from 'react-router-dom';
 import { DataProvider } from './DataContext';
 import CustomInput from './CustomInput';
 import { AuthContextProvider } from './AuthContext';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import PaymentSuccess from "./paymentSuccess";
 function App() {
 
   const elementToScroll = useRef(null);
   const queryClient = new QueryClient();
-  // Function to scroll to the element
+
   const scrollToElement = () => {
     if (elementToScroll.current) {
       elementToScroll.current.scrollIntoView({ behavior: 'smooth' });
@@ -36,56 +38,63 @@ function App() {
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>
-      <DataProvider>
-        <AuthContextProvider>
-          <Router>
+        <DataProvider>
+          <AuthContextProvider>
+            <Router>
 
-            <Routes>
-              <Route exact path="/login" element={<Login />} />
-              <Route exact path='/register' element={<Regsiter />} />
-              <Route exact path='/account' element={<Account />} />
-              <Route exact path='/userprofile/settings' element={
-              <div className="footer-container">
-                <Setting />
-                <Footer />
-              </div>} />
-              <Route exact path='/userprofile' element={
-                <div>
-                  <UserProfile />
-                  <Footer />
-                </div>} />
-              <Route exact path='/userprofile/useraddress' element={
-                <div>
-                  <Useraddress />
-                  <Footer />
-                </div>} />
+              <Routes>
+                <Route exact path="/login" element={<Login />} />
+                <Route exact path='/register' element={<Regsiter />} />
+                <Route exact path='/account' element={<Account />} />
+                <Route exact path='/userprofile/settings' element={
+                  <div className="footer-container">
+                    <Setting />
+                    <Footer />
+                  </div>} />
+                <Route exact path='/userprofile/review' element={
+                  <div className="footer-container">
+                    {/* <Navbar/> */}
+                    <UserReview />
+                    <Footer />
+                  </div>} />
+                <Route exact path='/userprofile' element={
+                  <div>
+                    <UserProfile />
+                    <Footer />
+                  </div>} />
+                <Route exact path='/userprofile/useraddress' element={
+                  <div>
+                    <Useraddress />
+                    <Footer />
+                  </div>} />
                 <Route exact path='/hireworkers' element={
-                <div className="hire-container">
-                  <Navbar/>
-                  <Hireworker />
-                  <Footer />
-                </div>} />
-              <Route exact path='/contact' element={
-                <div>
-                  <Navbar/>
-                  <Contact />
-                  <Footer />
-                </div>} />
-              <Route exact path="/" element={
-                <div>
-                  <Navbar scrollToElement={scrollToElement} />
-                  <Body />
-                  <WorkerSection />
-                  <AboutUs elementToScroll={elementToScroll} />
-                  <Reviews />
-                  <Footer />
-                </div>
-              } />
-            </Routes>
+                  <div className="hire-container">
+                    <Navbar />
+                    <Hireworker />
+                    <Footer />
+                  </div>} />
+                <Route exact path='/contact' element={
+                  <div>
+                    <Navbar />
+                    <Contact />
+                    <Footer />
+                  </div>} />
+                  <Route exact path='/paymentsuccess' element={<PaymentSuccess/>}/>
+                <Route exact path="/" element={
+                  <div>
+                    <Navbar scrollToElement={scrollToElement} />
+                    <Body />
+                    <WorkerSection />
+                    <AboutUs elementToScroll={elementToScroll} />
+                    <Reviews />
+                    <Footer />
+                  </div>
+                } />
+              </Routes>
 
-          </Router>
-        </AuthContextProvider>
-      </DataProvider>
+            </Router>
+          </AuthContextProvider>
+        </DataProvider>
       </QueryClientProvider>
     </div>
   );

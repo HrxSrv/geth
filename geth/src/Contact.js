@@ -176,7 +176,7 @@ const Contact = () => {
                         <label htmlFor="message">Message:</label>
                         <textarea id="message" name="message" rows="4" onChange={handleChange}></textarea>
 
-                        <button type="submit">Send Details</button>
+                        <button type="submit" onClick={handleSubmit}>Send Details</button>
                     </form>
                 </div>
                 <div className="contact-details">

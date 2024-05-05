@@ -1,9 +1,27 @@
-import React, { useRef } from "react";
-
-
+import React, { useRef,useState,useEffect } from "react";
+import logo from './component/user.png'
+import logo2 from './component/profile.png'
+import logo1 from './component/person.png'
+import logo3 from './component/user-gear.png'
+import axios from 'axios'
 export default function Reviews() {
     const box = useRef();
-  //  let card = document.querySelector('.mycard');
+    const [reviews, setReviews] = useState([]);
+    useEffect(() => {
+        const fetchReviews = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/getReviews');
+                setReviews(response.data);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+
+        fetchReviews();
+        // console.log("*")
+    }, []);
+    // console.log(reviews)
+    //let card = document.querySelector('.mycard');
 
     //console.log(box)
     const btnpressprev=()=> {
@@ -22,6 +40,30 @@ export default function Reviews() {
       
        
     }
+    const UserProfileContainer = ({ userreview, index }) => {
+        // console.log(userreview)
+        return (
+            <div className="mycard-1">
+                <div className="text">
+                    <img className="user-logo" src={logo3} alt="logo"/>
+                    <span>{userreview.username}</span>
+                </div>
+                
+                <div className="box-1">
+                <i className="fas fa-quote-left fa2"></i>
+                <p className="text-review">{userreview.review}</p>
+                <i className="fas fa-quote-right fa1"></i>    
+                </div>
+            </div>
+        )
+    };
+    const renderUserReviews = () => {
+        return reviews.map((userreview, index) => (
+            <UserProfileContainer key={index} userreview={userreview} />
+        ));
+
+    };
+
     return (
         <div>
             <div className="Review">
@@ -34,28 +76,7 @@ export default function Reviews() {
 
 
                 <div className="product-container" ref={box}>
-                    <div className="mycard-1">
-                        <div className="text">Very time Convenient! </div>
-                        <div className="box-1">
-                            <i class="fas fa-quote-left fa2"></i>
-                            very happy with salon service. Professional came on time & completed her work with perfection. Overall a great relaxing experienxe
-                            <i class="fas fa-quote-right fa1"></i>
-                            <div className="star">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div className="mycard"> </div>
-                    <div className="mycard"> </div>
-                    <div className="mycard"> </div>
-                    <div className="mycard"> </div>
-                    <div className="mycard"> </div>
-                    <div className="mycard"> </div>
-                    <div className="mycard"> </div>
-                    <div className="mycard"> </div>
-                    <div className="mycard"> </div>
-                    <div className="mycard"> </div>
-                    <div className="mycard"> </div>
+                    {renderUserReviews()}
                 </div>
             </div>
           

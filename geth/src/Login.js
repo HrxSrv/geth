@@ -11,7 +11,8 @@ import { UserAuth } from './AuthContext';
 export default function Login() {
     
     const {setUserData} = useData()
-
+    // const {loginUser} = useData()
+   
     const history = useNavigate();
     const history1 = useNavigate();
 
@@ -60,6 +61,8 @@ export default function Login() {
                     else{
                         history("/", { state: { id: email }})
                         setUserData({ email: res.data.email, password: res.data.password,username:res.data.username });
+                        
+                        // loginUser(res.data);
                     }
                 })
                 .catch(e => {

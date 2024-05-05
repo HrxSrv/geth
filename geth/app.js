@@ -1,6 +1,6 @@
 const express = require("express")
 const multer = require("multer")
-const { userinformation, userhistoryinfo,workerrating } = require("./mongo2")
+const { userinformation, userhistoryinfo,workerrating,userreview,Payment } = require("./mongo2")
 const userdata = require('./mongo')
 const cors = require("cors")
 const { json } = require("react-router-dom")
@@ -9,15 +9,15 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.use(cors())
-
-
+const crypto = require('crypto');
+const Razorpay = require('razorpay');
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, "../geth/public/upload");
     },
-    filename: function (req, file, cb) {
+    filename: function (req, file, cb){()=>{
         cb(null, Date.now() + file.originalname);
-    },
+    }},
 });
 
 const upload = multer({ storage: storage });
@@ -60,7 +60,7 @@ app.get("/history", async (req, res) => {
 })
 app.get('/worker/:workerid', async (req, res) => {
     const { workerid } = req.params;
-    console.log(workerid)
+    // console.log(workerid)
     try {
       // Fetch worker details from the database
       const workerDetails = await userinformation.findById(workerid);
@@ -158,6 +158,7 @@ app.patch('/useraddress', async (req, res) => {
 app.post('/contact', upload.single("file"), async (req, res) => {
 
     try {
+        console.log(1);
         console.log(req.body)
         const file = req.file || {};
         console.log(file);
@@ -249,7 +250,7 @@ app.listen(8000, () => {
 app.get('/getAverageRating/:workerId', async (req, res) => {
     try {
         const { workerId } = req.params;
-         console.log(workerId)
+        //  console.log(workerId)
         // Aggregate to get average rating for the worker
         const result = await workerrating.aggregate([
             { $match: { workerId } },
@@ -267,13 +268,105 @@ app.get('/getAverageRating/:workerId', async (req, res) => {
             res.status(404).json({ error: 'No ratings found for the worker' });
             return;
         }
-
-        const averageRating = result[0].averageRating;
+        // let roundedNumber = Math.round(number * 10) / 10;
+        let averageRating = result[0].averageRating*10;
         const totalRatings = result[0].totalRatings;
-
+        // averageRating = Number(averageRating.toFixed(1));
+        averageRating = Math.round(averageRating) / 10;
         res.status(200).json({ averageRating, totalRatings });
     } catch (err) {
         console.error('Error getting average rating:', err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+app.post('/Savereview', async (req, res) => {
+    try {
+        const { username, review } = req.body;
+    
+     
+        const existingReview = await userreview.findOne({ username });
+    
+        if (existingReview) {
+          existingReview.review = review;
+          await existingReview.save();
+          res.status(200).json({ message: 'User review updated successfully' });
+        } else {
+          // Create a new UserReview document
+          const userReview = new userreview({
+            username,
+            review
+          });
+    
+          // Save the new user review to MongoDB
+          await userReview.save();
+          res.status(201).json({ message: 'User review saved successfully' });
+        }
+      } catch (error) {
+        console.error('Error saving/updating user review:', error);
+        res.status(500).json({ error: 'Internal server error' });
+      }
+  });
+
+  app.get('/getReviews', async (req, res) => {
+    try {
+        const reviews = await userreview.find()
+        res.json(reviews)
+        // console.log(workers[0])
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+})
+app.get("/getkey", (req, res) =>{
+    res.status(200).json({ key: 'rzp_test_hb7uAhd3kjj1A7' })
+});
+const instance = new Razorpay({
+    key_id: 'rzp_test_hb7uAhd3kjj1A7',
+    key_secret: 'PNF4MRKP2eirtykp1xbR3ynJ',
+});
+app.post("/checkout",async (req,res)=>{
+    const options = {
+        amount: Number(req.body.amount * 100),
+        currency: "INR",
+      };
+      const order = await instance.orders.create(options);
+    
+      res.status(200).json({
+        success: true,
+        order,
+      });    
+})
+app.post("/paymentverification",async(req,res)=>{
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+ 
+  const body = razorpay_order_id + "|" + razorpay_payment_id;
+
+  const expectedSignature = crypto
+    .createHmac("sha256", 'PNF4MRKP2eirtykp1xbR3ynJ')
+    .update(body.toString())
+    .digest("hex");
+
+  const isAuthentic = expectedSignature === razorpay_signature;
+
+  if (isAuthentic) {
+    // Database comes here
+
+    await Payment.create({
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+    });
+
+    res.redirect(
+      `http://localhost:3000/paymentsuccess?reference=${razorpay_payment_id}`
+    );
+  } else {
+    res.status(400).json({
+      success: false,
+});
+}
+
+})
+//   export default router;

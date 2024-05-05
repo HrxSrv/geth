@@ -10,6 +10,7 @@ import logo7 from "./component/arrow-right.png"
 import logo13 from "./component/edit.png"
 import logo14 from "./component/arrow-down.png"
 import logo8 from "./component/clear.png"
+import logof from './component/feedback.png'
 import logo9 from "./component/menu-bar.png"
 import { useLocation, Link } from 'react-router-dom';
 import axios from "axios";
@@ -170,9 +171,9 @@ export default function UserProfile() {
                             </div>
                             <div className="profile-1">
                                 <div className="profile-img-div">
-                                    <img src={logo5} alt=" " className="profile-img-1" />
+                                    <img src={logof} alt=" " className="profile-img-1" />
                                 </div>
-                                <Link to="/userprofile" ><p>Help & Support</p></Link>
+                                <Link to="/userprofile/review" ><p>Review</p></Link>
                                 <img src={logo7} alt=" " className="profile-img-arrow-3" />
                             </div>
                             <div className="profile-1">
@@ -197,7 +198,8 @@ export default function UserProfile() {
                     <h4>Gaurav Upadhyay</h4>
                     <li>Profile Information</li>
                     <li><Link to="./useraddress">Manage Address</Link></li>
-                    <li><Link to='./settings'>Settings</Link></li>
+                    <li><Link to='./settings'>History</Link></li>
+                    <li><Link to="./review">Review</Link></li>
                     <ul>
                     </ul>
                 </div>
@@ -212,7 +214,8 @@ export default function UserProfile() {
 
                     <li>Profile Information</li>
                     <li><Link to="./useraddress">Manage Address</Link></li>
-                    <li><Link to='./settings'>Settings</Link></li>
+                    <li><Link to='./settings'>History</Link></li>
+                    <li><Link to="./review">Review</Link></li>
                     <ul>
                     </ul>
                 </div>

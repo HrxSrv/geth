@@ -35,6 +35,7 @@
   margin: 10px 41.962px;
   color: white;
 }
+
 .mycard-1{
  
   min-width: 245.850px;
@@ -43,13 +44,27 @@
   text-align:left;
   height: 154px;
   padding: 0.5rem 1rem;
-  background-color: rgb(241, 202, 241);
+  background-color: rgb(255, 255, 255);
   margin: 10px 41.962px;
   color: white;
 }
 .text{
-  font-size: 14px;
-  margin: 0 0 5px 0 ;
+  display: flex;
+  color: #0056b3;
+  margin: 10px 0 15px 0;
+}
+.text .user-logo{
+  width: 25px;
+  height: 25px;
+}
+
+.text span{
+  margin: auto 10px;
+}
+
+.box-1 .text-review{
+  color: black;
+  margin: 10px 0;
 }
 .box-1{
   display: grid;
@@ -60,11 +75,12 @@
 }
 .box-1 .fa1{
   color: black;
-  margin: 2px 0 0 120px ;
+  font-size: 15px;
 
 }
 .box-1 .fa2{
   color: black;
+  font-size: 15px;
 }
 .star{
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAA8CAMAAABGivqtAAAAxlBMVEUAAACZmZn2viTHuJ72viOampqampr1viSampr3vySampqdnZ34wiX1vSSampr1vSOZmZmampr1viT2vSOampr2viT2viSampr2viSampr2vyX4vyWbm5v3vSSdnZ32wSadnZ36wCWcnJyZmZn/wSr/2ySampr2vSP2viSZmZn2vSSZmZn2vST2viSampr2viSbm5ubm5uZmZn1vSSampqbm5v2vSWampqampr3vSf5wiT5vyagoKD/xCmkpKT/yCSZmZn1vSO4V2dEAAAAQHRSTlMA+vsG9fO6uqdgRSIi7+3q39XVqZWVgnJyX09HPDw1NTAwKRkYB+jh3L6+srKijY2Ef2lpYllZUU5CKigWFQ4Oneh1twAAAZlJREFUOMuV0mdzAiEQBmDgWq4YTWIvKRqT2Htv8P//VJCTGfYQZnw/3fJ4tyO76KE0m1b2fZu+U/pu4QGlA7N+Up5PIz9d+cmkbSrSNr9seT3GKeNYIyeO5j16S28exY5suK0U/QKmmeCCX6xs22hJLVkitMImxCvEs8EG3SCRCN/ViFPqnq5epIzZ07QJJvkM9Tkz1xnkmXbfSvR7f4H8AtXBkLGj74mMvjM1+VHZpAZ4LM4K/LBWEI9jwP71v1ZEQ6dyvQMf8A/1pmdZnKce/VH1iIsdte4U8VEtY23xOujxtFpWDgKbfjD2YeEhY0OzfjGeLyO/XfnNpAcmcjDwKOXRfU1IyiTRyEkaiz67pb9oJHJb9vVqKfgjLBPyF5Sq9T0KmSUhQmtiQrJGPHVi0DoSabj31G2gW3buHd0pY85lNdcCk8xlNDPXMuSyNiwl+theIb9C7RLIpKvviYy+M6H8qGwSAp6Is19+GP6KxwnggJ/kq6Jht5rnRQA4z9zyRRaXssvyqp5I6Vutv0vkpJaJtnjpz/8B19ytIayazLoAAAAASUVORK5CYII=");

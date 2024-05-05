@@ -1,0 +1,228 @@
+.MY-pRofile{
+    background-color:transparent;
+    width: 180%;
+    height: auto;
+    padding: 1rem;
+    border-radius: 5px;
+    margin: 28px -5% 0 0;
+    min-width: 400px;
+    box-shadow: 0 0 2px black;
+    position: relative;
+}
+.MY-pRofile .review-textarea {
+    width: 95%;
+    height: auto;
+        padding: 10px 20px;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 20px;
+        resize: none;
+        /* overflow: hidden; */
+        /* white-space: nowrap;  */
+        /* overflow-wrap: break-word;  */
+        word-wrap: break-word;
+        word-break: break-all;
+
+}
+.MY-pRofile button{
+    padding: 5px 15px;
+    color: white;
+    border-radius: 5px;
+    background-color: #007BFF;
+    border: none;
+    letter-spacing: 1px;
+    /* margin: 5px 5px; */
+    font-size: 17px;
+    margin: 0 auto; /* Auto margin to horizontally center */
+    display: block;
+    cursor: pointer;
+}
+
+@media screen and (max-width:1200px) {
+   
+    .MY-pRofile .review-textarea {
+        width: 94.5%;
+        height: auto;
+        padding: 10px 20px;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 20px;
+        resize: none;
+        /* overflow: hidden; */
+        /* white-space: nowrap;  */
+        /* overflow-wrap: break-word;  */
+        word-wrap: break-word;
+        word-break: break-all;
+    
+    }
+    .MY-pRofile button{
+        padding: 5px 15px;
+        color: white;
+        border-radius: 5px;
+        background-color: #007BFF;
+        border: none;
+        letter-spacing: 1px;
+        /* margin: 5px 5px; */
+        font-size: 17px;
+        margin: 0 auto; /* Auto margin to horizontally center */
+        display: block;
+    }
+}
+@media screen and (max-width:1100px) {
+    .MY-profile{
+        background-color: transparent;
+        width: 120%;
+        height: auto;
+        padding: 1rem;
+        border-radius: 5px;
+        margin: 28px -10% 0 -5%;
+        min-width: 400px;
+        box-shadow: 0 0 2px black;
+        position: relative;
+    }
+    .MY-pRofile .review-textarea {
+        width: 94%;
+        height: auto;
+        padding: 10px 20px;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 20px;
+        resize: none;
+        /* overflow: hidden; */
+        /* white-space: nowrap;  */
+        /* overflow-wrap: break-word;  */
+        word-wrap: break-word;
+        word-break: break-all;
+    
+    }
+    .MY-pRofile button{
+        padding: 5px 15px;
+        color: white;
+        border-radius: 5px;
+        background-color: #007BFF;
+        border: none;
+        letter-spacing: 1px;
+        /* margin: 5px 5px; */
+        font-size: 17px;
+        margin: 0 auto; /* Auto margin to horizontally center */
+        display: block;
+    }
+}
+@media screen and (max-width:1000px) {
+   
+    .MY-pRofile .review-textarea {
+        width: 93%;
+        height: auto;
+        padding: 10px 20px;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 20px;
+        resize: none;
+        /* overflow: hidden; */
+        /* white-space: nowrap;  */
+        /* overflow-wrap: break-word;  */
+        word-wrap: break-word;
+        word-break: break-all;
+    
+    }
+    .MY-pRofile button{
+        padding: 5px 15px;
+        color: white;
+        border-radius: 5px;
+        background-color: #007BFF;
+        border: none;
+        letter-spacing: 1px;
+        /* margin: 5px 5px; */
+        font-size: 17px;
+        margin: 0 auto; /* Auto margin to horizontally center */
+        display: block;
+    }
+}
+@media screen and (max-width:900px)
+{
+   
+    .MY-pRofile{
+        background-color: transparent;
+        width: 120%;
+        height: auto;
+        padding: 1rem;
+        border-radius: 5px;
+        margin: 28px -8% 0 -3%;
+        min-width: 400px;
+        box-shadow: 0 0 2px black;
+        position: relative;
+    }
+    .MY-pRofile .review-textarea {
+        width: 92%;
+        height: auto;
+        padding: 10px 20px;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 20px;
+        resize: none;
+        /* overflow: hidden; */
+        /* white-space: nowrap;  */
+        /* overflow-wrap: break-word;  */
+        word-wrap: break-word;
+        word-break: break-all;
+    
+    }
+    .MY-pRofile button{
+        padding: 5px 15px;
+        color: white;
+        border-radius: 5px;
+        background-color: #007BFF;
+        border: none;
+        letter-spacing: 1px;
+        /* margin: 5px 5px; */
+        font-size: 17px;
+        margin: 0 auto; /* Auto margin to horizontally center */
+        display: block;
+    }
+}
+@media screen and (max-width:800px)
+{
+
+    .MY-pRofile{
+        background-color: transparent;
+        width: 90%;
+        height: auto;
+        padding: 1rem;
+        border-radius: 5px;
+        margin: 28px -10% 0 10%;
+        min-width: 400px;
+        box-shadow: 0 0 2px black;
+        position: relative;
+        
+    
+    }
+    .MY-pRofile .review-textarea {
+        width: 91%;
+        height: auto;
+        padding: 10px 20px;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 20px;
+        resize: none;
+        /* overflow: hidden; */
+        /* white-space: nowrap;  */
+        /* overflow-wrap: break-word;  */
+        word-wrap: break-word;
+        word-break: break-all;
+    
+    }
+    .MY-pRofile button{
+        padding: 5px 15px;
+        color: white;
+        border-radius: 5px;
+        background-color: #007BFF;
+        border: none;
+        letter-spacing: 1px;
+        /* margin: 5px 5px; */
+        font-size: 17px;
+        margin: 0 auto; /* Auto margin to horizontally center */
+        display: block;
+        
+    }
+
+}

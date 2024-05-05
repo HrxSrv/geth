@@ -10,6 +10,7 @@ import './navbar.css'
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { UserAuth } from './AuthContext';
 import { useData } from './DataContext';
+import logof from './component/feedback.png'
 function Navbar({ scrollToElement }) {
 
     const { logOut, user } = UserAuth();
@@ -105,9 +106,9 @@ function Navbar({ scrollToElement }) {
                         </div>
                         <div className="profile-1">
                             <div className="profile-img-div">
-                                <img src={logo5} alt=" " className="profile-img-1" />
+                                <img src={logof} alt=" " className="profile-img-1" />
                             </div>
-                            <Link to="/userprofile" ><p>Help & Support</p></Link>
+                            <Link to="/userprofile/review" ><p>Review</p></Link>
                             <img src={logo7} alt=" " className="profile-img-arrow-3" />
                         </div>
                         <div className="profile-1">

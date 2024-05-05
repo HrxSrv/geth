@@ -32,10 +32,31 @@ const ratingSchema=new mongoose.Schema({
     rating:Number,
     username:String
 })
+const reviewSchema=new mongoose.Schema({
+    username:String,
+    review:String
+})
+const paymentSchema = new mongoose.Schema({
+    razorpay_order_id: {
+      type: String,
+      required: true,
+    },
+    razorpay_payment_id: {
+      type: String,
+      required: true,
+    },
+    razorpay_signature: {
+      type: String,
+      required: true,
+    },
+  });
+
 const userinformation = mongoose.model("userinformation",newSchema)
 const userhistoryinfo = mongoose.model("userhistoryinfo",historySchema)
 const workerrating = mongoose.model("workerrating",ratingSchema)
-module.exports = { userinformation, userhistoryinfo, workerrating };
+const userreview = mongoose.model("userreview",reviewSchema)
+const Payment = mongoose.model("Payment",paymentSchema)
+module.exports = { userinformation, userhistoryinfo, workerrating,userreview,Payment };
 // module.exports=userhistoryinfo;
 // {   "firstname":"gaurav",
 //     "address":{
