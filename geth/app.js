@@ -5,9 +5,10 @@ const userdata = require('./mongo')
 const cors = require("cors")
 const { json } = require("react-router-dom")
 const app = express()
+const path = require('path');
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
+app.use('/', express.static(path.join(__dirname, './build')));
 app.use(cors())
 const crypto = require('crypto');
 const Razorpay = require('razorpay');
@@ -215,7 +216,7 @@ app.get("/userinfo/:username", async (req, res) => {
     // const img = userinfo.image || 'default.jpg'
     res.status(200).json(userinfo);
     }
-    catch(e)
+    catch(error)
     {
         console.error('Error getting user image:', error);
         return res.status(500).json({ error: 'Internal server error' });
@@ -317,9 +318,9 @@ app.post('/Savereview', async (req, res) => {
     try {
         const { username, review } = req.body;
     
-     
+        
         const existingReview = await userreview.findOne({ username });
-    
+        console.log('hello')
         if (existingReview) {
           existingReview.review = review;
           await existingReview.save();

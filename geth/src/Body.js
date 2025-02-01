@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Body() {
 
@@ -12,7 +13,7 @@ export default function Body() {
                         <h1>Find the Right Workers for Your Needs</h1>
                         <p>Hire skilled professionals quickly and easily.</p>
                         <div class="cta-buttons">
-                            <a href="/hireworkers" class="cta-button">Browse Workers</a>
+                            <Link to="/hireworkers" class="cta-button">Browse Workers</Link>
                         </div>
                     </div>
                    

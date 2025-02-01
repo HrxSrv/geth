@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-
+require('dotenv').config();
 // mongoose.connect("mongodb://localhost:27017/first-website",{
 //     useNewUrlParser: true,
 //     useUnifiedTopology: true,
@@ -14,7 +14,7 @@ const mongoose = require("mongoose")
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
-mongoose.connect("mongodb+srv://upadhyaygaurav450:0gWr1suv6Jl0QXGf@cluster0.mvj3y.mongodb.net/getH?retryWrites=true&w=majority&appName=Cluster0", {
+mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

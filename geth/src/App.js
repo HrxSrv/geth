@@ -1,31 +1,31 @@
-import React, { useContext, useRef } from "react"
-import './App.css'
-import Navbar from "./Navbar"
-import Body from "./Body"
+import React, { useRef } from "react";
+import { HashRouter, Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import './App.css';
+import Navbar from "./Navbar";
+import Body from "./Body";
 import WorkerSection from "./WorkerSection";
 import Footer from "./Footer";
-import './aboutus.css'
+import './aboutus.css';
 import AboutUs from "./AboutUs";
 import Reviews from "./Reviews";
 import './reviews.css';
-import UserProfile from "./UserProfile"
-import Useraddress from "./Useraddress"
+import UserProfile from "./UserProfile";
+import Useraddress from "./Useraddress";
 import Login from "./Login";
-import Regsiter from "./Register"
-import Account from "./Account"
+import Register from "./Register";
+import Account from "./Account";
 import Setting from "./Setting";
 import Contact from "./Contact";
 import Hireworker from "./Hireworker";
 import UserReview from "./UserReview";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { useLocation, Link } from 'react-router-dom';
 import { DataProvider } from './DataContext';
-import CustomInput from './CustomInput';
 import { AuthContextProvider } from './AuthContext';
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import CustomInput from './CustomInput';
 import PaymentSuccess from "./paymentSuccess";
-function App() {
 
+function App() {
   const elementToScroll = useRef(null);
   const queryClient = new QueryClient();
 
@@ -40,47 +40,46 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <DataProvider>
           <AuthContextProvider>
-            <Router>
+            <HashRouter>
 
               <Routes>
-                <Route exact path="/login" element={<Login />} />
-                <Route exact path='/register' element={<Regsiter />} />
-                <Route exact path='/account' element={<Account />} />
-                <Route exact path='/userprofile/settings' element={
+                <Route path="/login" element={<Login />} />
+                <Route path='/register' element={<Register />} />
+                <Route path='/account' element={<Account />} />
+                <Route path='/userprofile/settings' element={
                   <div className="footer-container">
                     <Setting />
                     <Footer />
                   </div>} />
-                <Route exact path='/userprofile/review' element={
+                <Route path='/userprofile/review' element={
                   <div className="footer-container">
-                    {/* <Navbar/> */}
                     <UserReview />
                     <Footer />
                   </div>} />
-                <Route exact path='/userprofile' element={
+                <Route path='/userprofile' element={
                   <div>
                     <UserProfile />
                     <Footer />
                   </div>} />
-                <Route exact path='/userprofile/useraddress' element={
+                <Route path='/userprofile/useraddress' element={
                   <div>
                     <Useraddress />
                     <Footer />
                   </div>} />
-                <Route exact path='/hireworkers' element={
+                <Route path='/hireworkers' element={
                   <div className="hire-container">
                     <Navbar />
                     <Hireworker />
                     <Footer />
                   </div>} />
-                <Route exact path='/contact' element={
+                <Route path='/contact' element={
                   <div>
                     <Navbar />
                     <Contact />
                     <Footer />
                   </div>} />
-                  <Route exact path='/paymentsuccess' element={<PaymentSuccess/>}/>
-                <Route exact path="/" element={
+                <Route path='/paymentsuccess' element={<PaymentSuccess />} />
+                <Route path="/" element={
                   <div>
                     <Navbar scrollToElement={scrollToElement} />
                     <Body />
@@ -92,7 +91,7 @@ function App() {
                 } />
               </Routes>
 
-            </Router>
+            </HashRouter>
           </AuthContextProvider>
         </DataProvider>
       </QueryClientProvider>
