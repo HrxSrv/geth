@@ -20,7 +20,7 @@ export default function Useraddress() {
     //const location = useLocation()
     //  console.log(location)
     const { logOut, user } = UserAuth();
-    const { userData, deleteUserData } = useData();
+    const { userData, deleteUserData,data ,fetchData } = useData();
     const { email, username } = userData;
     const [selectedImage, setSelectedImage] = useState(user?.photoURL);
     const fileInputRef = useRef(null);
@@ -32,6 +32,19 @@ export default function Useraddress() {
     const [inputValuecity, setInputValuecity] = useState('');
     const [inputValuelandmark, setInputValuelandmark] = useState('');
     const [inputValueanumber, setInputValueanumber] = useState('');
+
+    useEffect(() => {
+        if (username) {
+            fetchData();
+           }
+    }, []);
+    // console.log(data)
+    let image = username? data ? data.image : '' : '';
+    let Name =  username ? data ? data.firstname : '':' ';
+    let imagepath = image || 'default.jpg'
+    imagepath = process.env.PUBLIC_URL + '/upload/' + imagepath
+
+    let name = Name|| "User"
     // console.log(inputValuemnumber)
     const [address, setAddress] = useState({
         name: '',
@@ -189,7 +202,7 @@ export default function Useraddress() {
                                 <p onClick={navTggl}>{email} </p>}
                         <div className={isExpandedmenu && (email !== '' || user !== null) ? "expanded" : "not-expanded"}>
                             <div className="profile">
-                                <img src={user !== null ? user?.photoURL : logo2} alt=" " className="profile-img" />
+                                <img src={user !== null ? user?.photoURL : imagepath} alt=" " className="profile-img" />
                                 {user !== null ? <p >{user?.displayName} </p> : email === '' ? <p> </p> : <p>{email}</p>}
                             </div>
                             <div id="linE"><p></p></div>
@@ -233,7 +246,7 @@ export default function Useraddress() {
             <div className="m-p" >
 
                 <div className="PROFILE">
-                    <h4>Gaurav Upadhyay</h4>
+                    <h4>Welcome {name}</h4>
                     <Link to="/userprofile"><li>Profile Information</li></Link>
                     <Link to="/userprofile/useraddress"><li>Manage Address</li></Link>
                     <Link to="/userprofile/settings"> <li>History</li></Link>
@@ -243,7 +256,7 @@ export default function Useraddress() {
                 </div>
                 <div className={isExpandedsidebar ? "PROFILe" : "PROFILe-n"}>
                     <div className="name-btn">
-                        <h4>Gaurav Upadhyay</h4>
+                        <h4>Welcome {name}</h4>
                         <button className="clear" onClick={sideTggl}>
                             <img className="clear-img" src={logo8} alt=" " />
                         </button>
@@ -266,7 +279,7 @@ export default function Useraddress() {
                     <div class="my-5">
                         <h3>My Address</h3>
                         <div>
-                            <img src={user !== null ? selectedImage : logo2} alt=" " className="profile--img" />
+                            <img src={imagepath} alt=" " className="profile--img" />
                             <button className="profile--btn" onClick={menuTggl}>
                                 <img src={logo13} alt=" " className="profile--btn-img" />
                                 <img src={logo14} alt=" " className="profile--btn-img" />

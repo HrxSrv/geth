@@ -31,9 +31,23 @@ import StarRating from './StarRating';
 export default function UserProfile() {
 
   const { logOut, user } = UserAuth();
-  const { userData, deleteUserData } = useData();
+  const { userData, deleteUserData,data, fetchData } = useData();
   const { email, username } = userData;
   const [selectedRating, setSelectedRating] = useState(null);
+
+  useEffect(() => {
+    if (username) {
+        fetchData();
+       }
+}, []);
+// console.log(data)
+
+let image = username? data ? data.image : '' : '';
+let Name =  username ? data ? data.firstname : '':' ';
+let imagepath = image || 'default.jpg'
+imagepath = process.env.PUBLIC_URL + '/upload/' + imagepath
+
+let name = Name || "User"
 
   const handleStarClick = (rating) => {
     setSelectedRating(rating);
@@ -229,7 +243,7 @@ export default function UserProfile() {
                 <p onClick={navTggl}>{email} </p>}
             <div className={isExpandedmenu && (email !== '' || user !== null) ? "expanded" : "not-expanded"}>
               <div className="profile">
-                <img src={user !== null ? user?.photoURL : logo2} alt=" " className="profile-img" />
+                <img src={user !== null ? user?.photoURL : imagepath} alt=" " className="profile-img" />
                 {user !== null ? <p >{user?.displayName} </p> : email === '' ? <p> </p> : <p>{email}</p>}
               </div>
               <div id="linE"><p></p></div>
@@ -276,7 +290,7 @@ export default function UserProfile() {
         <div className="m-p" >
 
           <div className="PROFILE">
-            <h4>Gaurav Upadhyay</h4>
+            <h4>Welcome {name}</h4>
             <li><Link to="/userprofile">Profile Information</Link></li>
             <li><Link to="/userprofile/useraddress">Manage Address</Link></li>
             <li>History</li>
@@ -286,7 +300,7 @@ export default function UserProfile() {
           </div>
           <div className={isExpandedsidebar ? "PROFILe" : "PROFILe-n"}>
             <div className="name-btn">
-              <h4>Gaurav Upadhyay</h4>
+              <h4>Welcome {name}</h4>
               <button className="clear" onClick={sideTggl}>
                 <img className="clear-img" src={logo8} alt=" " />
               </button>
@@ -308,7 +322,9 @@ export default function UserProfile() {
           <div class="MY-profile">
             <h3>History</h3>
             <hr />
-            {!userHiring.length ? <p> You hired no Household helper from getH </p> : renderUserhistory()}
+            {username ? !userHiring.length ? <p> You hired no Household helper from getH </p> : renderUserhistory():
+             <p> Please Login to getH to see your hired Household helper</p> 
+             }
           </div>
 
         </div>

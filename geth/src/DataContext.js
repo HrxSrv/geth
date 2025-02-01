@@ -1,5 +1,5 @@
 import React, { createContext, useContext,  useEffect,useState } from 'react';
-
+import axios from 'axios';
 const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
@@ -17,8 +17,22 @@ export const DataProvider = ({ children }) => {
         // Update localStorage whenever userData changes
         localStorage.setItem('userData', JSON.stringify(userData));
       }, [userData]);
+      // console.log(userData)
+      const [data, setData] = useState(null);
+      const fetchData = async () => {
+        // Make your API call here
+        const response = await axios.get(`http://localhost:8000/userinfo/${userData.username}`);
+        setData(response.data);
+      };
+      useEffect(() => {
+
+         if (userData.username) {
+          fetchData();
+         }
+      }, []);
+      console.log(data)
   return (
-    <DataContext.Provider value={{ userData, setUserData,deleteUserData }}>
+    <DataContext.Provider value={{ userData, setUserData,deleteUserData, data, fetchData }}>
       {children}
     </DataContext.Provider>
   );

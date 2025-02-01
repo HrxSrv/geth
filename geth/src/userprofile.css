@@ -51,6 +51,7 @@
 }
 .profile--img{
    width: 60px;
+   height: 60px;
    border-radius: 50%;
  
    margin: 0 -15px -2px 0;
@@ -157,7 +158,7 @@
     transition: left  0.75s ;
 }
 .PROFILe-n{
-    left: -210px;
+    left: -250px;
     height: 470px;
     width: 25%;
     opacity: 0;

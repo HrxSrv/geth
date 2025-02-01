@@ -11,13 +11,14 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 const crypto = require('crypto');
 const Razorpay = require('razorpay');
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, "../geth/public/upload");
     },
-    filename: function (req, file, cb){()=>{
+    filename: function (req, file, cb) {
         cb(null, Date.now() + file.originalname);
-    }},
+    },
 });
 
 const upload = multer({ storage: storage });
@@ -155,8 +156,7 @@ app.patch('/useraddress', async (req, res) => {
 
 })
 
-app.post('/contact', upload.single("file"), async (req, res) => {
-
+app.post('/contact',upload.single("file"),async (req, res) => {
     try {
         console.log(1);
         console.log(req.body)
@@ -187,6 +187,39 @@ app.post('/contact', upload.single("file"), async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 
+})
+app.post('/uploadimg/:username',upload.single("file"), async (req, res) => {
+
+        try {
+            const { username } = req.params;
+            const file = req.file || {};
+            // console.log(req.file);
+            const filepath = file.filename || "default.png";
+            const existingUser = await userdata.findOne({ username:username });
+            console.log(existingUser)
+            if (!existingUser) {
+              return res.status(404).json({ error: 'User not found' });
+            }
+            existingUser.image = filepath;
+            await existingUser.save();
+            return res.status(200).json({ message: 'User image updated successfully' });
+          } catch (error) {
+            console.error('Error updating user image:', error);
+            return res.status(500).json({ error: 'Internal server error' });
+          }
+})
+app.get("/userinfo/:username", async (req, res) => {
+    try{
+    const { username } = req.params;
+    const userinfo = await userdata.findOne({ username:username });
+    // const img = userinfo.image || 'default.jpg'
+    res.status(200).json(userinfo);
+    }
+    catch(e)
+    {
+        console.error('Error getting user image:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
 })
 app.post('/confirmhire', async (req, res) => {
     try {
@@ -365,6 +398,12 @@ app.post("/paymentverification",async(req,res)=>{
   } else {
     res.status(400).json({
       success: false,
+});
+
+app.get("/getworkerdate", async(req, res) =>{
+    const {id} = req.body;
+    const userinfo = await userhistoryinfo.findOne({ __id:id });
+    res.status(200).json(userinfo.HireDate)
 });
 }
 

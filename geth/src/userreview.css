@@ -12,16 +12,17 @@
 .MY-pRofile .review-textarea {
     width: 95%;
     height: auto;
-        padding: 10px 20px;
-        border: 2px solid #ccc;
-        border-radius: 4px;
-        font-size: 20px;
-        resize: none;
-        /* overflow: hidden; */
-        /* white-space: nowrap;  */
-        /* overflow-wrap: break-word;  */
-        word-wrap: break-word;
-        word-break: break-all;
+    padding: 10px 20px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 20px;
+    resize: none;
+    /* overflow: hidden; */
+    /* white-space: nowrap;  */
+    /* overflow-wrap: break-word;  */
+    word-wrap: break-word;
+    word-break: break-all;
+    margin: 10px 0 0 0;
 
 }
 .MY-pRofile button{
@@ -53,6 +54,7 @@
         /* overflow-wrap: break-word;  */
         word-wrap: break-word;
         word-break: break-all;
+        margin: 10px 0 0 0;
     
     }
     .MY-pRofile button{
@@ -93,6 +95,7 @@
         /* overflow-wrap: break-word;  */
         word-wrap: break-word;
         word-break: break-all;
+        margin: 10px 0 0 0;
     
     }
     .MY-pRofile button{
@@ -123,6 +126,7 @@
         /* overflow-wrap: break-word;  */
         word-wrap: break-word;
         word-break: break-all;
+        margin: 10px 0 0 0;
     
     }
     .MY-pRofile button{
@@ -165,6 +169,7 @@
         /* overflow-wrap: break-word;  */
         word-wrap: break-word;
         word-break: break-all;
+        margin: 10px 0 0 0;
     
     }
     .MY-pRofile button{
@@ -209,6 +214,7 @@
         /* overflow-wrap: break-word;  */
         word-wrap: break-word;
         word-break: break-all;
+        margin: 10px 0 0 0;
     
     }
     .MY-pRofile button{

@@ -16,10 +16,18 @@ import star from "./component/star.png"
 import star1 from "./component/star1.png"
 import star2 from "./component/star2.png"
 import star3 from "./component/star3.png"
+import {DayPicker} from "react-day-picker";
 // import Razorpay from 'razorpay';
 import { useData } from './DataContext';
 import axios from 'axios';
 const Hireworker = () => {
+
+    const hiredDates = ['2024-05-10', '2024-05-15', '2024-05-20'];
+    const [date, setDate] = useState('2024-05-09','2024-05-11','2024-05-13');
+    const [disabledDates, setDisabledDates] = useState(['2024-05-09','2024-05-11','2024-05-13']);
+    
+    
+    console.log(disabledDates)
 
     const [isExpanded, setisExpanded] = useState(false);
     function navTgl() {
@@ -196,7 +204,31 @@ const Hireworker = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [selectedUserIndex, setSelectedUserIndex] = useState(null);
     const [hiredate, setHiredate] = useState("");
-    // console.log(hiredate)
+    console.log(selectedUser)
+
+    const handleChangeDate = async (event) => {
+        const id = selectedUser.__id
+        // try{
+        //  const res= axios.get('http://localhost:8000/getworkerdate',{id})
+
+        //  console.log(res)
+        // }catch(e){
+        //      console.error(e)
+        // }
+        const selectedDate = event.target.value;
+        if (!isDateDisabled(selectedDate)) {
+          setHiredate(selectedDate);
+        } else {
+          // Optionally, you can display a message or provide feedback to the user
+          alert('Worker is hired on this date.');
+        }
+        
+      };
+    
+      const isDateDisabled = (selectedDate) => {
+        // Check if the selected date is in the disabledDates array
+        return disabledDates.includes(selectedDate);
+      };
     const openPopup = (user, index) => {
         setSelectedUser(user);
         setSelectedUserIndex(index);
@@ -236,32 +268,32 @@ const Hireworker = () => {
       };
     const handleConfirmHiring = async (amount) => {
 
-        // try {
-        //     if (!hiredate) {
-        //         // If hiring date is not selected, show an error message
-        //         alert("Please select hiring date.");
-        //         return;
-        //     }
-        //     const hiringData = {
-        //         uname: userData.username,
-        //         workerid: selectedUser._id,
-        //         Hiredate: hiredate
-        //     };
-        //     // const response = await axios.post("http://localhost:8000/confirmhire", hiringData);
-        //     // if (response.status === 200) {
-        //     //     // Handle success
-        //     //     console.log('Hiring confirmed successfully');
+        try {
+            if (!hiredate) {
+                // If hiring date is not selected, show an error message
+                alert("Please select hiring date.");
+                return;
+            }
+            const hiringData = {
+                uname: userData.username,
+                workerid: selectedUser._id,
+                Hiredate: hiredate
+            };
+            const response = await axios.post("http://localhost:8000/confirmhire", hiringData);
+            if (response.status === 200) {
+                // Handle success
+                console.log('Hiring confirmed successfully');
 
-        //     //     // Display an alert with a success message
-        //     //     // alert(`User hired on ${hiredate} successfully!`);
-        //     // } else {
-        //     //     // Handle unexpected status codes
-        //     //     console.warn('Unexpected status code:', response.status);
-        //     // }
-        // }
-        // catch (error) {
-        //     console.error('Error confirming hiring:', error);
-        // }
+                // Display an alert with a success message
+                // alert(`User hired on ${hiredate} successfully!`);
+            } else {
+                // Handle unexpected status codes
+                console.warn('Unexpected status code:', response.status);
+            }
+        }
+        catch (error) {
+            console.error('Error confirming hiring:', error);
+        }
         closePopup();
 
         const { data: { key } } = await axios.get("http://localhost:8000/getkey")
@@ -316,6 +348,7 @@ const Hireworker = () => {
         const month = String(currentDate.getMonth() + 1).padStart(2, "0");
         const day = String(currentDate.getDate()).padStart(2, "0");
         return `${year}-${month}-${day}`;
+
     };
 
     const dobString = !selectedUser ? "2022-12-07T00:00:00.000Z" : selectedUser.dob;
@@ -597,7 +630,7 @@ const Hireworker = () => {
 
                                             <div className="bio-data">
                                                 <div className="Buttons">
-                                                    <button onClick={()=>handleConfirmHiring(10)}>Confirm Hiring</button>
+                                                    <button onClick={()=>handleConfirmHiring(selectedUser && selectedUser.wage)}>Confirm Hiring</button>
                                                     <button onClick={handleNext}>Next</button>
                                                 </div>
                                                 <label for="dob">Hire date :</label>
@@ -605,7 +638,9 @@ const Hireworker = () => {
                                                     type="date"
                                                     id="dob"
                                                     name="dob"
-                                                    onChange={(e) => setHiredate(e.target.value)}
+                                                    disabledDates={disabledDates}
+                                                    onChange={handleChangeDate}
+                                                    disabled={isDateDisabled(hiredate)} 
                                                     min={getCurrentDate()}
                                                 />
                                             </div>

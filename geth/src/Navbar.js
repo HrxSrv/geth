@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import logo from "./getH-logos_black.png";
 import logo2 from "./component/profile_img.jpg"
 import logo3 from "./component/profile-user.png"
@@ -32,9 +32,18 @@ function Navbar({ scrollToElement }) {
     function navTggl() {
         setisExpandedmenu(!isExpandedmenu)
     }
-    const { userData,deleteUserData } = useData();
+    const { userData,deleteUserData,data,fetchData } = useData();
+    useEffect(() => {
+        if (username) {
+            fetchData();
+           }
+    }, []);
+    // console.log(data)
+    const { email, password ,username} = userData;
+    let image = username? data ? data.image : '' : '';
+    let imagepath = image || 'default.jpg'
+    imagepath = process.env.PUBLIC_URL + '/upload/' + imagepath
     // console.log(userData)
-    const { email, password } = userData;
     //   console.log(userData)
     //   console.log(!(email))
     return (
@@ -86,7 +95,7 @@ function Navbar({ scrollToElement }) {
                             <p onClick={navTggl}>{ email } </p>}
                     <div className={isExpandedmenu && (email!=='' || user !== null) ? "expanded" : "not-expanded"}>
                         <div className="profile">
-                            <img src={user!==null ? user?.photoURL : logo2 } alt=" " className="profile-img" />
+                            <img src={user!==null ? user?.photoURL : imagepath } alt=" " className="profile-img" />
                             {user !== null ? <p >{user?.displayName} </p>:email==='' ? <p> </p> : <p>{email}</p>}
                         </div>
                         <div id="linE"><p></p></div>

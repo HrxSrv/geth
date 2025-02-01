@@ -22,10 +22,20 @@ import StarRating from './StarRating';
 export default function UserReview() {
 
   const { logOut, user } = UserAuth();
-  const { userData, deleteUserData } = useData();
+  const { userData, deleteUserData,data,fetchData } = useData();
   const { email, username } = userData;
 
   const [review, setReview] = useState('');
+  useEffect(() => {
+    if (username) {
+        fetchData();
+       }
+}, []);
+// console.log(data)
+
+let Name =  username ? data ? data.firstname : '':' ';
+let name = Name|| "User"
+
 //  console.log(username)
   const handleChange = (event) => {
     const inputValue = event.target.value;
@@ -173,7 +183,7 @@ export default function UserReview() {
         <div className="m-p" >
 
           <div className="PROFILE">
-            <h4>Gaurav Upadhyay</h4>
+            <h4>Welcome {name}</h4>
             <li><Link to="/userprofile">Profile Information</Link></li>
             <li><Link to="/userprofile/useraddress">Manage Address</Link></li>
             <li><Link to="/userprofile/settings">History</Link></li>
@@ -183,12 +193,13 @@ export default function UserReview() {
           </div>
           <div className={isExpandedsidebar ? "PROFILe" : "PROFILe-n"}>
             <div className="name-btn">
-              <h4>Gaurav Upadhyay</h4>
+              <h4>Welcome {name}</h4>
               <button className="clear" onClick={sideTggl}>
                 <img className="clear-img" src={logo8} alt=" " />
               </button>
 
             </div>
+
 
             <li><Link to="/userprofile">Profile Information</Link></li>
             <li><Link to="/userprofile/useraddress">Manage Address</Link></li>
@@ -204,19 +215,27 @@ export default function UserReview() {
           </div>
           <div class="MY-pRofile">
             <h2>Review</h2>
-            <textarea className="review-textarea"
-                type="text"
-                value={review}
-                onChange={handleChange}
-                rows={4}
-                cols={50}
-                placeholder="Enter your review (max 100 words)"
-                maxLength={100}
-            ></textarea>
-            <div>Characters: {review.length}/100</div>
+            <hr/>
+            {
+              username?
+              <div>
+                <textarea className="review-textarea"
+                    type="text"
+                    value={review}
+                    onChange={handleChange}
+                    rows={4}
+                    cols={50}
+                    placeholder="Enter your review (max 100 words)"
+                    maxLength={100}
+                ></textarea>
+                <div>Characters: {review.length}/100</div>
+                <button onClick={handleReviewSave}>Add Review</button>
+              </div>:
+              <p> Please! Login/Signup to add a Review for getH.</p>
+            }
 
-            <button onClick={handleReviewSave}>Add Review</button>
-          </div>
+          </div> 
+          
 
         </div>
         {/* <div className="p-f">
