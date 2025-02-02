@@ -80,7 +80,7 @@ let name = Name || "User"
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/history',
+        const response = await axios.get('https://geth-ofyh.onrender.com/history',
           { params: { username }, });
         setUsersHiring(response.data);
       } catch (error) {
@@ -126,7 +126,7 @@ let name = Name || "User"
 
     const handleRatingSave = async(workerId,rating) => {
       try {
-        await axios.post('http://localhost:8000/saveRating', {
+        await axios.post('https://geth-ofyh.onrender.com/saveRating', {
           rating,
           workerId,
           username,
@@ -148,7 +148,7 @@ let name = Name || "User"
     useEffect(() => {
       const fetchWorkerDetails = async () => {
         try {
-          const response = await axios.get(`http://localhost:8000/worker/${user.workerid}`);
+          const response = await axios.get(`https://geth-ofyh.onrender.com/worker/${user.workerid}`);
           setWorkerDetails(response.data);
         } catch (error) {
           console.error('Error fetching worker details:', error);

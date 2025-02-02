@@ -189,7 +189,7 @@ const Hireworker = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/hireworkers');
+                const response = await axios.get('https://geth-ofyh.onrender.com/hireworkers');
                 setUsers(response.data);
             } catch (error) {
                 console.error('Error fetching users:', error);
@@ -209,7 +209,7 @@ const Hireworker = () => {
     const handleChangeDate = async (event) => {
         const id = selectedUser.__id
         // try{
-        //  const res= axios.get('http://localhost:8000/getworkerdate',{id})
+        //  const res= axios.get('https://geth-ofyh.onrender.com/getworkerdate',{id})
 
         //  console.log(res)
         // }catch(e){
@@ -279,7 +279,7 @@ const Hireworker = () => {
                 workerid: selectedUser._id,
                 Hiredate: hiredate
             };
-            const response = await axios.post("http://localhost:8000/confirmhire", hiringData);
+            const response = await axios.post("https://geth-ofyh.onrender.com/confirmhire", hiringData);
             if (response.status === 200) {
                 // Handle success
                 console.log('Hiring confirmed successfully');
@@ -296,9 +296,9 @@ const Hireworker = () => {
         }
         closePopup();
 
-        const { data: { key } } = await axios.get("http://localhost:8000/getkey")
+        const { data: { key } } = await axios.get("https://geth-ofyh.onrender.com/getkey")
 
-        const { data: { order } } = await axios.post("http://localhost:8000/checkout", {
+        const { data: { order } } = await axios.post("https://geth-ofyh.onrender.com/checkout", {
             amount
         })
 
@@ -309,7 +309,7 @@ const Hireworker = () => {
             name: "getH",
             description: "Payment for Geth",
             order_id: order.id,
-            callback_url: "http://localhost:8000/paymentverification",
+            callback_url: "https://geth-ofyh.onrender.com/paymentverification",
             prefill: {
                 name: "Gaurav Kumar",
                 email: "gaurav.kumar@yadav.com",
@@ -370,7 +370,7 @@ const Hireworker = () => {
             // console.log('Effect is running');
             const fetchRating = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:8000/getAverageRating/${userId}`);
+                    const response = await axios.get(`https://geth-ofyh.onrender.com/getAverageRating/${userId}`);
                     setRatings(response.data);
                     // console.log(response.data)
                 } catch (error) {

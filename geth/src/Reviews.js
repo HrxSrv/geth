@@ -10,7 +10,7 @@ export default function Reviews() {
     useEffect(() => {
         const fetchReviews = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/getReviews');
+                const response = await axios.get('https://geth-ofyh.onrender.com/getReviews');
                 setReviews(response.data);
             } catch (error) {
                 console.error('Error fetching users:', error);

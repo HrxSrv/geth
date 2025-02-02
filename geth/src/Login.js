@@ -50,7 +50,7 @@ export default function Login() {
     async function submit(e) {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:8000/login", {
+            await axios.post("https://geth-ofyh.onrender.com/login", {
                 email, password
             })
                 .then(res => {

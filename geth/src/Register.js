@@ -31,7 +31,7 @@ export default function Register()
         e.preventDefault();
          
         try{
-            await axios.post("http://localhost:8000/register",{
+            await axios.post("https://geth-ofyh.onrender.com/register",{
                 email,password,username
             })
             .then(res=>{

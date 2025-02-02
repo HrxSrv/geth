@@ -21,7 +21,7 @@ export const DataProvider = ({ children }) => {
       const [data, setData] = useState(null);
       const fetchData = async () => {
         // Make your API call here
-        const response = await axios.get(`http://localhost:8000/userinfo/${userData.username}`);
+        const response = await axios.get(`https://geth-ofyh.onrender.com/userinfo/${userData.username}`);
         setData(response.data);
       };
       useEffect(() => {

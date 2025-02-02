@@ -47,7 +47,7 @@ export default function UserProfile() {
             //     console.log(key[0] + ', ' + key[1])
             // }
             // console.log(file)
-            const res = await axios.post(`http://localhost:8000/uploadimg/${username}`, formData);
+            const res = await axios.post(`https://geth-ofyh.onrender.com/uploadimg/${username}`, formData);
             setUploadSuccess(true);
         } catch (err) {
             console.error("Error submitting the form:", err);
@@ -93,7 +93,7 @@ export default function UserProfile() {
     async function submit(e) {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:8000/userprofile", {
+            await axios.post("https://geth-ofyh.onrender.com/userprofile", {
                 firstname, lastname, mobilenumber, e_mail, occupation, gender, username
             })
         }

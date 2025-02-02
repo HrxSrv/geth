@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const makeRequest = axios.create({
-  baseURL: "http://localhost:8000/",
+  baseURL: "https://geth-ofyh.onrender.com/",
   withCredentials: true,
 });
