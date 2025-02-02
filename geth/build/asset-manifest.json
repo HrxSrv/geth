@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/static/css/main.4599addc.css",
+    "main.js": "/static/js/main.34115789.js",
+    "static/js/787.a8f9cce4.chunk.js": "/static/js/787.a8f9cce4.chunk.js",
+    "static/media/w2.jpg": "/static/media/w2.3d3229748ac7ac8bab64.jpg",
+    "static/media/img1.jpg": "/static/media/img1.6508adc3864edb140898.jpg",
+    "static/media/w3.jpg": "/static/media/w3.9986b5efd413c96de093.jpg",
+    "static/media/profile_img.jpg": "/static/media/profile_img.7475cf85a1c4d4a0c693.jpg",
+    "static/media/w1_2.jpg": "/static/media/w1_2.f215fef220370ed5a9e6.jpg",
+    "static/media/getH-logos_black.png": "/static/media/getH-logos_black.60fdc2961e292a6bcd46.png",
+    "static/media/google.png": "/static/media/google.3a1f2cccf2e62341e370.png",
+    "static/media/user-gear.png": "/static/media/user-gear.95a7103538af8fc07192.png",
+    "static/media/r-img1.webp": "/static/media/r-img1.d824db6c0ec5766e716e.webp",
+    "static/media/star6.png": "/static/media/star6.0a991ce1bf44c164f0d6.png",
+    "static/media/star7.png": "/static/media/star7.32d14b57f26e27d3ff9a.png",
+    "static/media/star5.png": "/static/media/star5.7a564579394fcae50352.png",
+    "static/media/person.png": "/static/media/person.3b9415777e13777e2b80.png",
+    "static/media/user.png": "/static/media/user.c920752422c11377083e.png",
+    "static/media/menu-bar.png": "/static/media/menu-bar.a7771dec6435890d21f3.png",
+    "static/media/profile.png": "/static/media/profile.92b37d69483498d88d7d.png",
+    "static/media/settings.png": "/static/media/settings.168bd09a37795f3aeb10.png",
+    "static/media/star2.png": "/static/media/star2.b95f8cd3454edc057561.png",
+    "static/media/star.png": "/static/media/star.384473f43784b1c1e4fa.png",
+    "static/media/question.png": "/static/media/question.e53b784c2db12c0499b3.png",
+    "static/media/star3.png": "/static/media/star3.e5afd05e4e45c969b43a.png",
+    "static/media/clear.png": "/static/media/clear.46451b91bba6c6308c8c.png",
+    "static/media/arrow-right.png": "/static/media/arrow-right.53e7c0fcefaa38aa7c6a.png",
+    "index.html": "/index.html",
+    "main.4599addc.css.map": "/static/css/main.4599addc.css.map",
+    "main.34115789.js.map": "/static/js/main.34115789.js.map",
+    "787.a8f9cce4.chunk.js.map": "/static/js/787.a8f9cce4.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4599addc.css",
+    "static/js/main.34115789.js"
+  ]
+}
