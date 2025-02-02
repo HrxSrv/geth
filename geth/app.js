@@ -278,7 +278,8 @@ app.get('/hireworkers', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 })
-app.listen(8000, () => {
+const port = process.env.PORT || 8000
+app.listen(port, () => {
     console.log("port connected");
 })
 app.get('/getAverageRating/:workerId', async (req, res) => {
