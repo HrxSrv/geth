@@ -23,8 +23,8 @@ import UserReview from "./UserReview";
 import { DataProvider } from './DataContext';
 import { AuthContextProvider } from './AuthContext';
 import CustomInput from './CustomInput';
+import Yadavmanthan from "./Poems"
 import PaymentSuccess from "./paymentSuccess";
-
 function App() {
   const elementToScroll = useRef(null);
   const queryClient = new QueryClient();
@@ -44,6 +44,7 @@ function App() {
 
               <Routes>
                 <Route path="/login" element={<Login />} />
+                <Route path="/yadav-manthan" element={<Yadavmanthan/>} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/account' element={<Account />} />
                 <Route path='/userprofile/settings' element={

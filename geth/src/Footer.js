@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
 
@@ -12,6 +13,9 @@ export default function Footer() {
                     <a href=" ">About Us</a>
                     <a href=" ">FAQ</a>
                     <a href=" ">Privacy Policy</a>
+                    <Link to={"/yadav-manthan"}>
+                        Yadav-Manthan
+                    </Link>
                 </div>
                 {/* <div class="social-media-icons">
                 </div> */}
